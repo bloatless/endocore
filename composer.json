@@ -1,0 +1,17 @@
+{
+    "name": "nekudo/shiny_core",
+    "description": "Micro-framework following the action-domain-responder pattern",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Simon Samtleben",
+            "email": "simon@nekudo.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Nekudo\\ShinyCore\\": "src/"
+        }
+    },
+    "require": {}
+}
