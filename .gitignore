@@ -4,3 +4,4 @@
 # Project
 /vendor/
 /config.php
+/composer.lock

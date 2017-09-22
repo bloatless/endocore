@@ -1,6 +1,8 @@
 <?php
 namespace Nekudo\ShinyCore;
 
+use Nekudo\ShinyCore\Interfaces\RouterInterface;
+
 class Application
 {
     /**
@@ -9,14 +11,19 @@ class Application
     public $config;
 
     /**
-     * @var array $routes
+     * @var RouterInterface $router
      */
-    public $routes;
+    public $router;
 
-
-    public function __construct(array $config, array $routes)
+    public function __construct(array $config, RouterInterface $router)
     {
         $this->config = $config;
-        $this->routes = $routes;
+        $this->router = $router;
+    }
+
+    public function run()
+    {
+        $foo = $this->router->dispatch();
+        var_dump($foo);
     }
 }
