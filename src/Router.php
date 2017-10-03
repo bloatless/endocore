@@ -33,11 +33,10 @@ class Router implements RouterInterface
         });
     }
 
-    public function dispatch(): array
+    public function dispatch(string $httpMethod, string $uri) : array
     {
-        $httpMethod = $_SERVER['REQUEST_METHOD'];
-        $uri = rawurldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-        $routeInfo = $this->routeDispatcher->dispatch($httpMethod, $uri);
+        $urlPath = rawurldecode(parse_url($uri, PHP_URL_PATH));
+        $routeInfo = $this->routeDispatcher->dispatch($httpMethod, $urlPath);
         return $routeInfo;
     }
 }

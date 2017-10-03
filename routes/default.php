@@ -6,4 +6,9 @@ return [
         'pattern' => '/',
         'handler' => 'home',
     ],
+    'foo' => [
+        'method' => 'GET',
+        'pattern' => '/foo',
+        'handler' => 'foo',
+    ],
 ];

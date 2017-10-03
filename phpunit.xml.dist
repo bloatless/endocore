@@ -1,0 +1,13 @@
+<phpunit beStrictAboutTestsThatDoNotTestAnything="true"
+		 beStrictAboutChangesToGlobalState="true"
+		 beStrictAboutOutputDuringTests="true"
+		 colors="true"
+		 stopOnFailure="false"
+		 bootstrap="./vendor/autoload.php"
+>
+	<testsuites>
+		<testsuite name="ShinyCore Test Suite">
+			<directory>./tests/</directory>
+		</testsuite>
+	</testsuites>
+</phpunit>

@@ -4,5 +4,9 @@ namespace Nekudo\ShinyCore\Interfaces;
 
 interface RouterInterface
 {
-    public function dispatch() : array;
+    const NOT_FOUND = 0;
+    const FOUND = 1;
+    const METHOD_NOT_ALLOWED = 2;
+
+    public function dispatch(string $httpMethod, string $uri) : array;
 }
