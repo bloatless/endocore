@@ -15,10 +15,16 @@ class Application
      */
     public $router;
 
+    /**
+     * @var Environment $environment
+     */
+    public $environment;
+
     public function __construct(array $config, RouterInterface $router)
     {
         $this->config = $config;
         $this->router = $router;
+        $this->environment = new Environment;
     }
 
     public function run()
@@ -28,8 +34,8 @@ class Application
 
     protected function dispatch()
     {
-        $httpMethod = $_SERVER['REQUEST_METHOD'];
-        $uri = $_SERVER['REQUEST_URI'];
+        $httpMethod = $this->environment->getRequestMethod();
+        $uri = $this->environment->getRequestUri();
         $routeInfo = $this->router->dispatch($httpMethod, $uri);
         if (!isset($routeInfo[0])) {
             // @todo handle invalid request
@@ -47,5 +53,10 @@ class Application
             default:
                 // @todo handle invalid route
         }
+    }
+
+    public function setEnvironment(Environment $environment)
+    {
+        $this->environment = $environment;
     }
 }
