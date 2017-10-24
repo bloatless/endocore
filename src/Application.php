@@ -16,15 +16,15 @@ class Application
     public $router;
 
     /**
-     * @var Environment $environment
+     * @var Request $request
      */
-    public $environment;
+    public $request;
 
-    public function __construct(array $config, RouterInterface $router)
+    public function __construct(array $config, Request $request, RouterInterface $router)
     {
         $this->config = $config;
         $this->router = $router;
-        $this->environment = new Environment;
+        $this->request = $request;
     }
 
     public function run()
@@ -34,8 +34,8 @@ class Application
 
     protected function dispatch()
     {
-        $httpMethod = $this->environment->getRequestMethod();
-        $uri = $this->environment->getRequestUri();
+        $httpMethod = $this->request->getRequestMethod();
+        $uri = $this->request->getRequestUri();
         $routeInfo = $this->router->dispatch($httpMethod, $uri);
         if (!isset($routeInfo[0])) {
             // @todo handle invalid request
@@ -48,15 +48,28 @@ class Application
                 // @todo handle not allowed
                 break;
             case Router::FOUND:
-                // @todo handle found
+                $action = $routeInfo[1]['action'];
+                $domain = $routeInfo[1]['domain'] ?? '';
+                $arguments = $routeInfo[2];
+                $this->callAction($action, $domain, $arguments);
                 break;
             default:
                 // @todo handle invalid route
         }
     }
 
-    public function setEnvironment(Environment $environment)
+    public function callAction(string $handler, string $domainName, array $arguments = [])
     {
-        $this->environment = $environment;
+        if (!class_exists($handler)) {
+            // @todo Handle class not found error
+        }
+
+        /** @var \Nekudo\ShinyCore\Interfaces\ActionInterface $action */
+        $action = new $handler($this->request);
+        if (!empty($domainName) && class_exists($domainName)) {
+            $domain = new $domainName;
+            $action->setDomain($domain);
+        }
+        $action->__invoke($arguments);
     }
 }

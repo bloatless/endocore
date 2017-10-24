@@ -10,7 +10,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "Nekudo\\ShinyCore\\": "src/"
+            "Nekudo\\ShinyCore\\": "src/",
+            "Nekudo\\ShinyCoreApp\\": "app/"
         }
     },
     "require": {

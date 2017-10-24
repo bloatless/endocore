@@ -3,7 +3,7 @@
 		 beStrictAboutOutputDuringTests="true"
 		 colors="true"
 		 stopOnFailure="false"
-		 bootstrap="./vendor/autoload.php"
+		 bootstrap="./tests/bootstrap.php"
 >
 	<testsuites>
 		<testsuite name="ShinyCore Test Suite">

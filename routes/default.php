@@ -4,11 +4,9 @@ return [
     'home' => [
         'method' => 'GET',
         'pattern' => '/',
-        'handler' => 'home',
-    ],
-    'foo' => [
-        'method' => 'GET',
-        'pattern' => '/foo',
-        'handler' => 'foo',
+        'handler' => [
+            'action' => 'Nekudo\ShinyCoreApp\Actions\HomeAction',
+            'domain' => '',
+        ],
     ],
 ];
