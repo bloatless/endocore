@@ -3,6 +3,7 @@
 namespace Nekudo\ShinyCore;
 
 use Nekudo\ShinyCore\Interfaces\ActionInterface;
+use Nekudo\ShinyCore\Interfaces\DomainInterface;
 
 abstract class Action implements ActionInterface
 {
@@ -11,6 +12,9 @@ abstract class Action implements ActionInterface
      */
     protected $request;
 
+    /**
+     * @inheritDoc
+     */
     protected $domain;
 
     public function __construct(Request $request)
@@ -18,7 +22,7 @@ abstract class Action implements ActionInterface
         $this->request = $request;
     }
 
-    public function setDomain($domain)
+    public function setDomain(DomainInterface $domain)
     {
         $this->domain = $domain;
     }

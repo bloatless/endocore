@@ -6,7 +6,7 @@ return [
         'pattern' => '/',
         'handler' => [
             'action' => 'Nekudo\ShinyCoreApp\Actions\HomeAction',
-            'domain' => '',
+            'domain' => 'Nekudo\ShinyCoreApp\Domains\HomeDomain',
         ],
     ],
 ];
