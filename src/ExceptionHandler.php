@@ -2,6 +2,8 @@
 
 namespace Nekudo\ShinyCore;
 
+use Nekudo\ShinyCore\Exceptions\Http\BadRequestException;
+use Nekudo\ShinyCore\Exceptions\Http\MethodNotAllowedException;
 use Nekudo\ShinyCore\Exceptions\Http\NotFoundException;
 
 class ExceptionHandler
@@ -14,6 +16,7 @@ class ExceptionHandler
     public function handleError(\Error $e)
     {
         // @todo Implement error output and logging
+        var_dump($e);
     }
 
     /**
@@ -24,8 +27,14 @@ class ExceptionHandler
     public function handleException(\Exception $e)
     {
         // @todo Implement error output and logging
+        var_dump($e);
+
         if ($e instanceof NotFoundException) {
             (new HtmlResponder(404))->notFound();
+        } elseif ($e instanceof MethodNotAllowedException) {
+
+        } elseif ($e instanceof BadRequestException) {
+
         }
     }
 }

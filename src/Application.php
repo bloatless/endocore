@@ -1,6 +1,7 @@
 <?php
 namespace Nekudo\ShinyCore;
 
+use Nekudo\ShinyCore\Exceptions\Http\BadRequestException;
 use Nekudo\ShinyCore\Exceptions\Http\MethodNotAllowedException;
 use Nekudo\ShinyCore\Exceptions\Http\NotFoundException;
 use Nekudo\ShinyCore\Interfaces\RouterInterface;
@@ -46,7 +47,7 @@ class Application
         $uri = $this->request->getRequestUri();
         $routeInfo = $this->router->dispatch($httpMethod, $uri);
         if (!isset($routeInfo[0])) {
-            // @todo handle invalid request
+            throw new BadRequestException('Unable to parse request.');
         }
         switch ($routeInfo[0]) {
             case Router::NOT_FOUND:
@@ -60,7 +61,7 @@ class Application
                 $this->callAction($action, $domain, $arguments);
                 break;
             default:
-                // @todo handle invalid route
+                throw new BadRequestException('Unable to parse request.');
         }
     }
 
@@ -71,7 +72,7 @@ class Application
         }
 
         /** @var \Nekudo\ShinyCore\Interfaces\ActionInterface $action */
-        $action = new $handler($this->request);
+        $action = new $handler($this->config, $this->request);
         if (!empty($domainName) && class_exists($domainName)) {
             $domain = new $domainName;
             $action->setDomain($domain);

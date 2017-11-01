@@ -2,13 +2,33 @@
 
 namespace Nekudo\ShinyCore;
 
+use Nekudo\ShinyCore\Interfaces\RendererInterface;
 use Nekudo\ShinyCore\Interfaces\ResponderInterface;
 
 class HtmlResponder extends HttpResponder implements ResponderInterface
 {
-    public function __invoke()
-    {
+    protected $config;
 
+    /**
+     * @var RendererInterface $renderer
+     */
+    protected $renderer;
+
+    public function __construct(array $config, int $statusCode = 200, string $version = '1.1')
+    {
+        $this->config = $config;
+        parent::__construct($statusCode, $version);
+        $this->addHeader('Content-Type', 'text/html; charset=utf-8');
+    }
+
+    public function getRenderer() : RendererInterface
+    {
+        return $this->renderer;
+    }
+
+    public function setRenderer(RendererInterface $renderer)
+    {
+        $this->renderer = $renderer;
     }
 
     public function found()

@@ -3,5 +3,5 @@
 
 # Project
 /vendor/
-/config.php
 /composer.lock
+/config/config.php

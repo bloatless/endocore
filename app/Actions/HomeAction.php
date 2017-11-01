@@ -14,7 +14,7 @@ class HomeAction extends Action
     public function __invoke(array $arguments = [])
     {
         $data = $this->domain->getSomeData();
-        $responder = new HomeResponder;
+        $responder = new HomeResponder($this->config);
         $responder->setBody($data);
         $responder->found();
     }

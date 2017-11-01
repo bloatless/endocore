@@ -8,6 +8,11 @@ use Nekudo\ShinyCore\Interfaces\DomainInterface;
 abstract class Action implements ActionInterface
 {
     /**
+     * @var array $config
+     */
+    protected $config;
+
+    /**
      * @var Request $request
      */
     protected $request;
@@ -17,8 +22,9 @@ abstract class Action implements ActionInterface
      */
     protected $domain;
 
-    public function __construct(Request $request)
+    public function __construct(array $config, Request $request)
     {
+        $this->config = $config;
         $this->request = $request;
     }
 

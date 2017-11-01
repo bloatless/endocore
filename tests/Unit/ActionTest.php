@@ -10,8 +10,9 @@ class ActionTest extends TestCase
 {
     public function testInvoke()
     {
+        $config = include __DIR__ . '/../../config/config.php';
         $request = new Request;
-        $action = new MockAction($request);
+        $action = new MockAction($config, $request);
         $this->assertTrue($action->__invoke());
     }
 }
