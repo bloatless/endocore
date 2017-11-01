@@ -34,7 +34,7 @@ class HttpResponderTest extends TestCase
     {
         $responder = new HttpResponder;
         $responder->addHeader('foo', 'bar');
-        $this->assertSame(['foo' => 'bar'] , $responder->getHeaders());
+        $this->assertSame(['foo' => 'bar'], $responder->getHeaders());
         $responder->addHeader('some', 'more');
         $responder->removeHeader('foo');
         $this->assertSame(['some' => 'more'], $responder->getHeaders());

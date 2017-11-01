@@ -2,21 +2,25 @@
 
 namespace Nekudo\ShinyCore;
 
-use Nekudo\ShinyCore\Interfaces\ResponderInterface;
-
-class HttpResponder implements ResponderInterface
+class HttpResponder
 {
     /**
+     * HTTP status code to use in response.
+     *
      * @var int $statusCode
      */
     protected $statusCode = 200;
 
     /**
+     * HTTP protocol version.
+     *
      * @var string $version
      */
     protected $version = '1.1';
 
     /**
+     * List of available HTTP status codes and names.
+     *
      * @var array $statusMessages
      */
     protected $statusMessages = [
@@ -81,12 +85,16 @@ class HttpResponder implements ResponderInterface
     ];
 
     /**
-     * @var array $headers Additional HTTP headers.
+     * Additional HTTP headers.
+     *
+     * @var array $headers
      */
     protected $headers = [];
 
     /**
-     * @var string $body The HTTP body.
+     * The HTTP body.
+     *
+     * @var string $body
      */
     protected $body = '';
 
@@ -217,7 +225,8 @@ class HttpResponder implements ResponderInterface
             'HTTP/%s %d %s',
             $this->version,
             $this->statusCode,
-            $this->statusMessages[$this->statusCode]);
+            $this->statusMessages[$this->statusCode]
+        );
         header($header, true);
     }
 

@@ -1,6 +1,8 @@
 <?php
 namespace Nekudo\ShinyCore;
 
+use Nekudo\ShinyCore\Exceptions\Http\MethodNotAllowedException;
+use Nekudo\ShinyCore\Exceptions\Http\NotFoundException;
 use Nekudo\ShinyCore\Interfaces\RouterInterface;
 
 class Application
@@ -29,7 +31,13 @@ class Application
 
     public function run()
     {
-        $this->dispatch();
+        try {
+            $this->dispatch();
+        } catch (\Error $e) {
+            (new ExceptionHandler)->handleError($e);
+        } catch (\Exception $e) {
+            (new ExceptionHandler)->handleException($e);
+        }
     }
 
     protected function dispatch()
@@ -42,11 +50,9 @@ class Application
         }
         switch ($routeInfo[0]) {
             case Router::NOT_FOUND:
-                // @todo handle not found
-                break;
+                throw new NotFoundException('Page not found.');
             case Router::METHOD_NOT_ALLOWED:
-                // @todo handle not allowed
-                break;
+                throw new MethodNotAllowedException('Method not allowed');
             case Router::FOUND:
                 $action = $routeInfo[1]['action'];
                 $domain = $routeInfo[1]['domain'] ?? '';
