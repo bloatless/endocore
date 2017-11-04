@@ -11,8 +11,8 @@ class ApplicationTest extends TestCase
 {
     public function testApplicationCanBeInitiated()
     {
-        $config = include __DIR__ . '/../../config/config.php';
-        $routes = include __DIR__ . '/../../routes/default.php';
+        $config = include __DIR__ . '/../Mocks/config.php';
+        $routes = include __DIR__ . '/../Mocks/routes.php';
         $request = new Request;
         $router = new Router($routes);
         $app = new Application($config, $request, $router);

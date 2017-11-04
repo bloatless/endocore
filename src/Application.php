@@ -1,6 +1,7 @@
 <?php
 namespace Nekudo\ShinyCore;
 
+use Nekudo\ShinyCore\Exceptions\Application\ClassNotFoundException;
 use Nekudo\ShinyCore\Exceptions\Http\BadRequestException;
 use Nekudo\ShinyCore\Exceptions\Http\MethodNotAllowedException;
 use Nekudo\ShinyCore\Exceptions\Http\NotFoundException;
@@ -68,7 +69,7 @@ class Application
     public function callAction(string $handler, string $domainName, array $arguments = [])
     {
         if (!class_exists($handler)) {
-            // @todo Handle class not found error
+            throw new ClassNotFoundException('Action class not found.');
         }
 
         /** @var \Nekudo\ShinyCore\Interfaces\ActionInterface $action */
