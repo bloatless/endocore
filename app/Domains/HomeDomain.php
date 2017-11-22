@@ -8,6 +8,6 @@ class HomeDomain extends Domain
 {
     public function getSomeData()
     {
-        return 'Welcome Home...';
+        return ['welcome' => 'Welcome Home...'];
     }
 }

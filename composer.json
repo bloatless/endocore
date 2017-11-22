@@ -15,6 +15,7 @@
         }
     },
     "require": {
+        "php": "^7.1",
         "nikic/fast-route": "^1.2"
     },
     "require-dev": {

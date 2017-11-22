@@ -2,6 +2,7 @@
 
 namespace Nekudo\ShinyCore\Tests\Unit;
 
+use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Exceptions\Application\ClassNotFoundException;
 use Nekudo\ShinyCore\HtmlResponder;
 use Nekudo\ShinyCore\PhtmlRenderer;
@@ -9,17 +10,18 @@ use PHPUnit\Framework\TestCase;
 
 class HtmlResponderTest extends TestCase
 {
-    public $config;
+    public $configData;
 
     public function setUp()
     {
-        $this->config = include __DIR__ . '/../Mocks/config.php';
+        $this->configData = include __DIR__ . '/../Mocks/config.php';
     }
 
     public function testInitWithDefaultRenderer()
     {
-        $config = $this->config;
-        unset($config['renderer']);
+        $configData = $this->configData;
+        unset($configData['renderer']);
+        $config = (new Config)->fromArray($configData);
         $responder = new HtmlResponder($config);
         $renderer = $responder->getRenderer();
         $this->assertInstanceOf(PhtmlRenderer::class, $renderer);
@@ -27,7 +29,8 @@ class HtmlResponderTest extends TestCase
 
     public function testInitWithRendererSetInConfig()
     {
-        $responder = new HtmlResponder($this->config);
+        $config = (new Config)->fromArray($this->configData);
+        $responder = new HtmlResponder($config);
         $renderer = $responder->getRenderer();
         $this->assertInstanceOf(PhtmlRenderer::class, $renderer);
     }
@@ -35,14 +38,16 @@ class HtmlResponderTest extends TestCase
     public function testInitWithInvalidRendererSetInConfig()
     {
         $this->expectException(ClassNotFoundException::class);
-        $config = $this->config;
-        $config['renderer'] = '\Nekudo\Invalid\Renderer';
+        $configData = $this->configData;
+        $configData['renderer'] = '\Nekudo\Invalid\Renderer';
+        $config = (new Config)->fromArray($configData);
         $responder = new HtmlResponder($config);
     }
 
     public function testGetSetRenderer()
     {
-        $responder = new HtmlResponder($this->config);
+        $config = (new Config)->fromArray($this->configData);
+        $responder = new HtmlResponder($config);
         $responder->setRenderer(new PhtmlRenderer);
         $this->assertInstanceOf(PhtmlRenderer::class, $responder->getRenderer());
     }

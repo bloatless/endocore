@@ -9,7 +9,7 @@ use Nekudo\ShinyCore\Interfaces\ResponderInterface;
 abstract class Action implements ActionInterface
 {
     /**
-     * @var array $config
+     * @var Config $config
      */
     protected $config;
 
@@ -29,15 +29,25 @@ abstract class Action implements ActionInterface
      */
     protected $responder;
 
-    public function __construct(array $config, Request $request)
+    public function __construct(Config $config, Request $request)
     {
         $this->config = $config;
         $this->request = $request;
     }
 
+    public function getDomain() : DomainInterface
+    {
+        return $this->domain;
+    }
+
     public function setDomain(DomainInterface $domain)
     {
         $this->domain = $domain;
+    }
+
+    public function getResponder() : ResponderInterface
+    {
+        return $this->responder;
     }
 
     public function setResponder(ResponderInterface $responder)

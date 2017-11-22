@@ -15,8 +15,6 @@ class HomeAction extends Action
     {
         $data = $this->domain->getSomeData();
         $responder = new HomeResponder($this->config);
-
-        $responder->setBody($data);
-        $responder->found();
+        $responder->found($data);
     }
 }

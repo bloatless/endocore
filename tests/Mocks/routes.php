@@ -5,8 +5,7 @@ return [
         'method' => 'GET',
         'pattern' => '/',
         'handler' => [
-            'action' => 'Nekudo\ShinyCoreApp\Actions\HomeAction',
-            'domain' => 'Nekudo\ShinyCoreApp\Domains\HomeDomain',
+            'action' => 'Nekudo\ShinyCore\Tests\Mocks\HelloWorldAction',
         ],
     ],
 ];

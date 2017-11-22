@@ -4,10 +4,10 @@ namespace Nekudo\ShinyCore\Tests\Mocks;
 
 use Nekudo\ShinyCore\Action;
 
-class MockAction extends Action
+class HelloWorldAction extends Action
 {
     public function __invoke(array $arguments = [])
     {
-        return true;
+        echo "Hello World!";
     }
 }

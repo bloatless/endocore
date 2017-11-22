@@ -3,22 +3,49 @@
 namespace Nekudo\ShinyCore\Tests\Integration;
 
 use Nekudo\ShinyCore\Application;
+use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Request;
 use Nekudo\ShinyCore\Router;
 use PHPUnit\Framework\TestCase;
 
 class ApplicationTest extends TestCase
 {
-    public function testApplicationCanBeInitiated()
+    /**
+     * @var Config $config
+     */
+    public $config;
+
+    public $routes;
+
+    public function setUp()
     {
         $config = include __DIR__ . '/../Mocks/config.php';
-        $routes = include __DIR__ . '/../Mocks/routes.php';
+        $this->config = (new Config)->fromArray($config);
+        $this->routes = include __DIR__ . '/../Mocks/routes.php';
+    }
+
+    public function testApplicationCanBeInitiated()
+    {
         $request = new Request;
-        $router = new Router($routes);
-        $app = new Application($config, $request, $router);
+        $router = new Router($this->routes);
+        $app = new Application($this->config, $request, $router);
         $this->assertInstanceOf('Nekudo\ShinyCore\Application', $app);
         $this->assertInstanceOf('Nekudo\ShinyCore\Interfaces\RouterInterface', $app->router);
+    }
 
+    /**
+     * @runInSeparateProcess
+     */
+    public function testValidRoute()
+    {
+        $request = new Request([], [], [
+           'REQUEST_METHOD' => 'GET',
+           'REQUEST_URI' => '/'
+        ]);
+        $router = new Router($this->routes);
+        $app = new Application($this->config, $request, $router);
 
+        $this->expectOutputString('Hello World!');
+        $app->run();
     }
 }

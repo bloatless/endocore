@@ -9,7 +9,7 @@ use Nekudo\ShinyCore\Interfaces\ResponderInterface;
 class HtmlResponder extends HttpResponder implements ResponderInterface
 {
     /**
-     * @var array $config
+     * @var Config $config
      */
     protected $config;
 
@@ -18,7 +18,7 @@ class HtmlResponder extends HttpResponder implements ResponderInterface
      */
     protected $renderer;
 
-    public function __construct(array $config, int $statusCode = 200, string $version = '1.1')
+    public function __construct(Config $config, int $statusCode = 200, string $version = '1.1')
     {
         parent::__construct($statusCode, $version);
 
@@ -29,11 +29,11 @@ class HtmlResponder extends HttpResponder implements ResponderInterface
 
     protected function initRenderer()
     {
-        $rendererClass = $this->config['renderer'] ?? '\Nekudo\ShinyCore\PhtmlRenderer';
+        $rendererClass = $this->config->getClass('renderer', '\Nekudo\ShinyCore\PhtmlRenderer');
         if (!class_exists($rendererClass)) {
             throw new ClassNotFoundException('Renderer class not found.');
         }
-        $this->renderer = new $rendererClass;
+        $this->renderer = new $rendererClass($this->config);
     }
 
     public function getRenderer() : RendererInterface
@@ -46,8 +46,15 @@ class HtmlResponder extends HttpResponder implements ResponderInterface
         $this->renderer = $renderer;
     }
 
-    public function found()
+    public function assign(array $pairs) : void
     {
+        $this->renderer->assign($pairs);
+    }
+
+    public function found(array $templateVariables = [])
+    {
+        $body = $this->renderer->render($this->view, $templateVariables);
+        $this->setBody($body);
         $this->respond();
     }
 

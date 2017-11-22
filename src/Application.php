@@ -10,7 +10,7 @@ use Nekudo\ShinyCore\Interfaces\RouterInterface;
 class Application
 {
     /**
-     * @var array $config
+     * @var Config $config
      */
     public $config;
 
@@ -24,7 +24,7 @@ class Application
      */
     public $request;
 
-    public function __construct(array $config, Request $request, RouterInterface $router)
+    public function __construct(Config $config, Request $request, RouterInterface $router)
     {
         $this->config = $config;
         $this->router = $router;
