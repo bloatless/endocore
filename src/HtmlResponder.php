@@ -6,6 +6,10 @@ use Nekudo\ShinyCore\Exceptions\Application\ClassNotFoundException;
 use Nekudo\ShinyCore\Interfaces\RendererInterface;
 use Nekudo\ShinyCore\Interfaces\ResponderInterface;
 
+/**
+ * @property string $view
+ */
+
 class HtmlResponder extends HttpResponder implements ResponderInterface
 {
     /**
@@ -51,23 +55,21 @@ class HtmlResponder extends HttpResponder implements ResponderInterface
         $this->renderer->assign($pairs);
     }
 
-    public function found(array $templateVariables = [])
+    public function found(string $view, array $templateVariables = [])
     {
-        $body = $this->renderer->render($this->view, $templateVariables);
-        $this->setBody($body);
-        $this->respond();
+        $this->setBody(
+            $this->renderer->render($view, $templateVariables)
+        );
     }
 
     public function notFound()
     {
         $this->setStatus(404);
         $this->setBody('<html><head><title>404 Not found</title></head><body>404 Not found</body></html>');
-        $this->respond();
     }
 
     public function error()
     {
         $this->setStatus(500);
-        $this->respond();
     }
 }

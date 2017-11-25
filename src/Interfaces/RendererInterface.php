@@ -6,5 +6,5 @@ interface RendererInterface
 {
     public function assign(array $pairs) : void;
 
-    public function render(string $view, array $data = []) : string;
+    public function render(string $view = '', array $data = []) : string;
 }

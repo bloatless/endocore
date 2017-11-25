@@ -23,7 +23,6 @@ abstract class Action implements ActionInterface
      */
     protected $domain;
 
-
     /**
      * @inheritdoc
      */

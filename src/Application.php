@@ -58,15 +58,16 @@ class Application
             case Router::FOUND:
                 $action = $routeInfo[1]['action'];
                 $domain = $routeInfo[1]['domain'] ?? '';
+                $responder = $routeInfo[1]['responder'] ?? '';
                 $arguments = $routeInfo[2];
-                $this->callAction($action, $domain, $arguments);
+                $this->callAction($action, $domain, $responder, $arguments);
                 break;
             default:
                 throw new BadRequestException('Unable to parse request.');
         }
     }
 
-    public function callAction(string $handler, string $domainName, array $arguments = [])
+    public function callAction(string $handler, string $domainName, string $responderName, array $arguments = [])
     {
         if (!class_exists($handler)) {
             throw new ClassNotFoundException('Action class not found.');
@@ -78,6 +79,12 @@ class Application
             $domain = new $domainName;
             $action->setDomain($domain);
         }
+        if (!empty($responderName) && class_exists($responderName)) {
+            $responder = new $responderName($this->config);
+            $action->setResponder($responder);
+        }
+
         $action->__invoke($arguments);
+        $action->getResponder()->respond();
     }
 }

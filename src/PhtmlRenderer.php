@@ -44,9 +44,11 @@ class PhtmlRenderer implements RendererInterface
         $this->templateVariables = array_merge($this->templateVariables, $pairs);
     }
 
-    public function render(string $view, array $variables = []) : string
+    public function render(string $view = '', array $variables = []) : string
     {
-        $this->setView($view);
+        if (!empty($view)) {
+            $this->setView($view);
+        }
         $this->assign($variables);
         $content = $this->renderView();
         if (empty($this->layout)) {
