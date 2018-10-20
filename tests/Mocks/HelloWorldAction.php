@@ -2,9 +2,9 @@
 
 namespace Nekudo\ShinyCore\Tests\Mocks;
 
-use Nekudo\ShinyCore\Action;
+use Nekudo\ShinyCore\HtmlAction;
 
-class HelloWorldAction extends Action
+class HelloWorldAction extends HtmlAction
 {
     public function __invoke(array $arguments = [])
     {

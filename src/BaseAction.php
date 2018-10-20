@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nekudo\ShinyCore;
 
 use Nekudo\ShinyCore\Interfaces\ActionInterface;
-use Nekudo\ShinyCore\Interfaces\DomainInterface;
 use Nekudo\ShinyCore\Interfaces\ResponderInterface;
 
-abstract class Action implements ActionInterface
+abstract class BaseAction implements ActionInterface
 {
     /**
      * @var Config $config
@@ -19,11 +20,6 @@ abstract class Action implements ActionInterface
     protected $request;
 
     /**
-     * @inheritDoc
-     */
-    protected $domain;
-
-    /**
      * @inheritdoc
      */
     protected $responder;
@@ -34,23 +30,8 @@ abstract class Action implements ActionInterface
         $this->request = $request;
     }
 
-    public function getDomain() : DomainInterface
-    {
-        return $this->domain;
-    }
-
-    public function setDomain(DomainInterface $domain)
-    {
-        $this->domain = $domain;
-    }
-
-    public function getResponder() : ResponderInterface
-    {
-        return $this->responder;
-    }
-
     public function setResponder(ResponderInterface $responder)
     {
-        $this->responder = $responder;
+        return $this->responder = $responder;
     }
 }

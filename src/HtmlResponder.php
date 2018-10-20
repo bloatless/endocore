@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nekudo\ShinyCore;
 
 use Nekudo\ShinyCore\Exceptions\Application\ClassNotFoundException;
 use Nekudo\ShinyCore\Interfaces\RendererInterface;
-use Nekudo\ShinyCore\Interfaces\ResponderInterface;
 
 /**
  * @property string $view
  */
 
-class HtmlResponder extends HttpResponder implements ResponderInterface
+class HtmlResponder extends HttpResponder
 {
     /**
      * @var Config $config
@@ -40,7 +41,7 @@ class HtmlResponder extends HttpResponder implements ResponderInterface
         $this->renderer = new $rendererClass($this->config);
     }
 
-    public function getRenderer() : RendererInterface
+    public function getRenderer(): RendererInterface
     {
         return $this->renderer;
     }
@@ -50,7 +51,7 @@ class HtmlResponder extends HttpResponder implements ResponderInterface
         $this->renderer = $renderer;
     }
 
-    public function assign(array $pairs) : void
+    public function assign(array $pairs): void
     {
         $this->renderer->assign($pairs);
     }

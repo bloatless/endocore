@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nekudo\ShinyCore;
 
-class HttpResponder
+use Nekudo\ShinyCore\Interfaces\ResponderInterface;
+
+class HttpResponder implements ResponderInterface
 {
     /**
      * HTTP status code to use in response.
@@ -113,7 +117,7 @@ class HttpResponder
      *
      * @return int
      */
-    public function getStatus() : int
+    public function getStatus(): int
     {
         return $this->statusCode;
     }
@@ -133,7 +137,7 @@ class HttpResponder
      *
      * @return string
      */
-    public function getVersion() : string
+    public function getVersion(): string
     {
         return $this->version;
     }
@@ -153,7 +157,7 @@ class HttpResponder
      *
      * @return array
      */
-    public function getHeaders() : array
+    public function getHeaders(): array
     {
         return $this->headers;
     }
@@ -191,7 +195,7 @@ class HttpResponder
      *
      * @return string
      */
-    public function getBody() : string
+    public function getBody(): string
     {
         return $this->body;
     }
@@ -235,7 +239,7 @@ class HttpResponder
      *
      * @return bool
      */
-    protected function sendAdditionalHeaders() : bool
+    protected function sendAdditionalHeaders(): bool
     {
         if (empty($this->headers)) {
             return true;
@@ -251,7 +255,7 @@ class HttpResponder
      *
      * @return bool
      */
-    protected function sendBody() : bool
+    protected function sendBody(): bool
     {
         if (mb_strlen($this->body) === 0) {
             return true;

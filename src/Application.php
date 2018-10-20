@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Nekudo\ShinyCore;
 
 use Nekudo\ShinyCore\Exceptions\Application\ClassNotFoundException;
@@ -56,18 +59,16 @@ class Application
             case Router::METHOD_NOT_ALLOWED:
                 throw new MethodNotAllowedException('Method not allowed');
             case Router::FOUND:
-                $action = $routeInfo[1]['action'];
-                $domain = $routeInfo[1]['domain'] ?? '';
-                $responder = $routeInfo[1]['responder'] ?? '';
+                $action = $routeInfo[1];
                 $arguments = $routeInfo[2];
-                $this->callAction($action, $domain, $responder, $arguments);
+                $this->callAction($action, $arguments);
                 break;
             default:
                 throw new BadRequestException('Unable to parse request.');
         }
     }
 
-    public function callAction(string $handler, string $domainName, string $responderName, array $arguments = [])
+    public function callAction(string $handler, array $arguments = [])
     {
         if (!class_exists($handler)) {
             throw new ClassNotFoundException('Action class not found.');
@@ -75,15 +76,6 @@ class Application
 
         /** @var \Nekudo\ShinyCore\Interfaces\ActionInterface $action */
         $action = new $handler($this->config, $this->request);
-        if (!empty($domainName) && class_exists($domainName)) {
-            $domain = new $domainName;
-            $action->setDomain($domain);
-        }
-        if (!empty($responderName) && class_exists($responderName)) {
-            $responder = new $responderName($this->config);
-            $action->setResponder($responder);
-        }
-
         $action->__invoke($arguments);
         $action->getResponder()->respond();
     }

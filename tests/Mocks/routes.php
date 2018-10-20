@@ -4,8 +4,6 @@ return [
     'home' => [
         'method' => 'GET',
         'pattern' => '/',
-        'handler' => [
-            'action' => 'Nekudo\ShinyCore\Tests\Mocks\HelloWorldAction',
-        ],
+        'handler' => 'Nekudo\ShinyCore\Tests\Mocks\HelloWorldAction',
     ],
 ];

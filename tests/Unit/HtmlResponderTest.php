@@ -48,7 +48,7 @@ class HtmlResponderTest extends TestCase
     {
         $config = (new Config)->fromArray($this->configData);
         $responder = new HtmlResponder($config);
-        $responder->setRenderer(new PhtmlRenderer);
+        $responder->setRenderer(new PhtmlRenderer($config));
         $this->assertInstanceOf(PhtmlRenderer::class, $responder->getRenderer());
     }
 }

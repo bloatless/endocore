@@ -1,14 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nekudo\ShinyCore\Interfaces;
 
 interface ActionInterface
 {
     public function __invoke(array $arguments = []);
 
-    public function setDomain(DomainInterface $domain);
-
-    public function setResponder(ResponderInterface $responder);
-
-    public function getResponder() : ResponderInterface;
+    public function getResponder(): ResponderInterface;
 }
