@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Interfaces;
+namespace Nekudo\ShinyCore\Router;
 
 interface RouterInterface
 {

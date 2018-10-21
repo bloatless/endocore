@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore;
+namespace Nekudo\ShinyCore\Router;
 
 use FastRoute;
 use FastRoute\RouteCollector;
-use Nekudo\ShinyCore\Interfaces\RouterInterface;
 
 class Router implements RouterInterface
 {

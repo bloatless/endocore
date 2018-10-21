@@ -2,7 +2,7 @@
 
 namespace Nekudo\ShinyCore\Tests\Unit;
 
-use Nekudo\ShinyCore\Router;
+use Nekudo\ShinyCore\Router\Router;
 use PHPUnit\Framework\TestCase;
 
 class RouterTest extends TestCase

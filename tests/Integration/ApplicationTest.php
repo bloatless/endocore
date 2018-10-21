@@ -5,7 +5,7 @@ namespace Nekudo\ShinyCore\Tests\Integration;
 use Nekudo\ShinyCore\Application;
 use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Request;
-use Nekudo\ShinyCore\Router;
+use Nekudo\ShinyCore\Router\Router;
 use PHPUnit\Framework\TestCase;
 
 class ApplicationTest extends TestCase
@@ -30,7 +30,7 @@ class ApplicationTest extends TestCase
         $router = new Router($this->routes);
         $app = new Application($this->config, $request, $router);
         $this->assertInstanceOf('Nekudo\ShinyCore\Application', $app);
-        $this->assertInstanceOf('Nekudo\ShinyCore\Interfaces\RouterInterface', $app->router);
+        $this->assertInstanceOf('Nekudo\ShinyCore\Router\RouterInterface', $app->router);
     }
 
     /**

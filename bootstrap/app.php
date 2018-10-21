@@ -8,7 +8,7 @@ $routes = require_once __DIR__ . '/../routes/default.php';
 $app = new \Nekudo\ShinyCore\Application(
     (new \Nekudo\ShinyCore\Config)->fromArray($config),
     (new \Nekudo\ShinyCore\Request($_GET, $_POST, $_SERVER)),
-    (new \Nekudo\ShinyCore\Router($routes))
+    (new \Nekudo\ShinyCore\Router\Router($routes))
 );
 
 return $app;

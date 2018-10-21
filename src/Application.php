@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Nekudo\ShinyCore;
 
 use Nekudo\ShinyCore\Exceptions\Application\ClassNotFoundException;
+use Nekudo\ShinyCore\Exceptions\ExceptionHandler;
 use Nekudo\ShinyCore\Exceptions\Http\BadRequestException;
 use Nekudo\ShinyCore\Exceptions\Http\MethodNotAllowedException;
 use Nekudo\ShinyCore\Exceptions\Http\NotFoundException;
-use Nekudo\ShinyCore\Interfaces\RouterInterface;
+use Nekudo\ShinyCore\Router\RouterInterface;
+use Nekudo\ShinyCore\Router\Router;
 
 class Application
 {
@@ -39,7 +41,7 @@ class Application
         try {
             $this->dispatch();
         } catch (\Error $e) {
-            (new ExceptionHandler)->handleError($e);
+            (new ExceptionHandler())->handleError($e);
         } catch (\Exception $e) {
             (new ExceptionHandler)->handleException($e);
         }

@@ -2,9 +2,7 @@
 
 namespace Nekudo\ShinyCoreApp\Domains;
 
-use Nekudo\ShinyCore\Domain;
-
-class HomeDomain extends Domain
+class HomeDomain
 {
     public function getSomeData()
     {
