@@ -2,7 +2,7 @@
 
 namespace Nekudo\ShinyCore\Tests\Mocks;
 
-use Nekudo\ShinyCore\HtmlAction;
+use Nekudo\ShinyCore\Actions\HtmlAction;
 
 class HelloWorldHtmlAction extends HtmlAction
 {

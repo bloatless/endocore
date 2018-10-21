@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore;
+namespace Nekudo\ShinyCore\Actions;
 
+use Nekudo\ShinyCore\Config;
+use Nekudo\ShinyCore\Request;
 use Nekudo\ShinyCore\Responder\HtmlResponder;
 use Nekudo\ShinyCore\Responder\ResponderInterface;
 

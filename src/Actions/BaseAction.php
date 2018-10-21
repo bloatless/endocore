@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore;
+namespace Nekudo\ShinyCore\Actions;
 
-use Nekudo\ShinyCore\Interfaces\ActionInterface;
+use Nekudo\ShinyCore\Config;
+use Nekudo\ShinyCore\Request;
 use Nekudo\ShinyCore\Responder\ResponderInterface;
 
 abstract class BaseAction implements ActionInterface

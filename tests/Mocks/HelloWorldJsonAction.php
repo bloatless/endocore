@@ -2,7 +2,7 @@
 
 namespace Nekudo\ShinyCore\Tests\Mocks;
 
-use Nekudo\ShinyCore\JsonAction;
+use Nekudo\ShinyCore\Actions\JsonAction;
 
 class HelloWorldJsonAction extends JsonAction
 {

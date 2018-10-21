@@ -2,7 +2,7 @@
 
 namespace Nekudo\ShinyCoreApp\Actions;
 
-use Nekudo\ShinyCore\HtmlAction;
+use Nekudo\ShinyCore\Actions\HtmlAction;
 use Nekudo\ShinyCoreApp\Domains\HomeDomain;
 
 class HomeAction extends HtmlAction

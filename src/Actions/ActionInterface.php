@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Interfaces;
+namespace Nekudo\ShinyCore\Actions;
 
 use Nekudo\ShinyCore\Responder\ResponderInterface;
 
