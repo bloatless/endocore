@@ -3,7 +3,7 @@
 namespace Nekudo\ShinyCore\Tests\Integration;
 
 use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\HtmlResponder;
+use Nekudo\ShinyCore\Responder\HtmlResponder;
 use PHPUnit\Framework\TestCase;
 
 class HtmlResponderTest extends TestCase

@@ -3,7 +3,7 @@
 namespace Nekudo\ShinyCore\Tests\Integration;
 
 use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\PhtmlRenderer;
+use Nekudo\ShinyCore\Responder\PhtmlRenderer;
 use PHPUnit\Framework\TestCase;
 
 class PhtmlRendererTest extends TestCase

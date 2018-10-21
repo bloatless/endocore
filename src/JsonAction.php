@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Nekudo\ShinyCore;
 
-use Nekudo\ShinyCore\Interfaces\ResponderInterface;
+use Nekudo\ShinyCore\Responder\JsonResponder;
+use Nekudo\ShinyCore\Responder\ResponderInterface;
 
 abstract class JsonAction extends BaseAction
 {

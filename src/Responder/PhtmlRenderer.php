@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore;
+namespace Nekudo\ShinyCore\Responder;
 
-use Nekudo\ShinyCore\Interfaces\RendererInterface;
+use Nekudo\ShinyCore\Config;
 
 class PhtmlRenderer implements RendererInterface
 {

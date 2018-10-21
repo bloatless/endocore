@@ -7,6 +7,7 @@ namespace Nekudo\ShinyCore;
 use Nekudo\ShinyCore\Exceptions\Http\BadRequestException;
 use Nekudo\ShinyCore\Exceptions\Http\MethodNotAllowedException;
 use Nekudo\ShinyCore\Exceptions\Http\NotFoundException;
+use Nekudo\ShinyCore\Responder\HtmlResponder;
 
 class ExceptionHandler
 {

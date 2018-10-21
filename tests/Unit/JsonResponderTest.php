@@ -3,7 +3,7 @@
 namespace Nekudo\ShinyCore\Tests\Unit;
 
 use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\JsonResponder;
+use Nekudo\ShinyCore\Responder\JsonResponder;
 use PHPUnit\Framework\TestCase;
 
 class JsonResponderTest extends TestCase

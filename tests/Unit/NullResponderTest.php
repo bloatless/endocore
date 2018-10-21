@@ -2,7 +2,7 @@
 
 namespace Nekudo\ShinyCore\Tests\Unit;
 
-use Nekudo\ShinyCore\NullResponder;
+use Nekudo\ShinyCore\Responder\NullResponder;
 use PHPUnit\Framework\TestCase;
 
 class NullResponderTest extends TestCase

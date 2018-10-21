@@ -2,7 +2,7 @@
 
 namespace Nekudo\ShinyCore\Tests\Unit;
 
-use Nekudo\ShinyCore\HttpResponder;
+use Nekudo\ShinyCore\Responder\HttpResponder;
 use PHPUnit\Framework\TestCase;
 
 class HttpResponderTest extends TestCase

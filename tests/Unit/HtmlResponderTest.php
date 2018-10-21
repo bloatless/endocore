@@ -4,8 +4,8 @@ namespace Nekudo\ShinyCore\Tests\Unit;
 
 use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Exceptions\Application\ClassNotFoundException;
-use Nekudo\ShinyCore\HtmlResponder;
-use Nekudo\ShinyCore\PhtmlRenderer;
+use Nekudo\ShinyCore\Responder\HtmlResponder;
+use Nekudo\ShinyCore\Responder\PhtmlRenderer;
 use PHPUnit\Framework\TestCase;
 
 class HtmlResponderTest extends TestCase

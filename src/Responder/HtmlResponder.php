@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore;
+namespace Nekudo\ShinyCore\Responder;
 
+use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Exceptions\Application\ClassNotFoundException;
-use Nekudo\ShinyCore\Interfaces\RendererInterface;
 
 /**
  * @property string $view
@@ -34,7 +34,7 @@ class HtmlResponder extends HttpResponder
 
     protected function initRenderer()
     {
-        $rendererClass = $this->config->getClass('renderer', '\Nekudo\ShinyCore\PhtmlRenderer');
+        $rendererClass = $this->config->getClass('renderer', '\Nekudo\ShinyCore\Responder\PhtmlRenderer');
         if (!class_exists($rendererClass)) {
             throw new ClassNotFoundException('Renderer class not found.');
         }

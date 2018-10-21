@@ -6,7 +6,7 @@ return [
         'layouts' => __DIR__ . '/resources/layouts',
     ],
 
-    'renderer' => '\Nekudo\ShinyCore\PhtmlRenderer',
+    'renderer' => '\Nekudo\ShinyCore\Responder\PhtmlRenderer',
 
     'db' => []
 ];

@@ -13,7 +13,7 @@ class Config
     public function fromArray(array $config) : Config
     {
         // set renderer class:
-        $rendererClass = $config['renderer'] ?? '\Nekudo\ShinyCore\PhtmlRenderer';
+        $rendererClass = $config['renderer'] ?? '\Nekudo\ShinyCore\Responder\PhtmlRenderer';
         $this->setClass('renderer', $rendererClass);
 
         // set paths:

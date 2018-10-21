@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore;
-
-use Nekudo\ShinyCore\Interfaces\ResponderInterface;
+namespace Nekudo\ShinyCore\Responder;
 
 class HttpResponder implements ResponderInterface
 {
