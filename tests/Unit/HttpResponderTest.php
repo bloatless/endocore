@@ -45,6 +45,7 @@ class HttpResponderTest extends TestCase
     /**
      * @runInSeparateProcess
      * @preserveGlobalState disabled
+     * @todo Move to integration
      */
     public function testRespond()
     {

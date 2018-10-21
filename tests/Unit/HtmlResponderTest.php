@@ -12,9 +12,12 @@ class HtmlResponderTest extends TestCase
 {
     public $configData;
 
+    public $config;
+
     public function setUp()
     {
         $this->configData = include __DIR__ . '/../Mocks/config.php';
+        $this->config = (new Config)->fromArray($this->configData);
     }
 
     public function testInitWithDefaultRenderer()
@@ -29,8 +32,7 @@ class HtmlResponderTest extends TestCase
 
     public function testInitWithRendererSetInConfig()
     {
-        $config = (new Config)->fromArray($this->configData);
-        $responder = new HtmlResponder($config);
+        $responder = new HtmlResponder($this->config);
         $renderer = $responder->getRenderer();
         $this->assertInstanceOf(PhtmlRenderer::class, $renderer);
     }
@@ -46,9 +48,17 @@ class HtmlResponderTest extends TestCase
 
     public function testGetSetRenderer()
     {
-        $config = (new Config)->fromArray($this->configData);
-        $responder = new HtmlResponder($config);
-        $responder->setRenderer(new PhtmlRenderer($config));
+        $responder = new HtmlResponder($this->config);
+        $responder->setRenderer(new PhtmlRenderer($this->config));
         $this->assertInstanceOf(PhtmlRenderer::class, $responder->getRenderer());
+    }
+
+    public function testAssign()
+    {
+        $responder = new HtmlResponder($this->config);
+        $responder->assign(['mock' => 'foobar']);
+        $renderer = $responder->getRenderer();
+        $output = $renderer->render('simple_view');
+        $this->assertEquals('foobar', $output);
     }
 }
