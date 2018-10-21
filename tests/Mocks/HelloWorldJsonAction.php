@@ -2,9 +2,9 @@
 
 namespace Nekudo\ShinyCore\Tests\Mocks;
 
-use Nekudo\ShinyCore\HtmlAction;
+use Nekudo\ShinyCore\JsonAction;
 
-class HelloWorldAction extends HtmlAction
+class HelloWorldJsonAction extends JsonAction
 {
     public function __invoke(array $arguments = [])
     {

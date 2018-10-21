@@ -21,7 +21,7 @@ class PhtmlRenderer implements RendererInterface
         $this->config = $config;
     }
 
-    public function getLayout() : string
+    public function getLayout(): string
     {
         return $this->layout;
     }
@@ -31,7 +31,7 @@ class PhtmlRenderer implements RendererInterface
         $this->layout = $layout;
     }
 
-    public function getView() : string
+    public function getView(): string
     {
         return $this->view;
     }
@@ -41,12 +41,12 @@ class PhtmlRenderer implements RendererInterface
         $this->view = $view;
     }
 
-    public function assign(array $pairs) : void
+    public function assign(array $pairs): void
     {
         $this->templateVariables = array_merge($this->templateVariables, $pairs);
     }
 
-    public function render(string $view = '', array $variables = []) : string
+    public function render(string $view = '', array $variables = []): string
     {
         if (!empty($view)) {
             $this->setView($view);
@@ -59,7 +59,7 @@ class PhtmlRenderer implements RendererInterface
         return $this->renderLayout($content);
     }
 
-    protected function renderView() : string
+    protected function renderView(): string
     {
         $viewFile = $this->config->getPath('views') . '/' . $this->view . '.phtml';
         $viewContent = file_get_contents($viewFile);
@@ -70,7 +70,7 @@ class PhtmlRenderer implements RendererInterface
         return $this->renderFile($viewFile);
     }
 
-    protected function renderLayout(string $content) : string
+    protected function renderLayout(string $content): string
     {
         $content = str_replace('<!-- extends "' . $this->layout . '" -->', '', $content);
         $content = trim($content);
@@ -79,7 +79,7 @@ class PhtmlRenderer implements RendererInterface
         return $this->renderFile($layoutFile);
     }
 
-    protected function renderFile(string $templateFile) : string
+    protected function renderFile(string $templateFile): string
     {
         if (!file_exists($templateFile)) {
             // @todo handle error

@@ -44,6 +44,7 @@ class HttpResponderTest extends TestCase
 
     /**
      * @runInSeparateProcess
+     * @preserveGlobalState disabled
      */
     public function testRespond()
     {
