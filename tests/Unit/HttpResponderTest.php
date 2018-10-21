@@ -10,24 +10,24 @@ class HttpResponderTest extends TestCase
 
     public function testStatus()
     {
-        $reponder = new HttpResponder;
-        $reponder->setStatus(418);
-        $this->assertEquals(418, $reponder->getStatus());
+        $responder = new HttpResponder;
+        $responder->setStatus(418);
+        $this->assertEquals(418, $responder->getStatus());
     }
 
     public function testVersion()
     {
-        $reponder = new HttpResponder;
-        $reponder->setVersion('1.0');
-        $this->assertEquals('1.0', $reponder->getVersion());
+        $responder = new HttpResponder;
+        $responder->setVersion('1.0');
+        $this->assertEquals('1.0', $responder->getVersion());
     }
 
     public function testBody()
     {
         $body = 'some html foo';
-        $reponder = new HttpResponder;
-        $reponder->setBody($body);
-        $this->assertEquals($body, $reponder->getBody());
+        $responder = new HttpResponder;
+        $responder->setBody($body);
+        $this->assertEquals($body, $responder->getBody());
     }
 
     public function testHeaders()
@@ -45,23 +45,27 @@ class HttpResponderTest extends TestCase
     /**
      * @runInSeparateProcess
      * @preserveGlobalState disabled
-     * @todo Move to integration
      */
     public function testRespond()
     {
-        $reponder = new HttpResponder;
+        $responder = new HttpResponder;
 
         // test http-status code only
+        $this->assertEquals(200, $responder->getStatus());
         $this->expectOutputString('');
-        $reponder->respond();
+        $responder->respond();
 
         // test additional headers
-        $reponder->addHeader('foo', 'bar');
-        $reponder->respond();
+        $responder->addHeader('foo', 'bar');
+        $headers = $responder->getHeaders();
+        $this->assertArrayHasKey('foo', $headers);
+
+        $this->expectOutputString('');
+        $responder->respond();
 
         // test with body
         $this->expectOutputString('shiny');
-        $reponder->setBody('shiny');
-        $reponder->respond();
+        $responder->setBody('shiny');
+        $responder->respond();
     }
 }

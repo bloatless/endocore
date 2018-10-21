@@ -4,6 +4,7 @@ namespace Nekudo\ShinyCore\Tests\Integration;
 
 use Nekudo\ShinyCore\Application;
 use Nekudo\ShinyCore\Config;
+use Nekudo\ShinyCore\Exceptions\Http\NotFoundException;
 use Nekudo\ShinyCore\Request;
 use Nekudo\ShinyCore\Router;
 use PHPUnit\Framework\TestCase;
@@ -35,6 +36,7 @@ class ApplicationTest extends TestCase
 
     /**
      * @runInSeparateProcess
+     * @preserveGlobalState disabled
      */
     public function testValidRoute()
     {
@@ -46,6 +48,18 @@ class ApplicationTest extends TestCase
         $app = new Application($this->config, $request, $router);
 
         $this->expectOutputString('Hello World!');
+        $app->run();
+    }
+
+    public function testNotFoundRoute()
+    {
+        $request = new Request([], [], [
+            'REQUEST_METHOD' => 'GET',
+            'REQUEST_URI' => '/not-existing'
+        ]);
+        $this->expectException(NotFoundException::class);
+        $router = new Router($this->routes);
+        $app = new Application($this->config, $request, $router);
         $app->run();
     }
 }
