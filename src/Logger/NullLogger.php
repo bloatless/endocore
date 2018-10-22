@@ -8,6 +8,6 @@ class NullLogger extends AbstractLogger
 {
     public function log(string $level, string $message, array $context = []): void
     {
-        return null;
+        return;
     }
 }

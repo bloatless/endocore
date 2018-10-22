@@ -9,6 +9,7 @@ use Nekudo\ShinyCore\Exceptions\ExceptionHandler;
 use Nekudo\ShinyCore\Exceptions\Http\BadRequestException;
 use Nekudo\ShinyCore\Exceptions\Http\MethodNotAllowedException;
 use Nekudo\ShinyCore\Exceptions\Http\NotFoundException;
+use Nekudo\ShinyCore\Logger\LoggerInterface;
 use Nekudo\ShinyCore\Router\RouterInterface;
 use Nekudo\ShinyCore\Router\Router;
 
@@ -20,20 +21,26 @@ class Application
     public $config;
 
     /**
+     * @var Request $request
+     */
+    public $request;
+
+    /**
      * @var RouterInterface $router
      */
     public $router;
 
     /**
-     * @var Request $request
+     * @var LoggerInterface $logger
      */
-    public $request;
+    public $logger;
 
-    public function __construct(Config $config, Request $request, RouterInterface $router)
+    public function __construct(Config $config, Request $request, RouterInterface $router, LoggerInterface $logger)
     {
         $this->config = $config;
         $this->router = $router;
         $this->request = $request;
+        $this->logger = $logger;
     }
 
     public function run()
@@ -76,7 +83,7 @@ class Application
             throw new ClassNotFoundException('Action class not found.');
         }
 
-        /** @var \Nekudo\ShinyCore\Interfaces\ActionInterface $action */
+        /** @var \Nekudo\ShinyCore\Actions\ActionInterface $action */
         $action = new $handler($this->config, $this->request);
         $action->__invoke($arguments);
         $action->getResponder()->respond();
