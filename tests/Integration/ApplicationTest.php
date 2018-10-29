@@ -4,6 +4,7 @@ namespace Nekudo\ShinyCore\Tests\Integration;
 
 use Nekudo\ShinyCore\Application;
 use Nekudo\ShinyCore\Config;
+use Nekudo\ShinyCore\Logger\NullLogger;
 use Nekudo\ShinyCore\Request;
 use Nekudo\ShinyCore\Router\Router;
 use PHPUnit\Framework\TestCase;
@@ -17,18 +18,21 @@ class ApplicationTest extends TestCase
 
     public $routes;
 
+    public $logger;
+
     public function setUp()
     {
         $config = include __DIR__ . '/../Mocks/config.php';
         $this->config = (new Config)->fromArray($config);
         $this->routes = include __DIR__ . '/../Mocks/routes.php';
+        $this->logger = new NullLogger;
     }
 
     public function testApplicationCanBeInitiated()
     {
         $request = new Request;
         $router = new Router($this->routes);
-        $app = new Application($this->config, $request, $router);
+        $app = new Application($this->config, $request, $router, $this->logger);
         $this->assertInstanceOf('Nekudo\ShinyCore\Application', $app);
         $this->assertInstanceOf('Nekudo\ShinyCore\Router\RouterInterface', $app->router);
     }
@@ -44,7 +48,7 @@ class ApplicationTest extends TestCase
            'REQUEST_URI' => '/'
         ]);
         $router = new Router($this->routes);
-        $app = new Application($this->config, $request, $router);
+        $app = new Application($this->config, $request, $router, $this->logger);
 
         $this->expectOutputString('Hello World!');
         $app->run();
