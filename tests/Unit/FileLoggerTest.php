@@ -7,7 +7,6 @@ use Nekudo\ShinyCore\Exceptions\Application\ShinyCoreException;
 use Nekudo\ShinyCore\Logger\FileLogger;
 use Nekudo\ShinyCore\Logger\LogLevel;
 use PHPUnit\Framework\TestCase;
-use SebastianBergmann\CodeCoverage\Node\File;
 
 class FileLoggerTest extends TestCase
 {
@@ -79,6 +78,40 @@ class FileLoggerTest extends TestCase
         $logfileContent = file_get_contents($pathToLogfile);
         $this->assertTrue(strpos($logfileContent, '--- Context ---') !== false);
         $this->assertTrue(strpos($logfileContent, '[from] => unit test') !== false);
+        unlink($pathToLogfile);
+    }
+
+    public function testGetLevels()
+    {
+        $logger = new FileLogger($this->config);
+        $levels = $logger->getLevels();
+        $this->assertTrue(is_array($levels));
+        $this->assertTrue(count($levels) === 8);
+    }
+
+    public function testGetLevelCode()
+    {
+        $logger = new FileLogger($this->config);
+        $this->assertEquals(0, $logger->getLevelCode(LogLevel::DEBUG));
+        $this->assertEquals(7, $logger->getLevelCode(LogLevel::EMERGENCY));
+    }
+
+    public function testSetGetMinLogLevel()
+    {
+        $logger = new FileLogger($this->config);
+        $logger->setMinLevel(LogLevel::NOTICE);
+        $this->assertEquals(LogLevel::NOTICE, $logger->getMinLevel());
+    }
+
+    public function testRespectsMinLevel()
+    {
+        $pathToLogfile = $this->providePathToLogfile();
+        $logger = new FileLogger($this->config);
+        $logger->setMinLevel(LogLevel::WARNING);
+        $logger->debug('foobar');
+        $this->assertFileNotExists($pathToLogfile);
+        $logger->emergency('barfoo');
+        $this->assertFileExists($pathToLogfile);
         unlink($pathToLogfile);
     }
 

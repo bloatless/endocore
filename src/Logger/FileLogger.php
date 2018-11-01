@@ -46,6 +46,11 @@ class FileLogger extends AbstractLogger
      */
     public function log(string $level, string $message, array $context = []): void
     {
+        // do not log if level is below min level:
+        if ($this->isHandling($level) === false) {
+            return;
+        }
+
         $pathToLogfile = $this->openLogfile();
         $lineToLog = sprintf('[ %s ] %s: %s', date('Y-m-d H:i:s'), $level, $message) . PHP_EOL;
         if (!empty($context)) {

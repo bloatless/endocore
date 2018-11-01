@@ -14,6 +14,78 @@ namespace Nekudo\ShinyCore\Logger;
 abstract class AbstractLogger implements LoggerInterface
 {
     /**
+     * @var array $levels
+     */
+    protected $levels = [
+        0 => LogLevel::DEBUG,
+        1 => LogLevel::INFO,
+        2 => LogLevel::NOTICE,
+        3 => LogLevel::WARNING,
+        4 => LogLevel::ERROR,
+        5 => LogLevel::CRITICAL,
+        6 => LogLevel::ALERT,
+        7 => LogLevel::EMERGENCY,
+    ];
+
+    /**
+     * @var int $minLevel
+     */
+    protected $minLevel = 0;
+
+    /**
+     * Returns log levels with numeric index.
+     *
+     * @return array
+     */
+    public function getLevels(): array
+    {
+        return $this->levels;
+    }
+
+    /**
+     * Sets min. log-level.
+     *
+     * @param string $level
+     */
+    public function setMinLevel(string $level): void
+    {
+        $this->minLevel = $this->getLevelCode($level);
+    }
+
+    /**
+     * Returns min. log-level.
+     *
+     * @return string
+     */
+    public function getMinLevel(): string
+    {
+        return $this->levels[$this->minLevel];
+    }
+
+    /**
+     * Checks if log level is handled by logger.
+     *
+     * @param string $level
+     * @return bool
+     */
+    public function isHandling(string $level): bool
+    {
+        $levelCode = $this->getLevelCode($level);
+        return $levelCode >= $this->minLevel;
+    }
+
+    /**
+     * Returns numeric level code for given log-level.
+     *
+     * @param string $level
+     * @return int
+     */
+    public function getLevelCode(string $level): int
+    {
+        return array_search($level, $this->levels);
+    }
+
+    /**
      * System is unusable.
      *
      * @param string $message
