@@ -81,6 +81,13 @@ class FileLoggerTest extends TestCase
         unlink($pathToLogfile);
     }
 
+    public function testDoesNotLogInvalidLevel()
+    {
+        $logger = new FileLogger($this->config);
+        $this->expectException(\InvalidArgumentException::class);
+        $logger->log('foo', 'bar');
+    }
+
     public function testGetLevels()
     {
         $logger = new FileLogger($this->config);
@@ -94,6 +101,8 @@ class FileLoggerTest extends TestCase
         $logger = new FileLogger($this->config);
         $this->assertEquals(0, $logger->getLevelCode(LogLevel::DEBUG));
         $this->assertEquals(7, $logger->getLevelCode(LogLevel::EMERGENCY));
+        $this->expectException(\InvalidArgumentException::class);
+        $logger->getLevelCode('foo');
     }
 
     public function testSetGetMinLogLevel()
@@ -101,6 +110,8 @@ class FileLoggerTest extends TestCase
         $logger = new FileLogger($this->config);
         $logger->setMinLevel(LogLevel::NOTICE);
         $this->assertEquals(LogLevel::NOTICE, $logger->getMinLevel());
+        $this->expectException(\InvalidArgumentException::class);
+        $logger->setMinLevel('foo');
     }
 
     public function testRespectsMinLevel()
@@ -113,6 +124,13 @@ class FileLoggerTest extends TestCase
         $logger->emergency('barfoo');
         $this->assertFileExists($pathToLogfile);
         unlink($pathToLogfile);
+    }
+
+    public function testLevelIsValid()
+    {
+        $logger = new FileLogger($this->config);
+        $this->assertTrue($logger->levelIsValid(LogLevel::WARNING));
+        $this->assertFalse($logger->levelIsValid('invalid level'));
     }
 
     private function provideLevelsAndMessages(): array

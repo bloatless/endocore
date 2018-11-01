@@ -46,6 +46,10 @@ class FileLogger extends AbstractLogger
      */
     public function log(string $level, string $message, array $context = []): void
     {
+        if ($this->levelIsValid($level) === false) {
+            throw new \InvalidArgumentException('Invalid log-level provided.');
+        }
+
         // do not log if level is below min level:
         if ($this->isHandling($level) === false) {
             return;

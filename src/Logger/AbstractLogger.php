@@ -49,6 +49,9 @@ abstract class AbstractLogger implements LoggerInterface
      */
     public function setMinLevel(string $level): void
     {
+        if ($this->levelIsValid($level) === false) {
+            throw new \InvalidArgumentException('Invalid log-level provided.');
+        }
         $this->minLevel = $this->getLevelCode($level);
     }
 
@@ -82,7 +85,21 @@ abstract class AbstractLogger implements LoggerInterface
      */
     public function getLevelCode(string $level): int
     {
+        if ($this->levelIsValid($level) === false) {
+            throw new \InvalidArgumentException('Invalid log-level provided.');
+        }
         return array_search($level, $this->levels);
+    }
+
+    /**
+     * Checks if log-level is valid.
+     *
+     * @param string $level
+     * @return bool
+     */
+    public function levelIsValid(string $level): bool
+    {
+        return in_array($level, $this->levels);
     }
 
     /**
