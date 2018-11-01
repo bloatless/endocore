@@ -12,9 +12,16 @@ try {
     $request = new \Nekudo\ShinyCore\Request($_GET, $_POST, $_SERVER);
     $router = new \Nekudo\ShinyCore\Router\Router($routes);
     $logger = new \Nekudo\ShinyCore\Logger\FileLogger($config);
+    $exceptionHandler = new \Nekudo\ShinyCore\Exceptions\ExceptionHandler;
 
     // create application:
-    $app = new \Nekudo\ShinyCore\Application($config, $request, $router, $logger);
+    $app = new \Nekudo\ShinyCore\Application(
+        $config,
+        $request,
+        $router,
+        $logger,
+        $exceptionHandler
+    );
 
     return $app;
 } catch (\Nekudo\ShinyCore\Exceptions\Application\ShinyCoreException $e) {

@@ -7,7 +7,9 @@ return [
         'logs' => __DIR__ . '/logs',
     ],
 
-    'renderer' => '\Nekudo\ShinyCore\Responder\PhtmlRenderer',
+    'classes' => [
+        'html_renderer' => '\Nekudo\ShinyCore\Responder\PhtmlRenderer',
+    ],
 
     'db' => []
 ];

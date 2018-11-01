@@ -3,7 +3,7 @@
 namespace Nekudo\ShinyCore\Tests\Unit;
 
 use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Exceptions\Application\ClassNotFoundException;
+use Nekudo\ShinyCore\Exceptions\Application\ShinyCoreException;
 use Nekudo\ShinyCore\Responder\HtmlResponder;
 use Nekudo\ShinyCore\Responder\PhtmlRenderer;
 use PHPUnit\Framework\TestCase;
@@ -39,9 +39,9 @@ class HtmlResponderTest extends TestCase
 
     public function testInitWithInvalidRendererSetInConfig()
     {
-        $this->expectException(ClassNotFoundException::class);
+        $this->expectException(ShinyCoreException::class);
         $configData = $this->configData;
-        $configData['renderer'] = '\Nekudo\Invalid\Renderer';
+        $configData['classes']['html_renderer'] = '\Nekudo\Invalid\Renderer';
         $config = (new Config)->fromArray($configData);
         $responder = new HtmlResponder($config);
     }

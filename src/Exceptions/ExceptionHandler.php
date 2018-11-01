@@ -9,14 +9,14 @@ use Nekudo\ShinyCore\Exceptions\Http\MethodNotAllowedException;
 use Nekudo\ShinyCore\Exceptions\Http\NotFoundException;
 use Nekudo\ShinyCore\Responder\HtmlResponder;
 
-class ExceptionHandler
+class ExceptionHandler implements ExceptionHandlerInterface
 {
     /**
      * Handles internal php errors.
      *
      * @param \Error $e
      */
-    public function handleError(\Error $e)
+    public function handleError(\Error $e): void
     {
         // @todo Implement error output and logging
         var_dump($e);
@@ -27,7 +27,7 @@ class ExceptionHandler
      *
      * @param \Exception $e
      */
-    public function handleException(\Exception $e)
+    public function handleException(\Exception $e): void
     {
         // @todo Implement error output and logging
         var_dump($e);

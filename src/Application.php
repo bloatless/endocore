@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Nekudo\ShinyCore;
 
-use Nekudo\ShinyCore\Exceptions\Application\ClassNotFoundException;
-use Nekudo\ShinyCore\Exceptions\ExceptionHandler;
+use Nekudo\ShinyCore\Exceptions\Application\ShinyCoreException;
+use Nekudo\ShinyCore\Exceptions\ExceptionHandlerInterface;
 use Nekudo\ShinyCore\Exceptions\Http\BadRequestException;
 use Nekudo\ShinyCore\Exceptions\Http\MethodNotAllowedException;
 use Nekudo\ShinyCore\Exceptions\Http\NotFoundException;
@@ -35,12 +35,23 @@ class Application
      */
     public $logger;
 
-    public function __construct(Config $config, Request $request, RouterInterface $router, LoggerInterface $logger)
-    {
+    /**
+     * @var ExceptionHandlerInterface $exceptionHandler
+     */
+    public $exceptionHandler;
+
+    public function __construct(
+        Config $config,
+        Request $request,
+        RouterInterface $router,
+        LoggerInterface $logger,
+        ExceptionHandlerInterface $exceptionHandler
+    ) {
         $this->config = $config;
         $this->router = $router;
         $this->request = $request;
         $this->logger = $logger;
+        $this->exceptionHandler = $exceptionHandler;
     }
 
     public function run()
@@ -48,9 +59,9 @@ class Application
         try {
             $this->dispatch();
         } catch (\Error $e) {
-            (new ExceptionHandler())->handleError($e);
+            $this->exceptionHandler->handleError($e);
         } catch (\Exception $e) {
-            (new ExceptionHandler)->handleException($e);
+            $this->exceptionHandler->handleException($e);
         }
     }
 
@@ -80,7 +91,7 @@ class Application
     public function callAction(string $handler, array $arguments = [])
     {
         if (!class_exists($handler)) {
-            throw new ClassNotFoundException('Action class not found.');
+            throw new ShinyCoreException('Action class not found.');
         }
 
         /** @var \Nekudo\ShinyCore\Actions\ActionInterface $action */
