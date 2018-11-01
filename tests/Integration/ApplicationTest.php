@@ -29,7 +29,8 @@ class ApplicationTest extends TestCase
         $this->config = (new Config)->fromArray($config);
         $this->routes = include __DIR__ . '/../Mocks/routes.php';
         $this->logger = new NullLogger;
-        $this->exceptionHandler = new ExceptionHandler;
+        $request = new Request;
+        $this->exceptionHandler = new ExceptionHandler($this->config, $this->logger, $request);
     }
 
     public function testApplicationCanBeInitiated()

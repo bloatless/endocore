@@ -14,7 +14,7 @@ abstract class JsonAction extends BaseAction
     public function __construct(Config $config, Request $request)
     {
         parent::__construct($config, $request);
-        $this->responder = new JsonResponder;
+        $this->responder = new JsonResponder($config);
     }
 
     public function getResponder(): ResponderInterface

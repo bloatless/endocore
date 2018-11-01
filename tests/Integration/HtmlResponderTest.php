@@ -23,7 +23,10 @@ class HtmlResponderTest extends TestCase
     public function testFoundRequest()
     {
         $responder = new HtmlResponder($this->config);
-        $responder->found('simple_view', ['mock' => 'foobar']);
+        $responder->found([
+            'view' => 'simple_view',
+            'vars' => ['mock' => 'foobar']
+        ]);
         $this->assertEquals(200, $responder->getStatus());
         $this->expectOutputString('foobar');
         $responder->respond();
@@ -38,7 +41,7 @@ class HtmlResponderTest extends TestCase
         $responder = new HtmlResponder($this->config);
         $responder->notFound();
         $this->assertEquals(404, $responder->getStatus());
-        $this->expectOutputString('<html><head><title>404 Not found</title></head><body>404 Not found</body></html>');
+        $this->expectOutputString('<html><title>404 Not found</title>404 Not found</html>');
         $responder->respond();
     }
 
@@ -49,9 +52,9 @@ class HtmlResponderTest extends TestCase
     public function testErrorRequest()
     {
         $responder = new HtmlResponder($this->config);
-        $responder->error();
+        $responder->error([]);
         $this->assertEquals(500, $responder->getStatus());
-        $this->expectOutputString('');
+        $this->expectOutputRegex('/Error 500/');
         $responder->respond();
     }
 }

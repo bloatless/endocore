@@ -2,14 +2,17 @@
 
 namespace Nekudo\ShinyCore\Tests\Unit;
 
+use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Responder\NullResponder;
 use PHPUnit\Framework\TestCase;
 
 class NullResponderTest extends TestCase
 {
-    public function testRespond()
+    public function testCanBeInitialized()
     {
-        $responder = new NullResponder;
-        $this->assertEquals(null, $responder->respond());
+        $configData = include __DIR__ . '/../Mocks/config.php';
+        $config = (new Config)->fromArray($configData);
+        $responder = new NullResponder($config);
+        $this->assertInstanceOf(NullResponder::class, $responder);
     }
 }

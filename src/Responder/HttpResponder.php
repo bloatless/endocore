@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace Nekudo\ShinyCore\Responder;
 
-class HttpResponder implements ResponderInterface
+use Nekudo\ShinyCore\Config;
+
+abstract class HttpResponder implements ResponderInterface
 {
+    /** @var Config $config */
+    protected $config;
+
     /**
      * HTTP status code to use in response.
      *
@@ -101,13 +106,11 @@ class HttpResponder implements ResponderInterface
     protected $body = '';
 
     /**
-     * @param int $statusCode
-     * @param string $version
+     * @param Config $config
      */
-    public function __construct(int $statusCode = 200, string $version = '1.1')
+    public function __construct(Config $config)
     {
-        $this->statusCode = $statusCode;
-        $this->version = $version;
+        $this->config = $config;
     }
 
     /**
@@ -125,7 +128,7 @@ class HttpResponder implements ResponderInterface
      *
      * @param int $statusCode
      */
-    public function setStatus(int $statusCode)
+    public function setStatus(int $statusCode): void
     {
         $this->statusCode = $statusCode;
     }
@@ -203,7 +206,7 @@ class HttpResponder implements ResponderInterface
      *
      * @param string $body
      */
-    public function setBody(string $body)
+    public function setBody(string $body): void
     {
         $this->body = $body;
     }
@@ -211,7 +214,7 @@ class HttpResponder implements ResponderInterface
     /**
      * Sends and HTTP message/response to the browser.
      */
-    public function respond()
+    public function respond(): void
     {
         $this->sendHttpHeader();
         $this->sendAdditionalHeaders();

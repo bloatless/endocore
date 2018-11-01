@@ -10,6 +10,6 @@ class JsonDemoAction extends JsonAction
 {
     public function __invoke(array $arguments = [])
     {
-        $this->responder->success(['foo' => 'Some data...']);
+        $this->responder->found(['foo' => 'Some data...']);
     }
 }

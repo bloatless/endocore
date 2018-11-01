@@ -2,22 +2,30 @@
 
 namespace Nekudo\ShinyCore\Tests\Unit;
 
-use Nekudo\ShinyCore\Responder\HttpResponder;
+use Nekudo\ShinyCore\Config;
+use Nekudo\ShinyCore\Tests\Mocks\HttpResponderStub;
 use PHPUnit\Framework\TestCase;
 
 class HttpResponderTest extends TestCase
 {
+    public $config;
+
+    public function setUp()
+    {
+        $configData = include __DIR__ . '/../Mocks/config.php';
+        $this->config = (new Config)->fromArray($configData);
+    }
 
     public function testStatus()
     {
-        $responder = new HttpResponder;
+        $responder = new HttpResponderStub($this->config);
         $responder->setStatus(418);
         $this->assertEquals(418, $responder->getStatus());
     }
 
     public function testVersion()
     {
-        $responder = new HttpResponder;
+        $responder = new HttpResponderStub($this->config);
         $responder->setVersion('1.0');
         $this->assertEquals('1.0', $responder->getVersion());
     }
@@ -25,14 +33,14 @@ class HttpResponderTest extends TestCase
     public function testBody()
     {
         $body = 'some html foo';
-        $responder = new HttpResponder;
+        $responder = new HttpResponderStub($this->config);
         $responder->setBody($body);
         $this->assertEquals($body, $responder->getBody());
     }
 
     public function testHeaders()
     {
-        $responder = new HttpResponder;
+        $responder = new HttpResponderStub($this->config);
         $responder->addHeader('foo', 'bar');
         $this->assertSame(['foo' => 'bar'], $responder->getHeaders());
         $responder->addHeader('some', 'more');
@@ -48,7 +56,7 @@ class HttpResponderTest extends TestCase
      */
     public function testRespond()
     {
-        $responder = new HttpResponder;
+        $responder = new HttpResponderStub($this->config);
 
         // test http-status code only
         $this->assertEquals(200, $responder->getStatus());

@@ -18,22 +18,24 @@ class JsonResponderTest extends TestCase
 
     public function testSuccess()
     {
-        $responder = new JsonResponder;
-        $responder->success(['foo' => 'bar']);
+        $responder = new JsonResponder($this->config);
+        $responder->found(['foo' => 'bar']);
         $this->assertEquals('{"data":{"foo":"bar"}}', $responder->getBody());
     }
 
     public function testError()
     {
-        $responder = new JsonResponder;
+        $responder = new JsonResponder($this->config);
         $responder->error(['foo' => 'bar']);
+        $this->assertEquals(500, $responder->getStatus());
         $this->assertEquals('{"errors":{"foo":"bar"}}', $responder->getBody());
     }
 
     public function testBadRequest()
     {
-        $responder = new JsonResponder;
-        $responder->badRequest(['foo' => 'bar']);
-        $this->assertEquals('{"errors":{"foo":"bar"}}', $responder->getBody());
+        $responder = new JsonResponder($this->config);
+        $responder->badRequest();
+        $this->assertEquals('', $responder->getBody());
+        $this->assertEquals(400, $responder->getStatus());
     }
 }

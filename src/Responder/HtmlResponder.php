@@ -14,20 +14,13 @@ use Nekudo\ShinyCore\Exceptions\Application\ShinyCoreException;
 class HtmlResponder extends HttpResponder
 {
     /**
-     * @var Config $config
-     */
-    protected $config;
-
-    /**
      * @var RendererInterface $renderer
      */
     protected $renderer;
 
-    public function __construct(Config $config, int $statusCode = 200, string $version = '1.1')
+    public function __construct(Config $config)
     {
-        parent::__construct($statusCode, $version);
-
-        $this->config = $config;
+        parent::__construct($config);
         $this->addHeader('Content-Type', 'text/html; charset=utf-8');
         $this->initRenderer();
     }
@@ -56,21 +49,37 @@ class HtmlResponder extends HttpResponder
         $this->renderer->assign($pairs);
     }
 
-    public function found(string $view, array $templateVariables = [])
+    public function found(array $data): void
     {
+        $view = $data['view'] ?? '';
+        $templateVars = $data['vars'] ?? [];
         $this->setBody(
-            $this->renderer->render($view, $templateVariables)
+            $this->renderer->render($view, $templateVars)
         );
     }
 
-    public function notFound()
+    public function badRequest(): void
     {
-        $this->setStatus(404);
-        $this->setBody('<html><head><title>404 Not found</title></head><body>404 Not found</body></html>');
+        $this->setStatus(400);
+        $this->setBody('<html><title>400 Bad Request</title>400 Bad Request</html>');
     }
 
-    public function error()
+    public function notFound(): void
+    {
+        $this->setStatus(404);
+        $this->setBody('<html><title>404 Not found</title>404 Not found</html>');
+    }
+
+    public function methodNotAllowed(): void
+    {
+        $this->setStatus(405);
+        $this->setBody('<html><title>405 Method not allowed</title>405 Method not allowed</html>');
+    }
+
+    public function error(array $errors): void
     {
         $this->setStatus(500);
+        $bodyTemplate = '<html><title>Error 500</title><pre>%s</pre></html>';
+        $this->setBody(sprintf($bodyTemplate, print_r($errors, true)));
     }
 }

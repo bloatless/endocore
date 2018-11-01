@@ -44,4 +44,9 @@ class Request
     {
         return $this->server['REQUEST_URI'] ?? '';
     }
+
+    public function getContentType(): string
+    {
+        return $this->server['CONTENT_TYPE'] ?? '';
+    }
 }

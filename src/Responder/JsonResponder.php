@@ -4,23 +4,34 @@ declare(strict_types=1);
 
 namespace Nekudo\ShinyCore\Responder;
 
+use Nekudo\ShinyCore\Config;
+
 class JsonResponder extends HttpResponder
 {
-    public function __construct(int $statusCode = 200, string $version = '1.1')
+    public function __construct(Config $config)
     {
-        parent::__construct($statusCode, $version);
+        parent::__construct($config);
         $this->addHeader('Content-Type', 'application/json');
     }
 
-    public function success(array $data): void
+    public function found(array $data): void
     {
         $this->setBody(json_encode(['data' => $data]));
     }
 
-    public function badRequest(array $errors): void
+    public function badRequest(): void
     {
         $this->setStatus(400);
-        $this->setBody(json_encode(['errors' => $errors]));
+    }
+
+    public function notFound(): void
+    {
+        $this->setStatus(404);
+    }
+
+    public function methodNotAllowed(): void
+    {
+        $this->setStatus(405);
     }
 
     public function error(array $errors): void
