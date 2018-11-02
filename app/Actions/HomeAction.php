@@ -10,11 +10,6 @@ class HomeAction extends HtmlAction
     public function __invoke(array $arguments = [])
     {
         $domain = new HomeDomain;
-        $responseData = [
-            'view' => 'home',
-            'vars' => $domain->getSomeData(),
-        ];
-
-        $this->responder->found($responseData);
+        $this->responder->show('home', $domain->getSomeData());
     }
 }

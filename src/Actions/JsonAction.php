@@ -9,6 +9,10 @@ use Nekudo\ShinyCore\Request;
 use Nekudo\ShinyCore\Responder\JsonResponder;
 use Nekudo\ShinyCore\Responder\ResponderInterface;
 
+/**
+ * @property JsonResponder $responder
+ */
+
 abstract class JsonAction extends BaseAction
 {
     public function __construct(Config $config, Request $request)

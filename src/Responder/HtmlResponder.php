@@ -49,6 +49,19 @@ class HtmlResponder extends HttpResponder
         $this->renderer->assign($pairs);
     }
 
+    public function render(string $view, array $templateVars = []): string
+    {
+        return $this->renderer->render($view, $templateVars);
+    }
+
+    public function show(string $view, array $templateVars = []): void
+    {
+        $this->found([
+            'view' => $view,
+            'vars' => $templateVars
+        ]);
+    }
+
     public function found(array $data): void
     {
         $view = $data['view'] ?? '';
