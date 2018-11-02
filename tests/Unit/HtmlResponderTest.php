@@ -61,4 +61,56 @@ class HtmlResponderTest extends TestCase
         $output = $renderer->render('simple_view');
         $this->assertEquals('foobar', $output);
     }
+
+    public function testRender()
+    {
+        $responder = new HtmlResponder($this->config);
+        $this->assertEquals('foobar', $responder->render('simple_view', ['mock' => 'foobar']));
+    }
+
+    public function testShow()
+    {
+        $responder = new HtmlResponder($this->config);
+        $responder->show('simple_view', ['mock' => 'foobar']);
+        $this->assertEquals('foobar', $responder->getBody());
+    }
+
+    public function testFound()
+    {
+        $responder = new HtmlResponder($this->config);
+        $responder->found([
+            'view' => 'simple_view',
+            'vars' => ['mock' => 'bar'],
+        ]);
+        $this->assertEquals('bar', $responder->getBody());
+    }
+
+    public function testBadRequest()
+    {
+        $responder = new HtmlResponder($this->config);
+        $responder->badRequest();
+        $this->assertEquals(400, $responder->getStatus());
+    }
+
+    public function testNotFound()
+    {
+        $responder = new HtmlResponder($this->config);
+        $responder->notFound();
+        $this->assertEquals(404, $responder->getStatus());
+    }
+
+    public function testMethodNotAllowed()
+    {
+        $responder = new HtmlResponder($this->config);
+        $responder->methodNotAllowed();
+        $this->assertEquals(405, $responder->getStatus());
+    }
+
+    public function testError()
+    {
+        $responder = new HtmlResponder($this->config);
+        $responder->error(['foo' => 'testing error']);
+        $this->assertEquals(500, $responder->getStatus());
+        $this->assertContains('testing error', $responder->getBody());
+    }
 }

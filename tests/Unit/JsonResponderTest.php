@@ -38,4 +38,20 @@ class JsonResponderTest extends TestCase
         $this->assertEquals('', $responder->getBody());
         $this->assertEquals(400, $responder->getStatus());
     }
+
+    public function testNotFound()
+    {
+        $responder = new JsonResponder($this->config);
+        $responder->notFound();
+        $this->assertEquals('', $responder->getBody());
+        $this->assertEquals(404, $responder->getStatus());
+    }
+
+    public function testMethodNotAllowed()
+    {
+        $responder = new JsonResponder($this->config);
+        $responder->methodNotAllowed();
+        $this->assertEquals('', $responder->getBody());
+        $this->assertEquals(405, $responder->getStatus());
+    }
 }
