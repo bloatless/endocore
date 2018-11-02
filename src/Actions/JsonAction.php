@@ -21,6 +21,11 @@ abstract class JsonAction extends BaseAction
         $this->responder = new JsonResponder($config);
     }
 
+    /**
+     * Returns the responder.
+     *
+     * @return ResponderInterface
+     */
     public function getResponder(): ResponderInterface
     {
         return $this->responder;

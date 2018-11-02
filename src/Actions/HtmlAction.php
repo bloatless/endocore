@@ -21,6 +21,11 @@ abstract class HtmlAction extends BaseAction
         $this->setResponder(new HtmlResponder($config));
     }
 
+    /**
+     * Returns the responder.
+     *
+     * @return ResponderInterface
+     */
     public function getResponder(): ResponderInterface
     {
         return $this->responder;

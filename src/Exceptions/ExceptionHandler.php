@@ -45,8 +45,8 @@ class ExceptionHandler implements ExceptionHandlerInterface
      */
     public function handleError(\Error $e): void
     {
-        // @todo Implement error output and logging
-        var_dump($e);
+        $this->logger->error(sprintf('%s in %s:%d', $e->getMessage(), $e->getFile(), $e->getLine()));
+        $this->respondPhpError($e);
     }
 
     /**
@@ -56,19 +56,32 @@ class ExceptionHandler implements ExceptionHandlerInterface
      */
     public function handleException(\Exception $e): void
     {
-        // @todo Log errors
-
         if ($e instanceof NotFoundException) {
+            $this->logger->info('404 Not Found: ' . $this->request->getRequestUri());
             $this->respondNotFound();
         } elseif ($e instanceof MethodNotAllowedException) {
+            $this->logger->notice('Method not allowed.', [
+                'request_uri' => $this->request->getRequestUri(),
+                'request_method' => $this->request->getRequestMethod(),
+            ]);
             $this->respondMethodNotAllowed();
         } elseif ($e instanceof BadRequestException) {
+            $this->logger->notice('Bad request.', [
+                'request_uri' => $this->request->getRequestUri(),
+                'request_method' => $this->request->getRequestMethod(),
+            ]);
             $this->respondBadRequest();
         } else {
+            $this->logger->error(sprintf('%s in %s:%d', $e->getMessage(), $e->getFile(), $e->getLine()));
             $this->respondGeneralError($e);
         }
     }
 
+    /**
+     * Responds to client in case of a "400 bad request" http error.
+     *
+     * @return void
+     */
     protected function respondBadRequest(): void
     {
         $responder = $this->provideResponder();
@@ -76,6 +89,11 @@ class ExceptionHandler implements ExceptionHandlerInterface
         $responder->respond();
     }
 
+    /**
+     * Responds to client in case of a "404 not found" http error.
+     *
+     * @return void
+     */
     protected function respondNotFound(): void
     {
         $responder = $this->provideResponder();
@@ -83,6 +101,11 @@ class ExceptionHandler implements ExceptionHandlerInterface
         $responder->respond();
     }
 
+    /**
+     * Responds to client in case of a "405 method not allowed" http error.
+     *
+     * @return void
+     */
     protected function respondMethodNotAllowed(): void
     {
         $responder = $this->provideResponder();
@@ -90,13 +113,44 @@ class ExceptionHandler implements ExceptionHandlerInterface
         $responder->respond();
     }
 
+    /**
+     * Responds to client in case of a general server error (500).
+     *
+     * @param \Exception $e
+     * @return void
+     */
     protected function respondGeneralError(\Exception $e): void
     {
         $responder = $this->provideResponder();
-        $responder->error([$e->getMessage()]);
+        $responder->error([
+            'Message' => $e->getMessage(),
+            'File' => $e->getFile(),
+            'Line' => $e->getLine(),
+        ]);
         $responder->respond();
     }
 
+    /**
+     * Responds to client in case of a PHP error.
+     *
+     * @param \Error $e
+     */
+    protected function respondPhpError(\Error $e): void
+    {
+        $responder = $this->provideResponder();
+        $responder->error([
+            'Message' => $e->getMessage(),
+            'File' => $e->getFile(),
+            'Line' => $e->getLine(),
+        ]);
+        $responder->respond();
+    }
+
+    /**
+     * Provides a responder according to requested content type.
+     *
+     * @return ResponderInterface
+     */
     protected function provideResponder(): ResponderInterface
     {
         if ($this->request->getContentType() === 'application/json') {

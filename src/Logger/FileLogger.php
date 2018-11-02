@@ -56,7 +56,7 @@ class FileLogger extends AbstractLogger
         }
 
         $pathToLogfile = $this->openLogfile();
-        $lineToLog = sprintf('[ %s ] %s: %s', date('Y-m-d H:i:s'), $level, $message) . PHP_EOL;
+        $lineToLog = sprintf('[ %s ] %s: %s', date('Y-m-d H:i:s'), ucfirst($level), $message) . PHP_EOL;
         if (!empty($context)) {
             $lineToLog .= '--- Context ---' . PHP_EOL;
             $lineToLog .= print_r($context, true) . PHP_EOL;

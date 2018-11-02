@@ -12,7 +12,17 @@ interface ExceptionHandlerInterface
 {
     public function __construct(Config $config, LoggerInterface $logger, Request $request);
 
+    /**
+     * Handles internal php errors.
+     *
+     * @param \Error $e
+     */
     public function handleError(\Error $e): void;
 
+    /**
+     * Handles exceptions.
+     *
+     * @param \Exception $e
+     */
     public function handleException(\Exception $e): void;
 }

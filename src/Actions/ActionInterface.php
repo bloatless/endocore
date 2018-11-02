@@ -8,7 +8,17 @@ use Nekudo\ShinyCore\Responder\ResponderInterface;
 
 interface ActionInterface
 {
-    public function __invoke(array $arguments = []);
+    /**
+     * Executes the action.
+     *
+     * @param array $arguments
+     */
+    public function __invoke(array $arguments = []): void;
 
+    /**
+     * Returns the responder.
+     *
+     * @return ResponderInterface
+     */
     public function getResponder(): ResponderInterface;
 }

@@ -92,7 +92,7 @@ class HtmlResponder extends HttpResponder
     public function error(array $errors): void
     {
         $this->setStatus(500);
-        $bodyTemplate = '<html><title>Error 500</title><pre>%s</pre></html>';
+        $bodyTemplate = '<html><title>Error 500</title><h1>Server Error</h1><pre>%s</pre></html>';
         $this->setBody(sprintf($bodyTemplate, print_r($errors, true)));
     }
 }

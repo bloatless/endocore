@@ -8,7 +8,7 @@ use Nekudo\ShinyCore\Actions\JsonAction;
 
 class JsonDemoAction extends JsonAction
 {
-    public function __invoke(array $arguments = [])
+    public function __invoke(array $arguments = []): void
     {
         $this->responder->found([
             'foo' => 'Some data...'

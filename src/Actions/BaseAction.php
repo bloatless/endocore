@@ -21,7 +21,7 @@ abstract class BaseAction implements ActionInterface
     protected $request;
 
     /**
-     * @inheritdoc
+     * @var ResponderInterface $responder
      */
     protected $responder;
 
@@ -31,6 +31,12 @@ abstract class BaseAction implements ActionInterface
         $this->request = $request;
     }
 
+    /**
+     * Sets a responder.
+     *
+     * @param ResponderInterface $responder
+     * @return ResponderInterface
+     */
     public function setResponder(ResponderInterface $responder)
     {
         return $this->responder = $responder;
