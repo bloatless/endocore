@@ -72,7 +72,7 @@ class Application
 
     /**
      * Analyzes the request using the router and calls corresponding action.
-     * Throws HTTP excpetions in case request could not be assigned to an action.
+     * Throws HTTP exceptions in case request could not be assigned to an action.
 
      * @throws BadRequestException
      * @throws MethodNotAllowedException

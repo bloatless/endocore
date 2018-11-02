@@ -53,7 +53,7 @@ class FileLoggerTest extends TestCase
         }
         $logfileContent = file_get_contents($pathToLogfile);
         foreach ($messages as $level => $message) {
-            $expected = sprintf('%s: %s', $level, $message);
+            $expected = sprintf('%s: %s', ucfirst($level), $message);
             $this->assertTrue(strpos($logfileContent, $expected) !== false);
         }
         unlink($pathToLogfile);
