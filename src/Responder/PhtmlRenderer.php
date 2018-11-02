@@ -5,15 +5,28 @@ declare(strict_types=1);
 namespace Nekudo\ShinyCore\Responder;
 
 use Nekudo\ShinyCore\Config;
+use Nekudo\ShinyCore\Exceptions\Application\ShinyCoreException;
 
 class PhtmlRenderer implements RendererInterface
 {
+    /**
+     * @var Config $config
+     */
     protected $config;
 
+    /**
+     * @var string $layout
+     */
     protected $layout = '';
 
+    /**
+     * @var string $view
+     */
     protected $view = '';
 
+    /**
+     * @var array $templateVariables
+     */
     protected $templateVariables = [];
 
     public function __construct(Config $config)
@@ -21,31 +34,67 @@ class PhtmlRenderer implements RendererInterface
         $this->config = $config;
     }
 
+    /**
+     * Returns layout name/file.
+     *
+     * @return string
+     */
     public function getLayout(): string
     {
         return $this->layout;
     }
 
-    public function setLayout(string $layout)
+    /**
+     * Sets layout name/file.
+     *
+     * @param string $layout
+     * @return void
+     */
+    public function setLayout(string $layout): void
     {
         $this->layout = $layout;
     }
 
+    /**
+     * Returns view name.
+     *
+     * @return string
+     */
     public function getView(): string
     {
         return $this->view;
     }
 
-    public function setView(string $view)
+    /**
+     * Sets view name.
+     *
+     * @param string $view
+     * @return void
+     */
+    public function setView(string $view): void
     {
         $this->view = $view;
     }
 
+    /**
+     * Assigns template variables.
+     *
+     * @param array $pairs
+     * @return void
+     */
     public function assign(array $pairs): void
     {
         $this->templateVariables = array_merge($this->templateVariables, $pairs);
     }
 
+    /**
+     * Renders given view and returns html code.
+
+     * @param string $view
+     * @param array $variables
+     * @throws ShinyCoreException
+     * @return string
+     */
     public function render(string $view = '', array $variables = []): string
     {
         if (!empty($view)) {
@@ -59,6 +108,12 @@ class PhtmlRenderer implements RendererInterface
         return $this->renderLayout($content);
     }
 
+    /**
+     * Renders a view file.
+     *
+     * @throws ShinyCoreException
+     * @return string
+     */
     protected function renderView(): string
     {
         $viewFile = $this->config->getPath('views') . '/' . $this->view . '.phtml';
@@ -70,6 +125,13 @@ class PhtmlRenderer implements RendererInterface
         return $this->renderFile($viewFile);
     }
 
+    /**
+     * Renders a layout file.
+     *
+     * @param string $content
+     * @throws ShinyCoreException
+     * @return string
+     */
     protected function renderLayout(string $content): string
     {
         $content = str_replace('<!-- extends "' . $this->layout . '" -->', '', $content);
@@ -79,10 +141,15 @@ class PhtmlRenderer implements RendererInterface
         return $this->renderFile($layoutFile);
     }
 
+    /**
+     * @param string $templateFile
+     * @return string
+     * @throws ShinyCoreException
+     */
     protected function renderFile(string $templateFile): string
     {
         if (!file_exists($templateFile)) {
-            // @todo handle error
+            throw new ShinyCoreException(sprintf('Template file not found. (%s)', $templateFile));
         }
         extract($this->templateVariables);
         ob_start();
@@ -90,7 +157,14 @@ class PhtmlRenderer implements RendererInterface
         return ob_get_clean();
     }
 
-    protected function out(string $name, $secure = true)
+    /**
+     * (Safely) outputs a template variable.
+
+     * @param string $name
+     * @param bool $secure
+     * @return void
+     */
+    protected function out(string $name, $secure = true): void
     {
         if ($secure === true) {
             echo htmlentities($this->templateVariables[$name]);

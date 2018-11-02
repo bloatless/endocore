@@ -25,7 +25,13 @@ class HtmlResponder extends HttpResponder
         $this->initRenderer();
     }
 
-    protected function initRenderer()
+    /**
+     * Initiates the HTTP renderer defined in config (or default if no renderer is defined).
+     *
+     * @throws ShinyCoreException
+     * @return void
+     */
+    protected function initRenderer(): void
     {
         $rendererClass = $this->config->getClass('html_renderer', '\Nekudo\ShinyCore\Responder\PhtmlRenderer');
         if (!class_exists($rendererClass)) {
@@ -34,26 +40,57 @@ class HtmlResponder extends HttpResponder
         $this->renderer = new $rendererClass($this->config);
     }
 
+    /**
+     * Returns the HTML renderer.
+     *
+     * @return RendererInterface
+     */
     public function getRenderer(): RendererInterface
     {
         return $this->renderer;
     }
 
-    public function setRenderer(RendererInterface $renderer)
+    /**
+     * Sets the HTML renderer.
+     *
+     * @param RendererInterface $renderer
+     * @return void
+     */
+    public function setRenderer(RendererInterface $renderer): void
     {
         $this->renderer = $renderer;
     }
 
+    /**
+     * Assigns a template variable.
+     *
+     * @param array $pairs
+     * @return void
+     */
     public function assign(array $pairs): void
     {
         $this->renderer->assign($pairs);
     }
 
+    /**
+     * Renders given view and returns HTML code.
+     *
+     * @param string $view
+     * @param array $templateVars
+     * @return string
+     */
     public function render(string $view, array $templateVars = []): string
     {
         return $this->renderer->render($view, $templateVars);
     }
 
+    /**
+     * Renders given view and passes it to http-responder.
+     *
+     * @param string $view
+     * @param array $templateVars
+     * @return void
+     */
     public function show(string $view, array $templateVars = []): void
     {
         $this->found([
@@ -62,6 +99,12 @@ class HtmlResponder extends HttpResponder
         ]);
     }
 
+    /**
+     * Renders view defined in data array and passes it to http-responder.
+     *
+     * @param array $data
+     * @return void
+     */
     public function found(array $data): void
     {
         $view = $data['view'] ?? '';
@@ -71,24 +114,45 @@ class HtmlResponder extends HttpResponder
         );
     }
 
+    /**
+     * Respond with an error message.
+     *
+     * @return void
+     */
     public function badRequest(): void
     {
         $this->setStatus(400);
         $this->setBody('<html><title>400 Bad Request</title>400 Bad Request</html>');
     }
 
+    /**
+     * Respond with an not found message.
+     *
+     * @return void
+     */
     public function notFound(): void
     {
         $this->setStatus(404);
         $this->setBody('<html><title>404 Not found</title>404 Not found</html>');
     }
 
+    /**
+     * Respond with an error message.
+     *
+     * @return void
+     */
     public function methodNotAllowed(): void
     {
         $this->setStatus(405);
         $this->setBody('<html><title>405 Method not allowed</title>405 Method not allowed</html>');
     }
 
+    /**
+     * Respond with an error message.
+     *
+     * @param array $errors
+     * @return void
+     */
     public function error(array $errors): void
     {
         $this->setStatus(500);

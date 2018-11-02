@@ -35,10 +35,10 @@ abstract class BaseAction implements ActionInterface
      * Sets a responder.
      *
      * @param ResponderInterface $responder
-     * @return ResponderInterface
+     * @return void
      */
-    public function setResponder(ResponderInterface $responder)
+    public function setResponder(ResponderInterface $responder): void
     {
-        return $this->responder = $responder;
+        $this->responder = $responder;
     }
 }

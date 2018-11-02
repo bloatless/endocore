@@ -25,7 +25,12 @@ class Router implements RouterInterface
         $this->bootstrapDispatcher();
     }
 
-    protected function bootstrapDispatcher()
+    /**
+     * Prepares the route dispatcher.
+     *
+     * @return void
+     */
+    protected function bootstrapDispatcher(): void
     {
         $this->routeDispatcher = FastRoute\simpleDispatcher(function (RouteCollector $collector) {
             foreach ($this->routes as $routeName => $route) {
@@ -34,6 +39,13 @@ class Router implements RouterInterface
         });
     }
 
+    /**
+     * Dispatches HTTP request and returns route information.
+     *
+     * @param string $httpMethod
+     * @param string $uri
+     * @return array
+     */
     public function dispatch(string $httpMethod, string $uri) : array
     {
         $urlPath = rawurldecode(parse_url($uri, PHP_URL_PATH));

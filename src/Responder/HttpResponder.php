@@ -127,6 +127,7 @@ abstract class HttpResponder implements ResponderInterface
      * Returns HTTP status code.
      *
      * @param int $statusCode
+     * @return void
      */
     public function setStatus(int $statusCode): void
     {
@@ -147,8 +148,9 @@ abstract class HttpResponder implements ResponderInterface
      * Sets HTTP version.
      *
      * @param string $version
+     * @return void
      */
-    public function setVersion(string $version)
+    public function setVersion(string $version): void
     {
         $this->version = $version;
     }
@@ -168,25 +170,30 @@ abstract class HttpResponder implements ResponderInterface
      *
      * @param string $name
      * @param string $value
+     * @return void
      */
-    public function addHeader(string $name, string $value)
+    public function addHeader(string $name, string $value): void
     {
         $this->headers[$name] = $value;
     }
 
     /**
      * Removes an additional HTTP header.
+     *
      * @param string $name
+     * @return void
      */
-    public function removeHeader(string $name)
+    public function removeHeader(string $name): void
     {
         unset($this->headers[$name]);
     }
 
     /**
      * Removes all additional HTTP headers.
+     *
+     * @return void
      */
-    public function clearHeaders()
+    public function clearHeaders(): void
     {
         $this->headers = [];
     }
@@ -205,6 +212,7 @@ abstract class HttpResponder implements ResponderInterface
      * Sets the HTTP message body.
      *
      * @param string $body
+     * @return void
      */
     public function setBody(string $body): void
     {
@@ -213,6 +221,8 @@ abstract class HttpResponder implements ResponderInterface
 
     /**
      * Sends and HTTP message/response to the browser.
+     *
+     * @return void
      */
     public function respond(): void
     {
@@ -223,8 +233,10 @@ abstract class HttpResponder implements ResponderInterface
 
     /**
      * Sends the HTTP header to the browser.
+     *
+     * @return void
      */
-    protected function sendHttpHeader()
+    protected function sendHttpHeader(): void
     {
         $header = sprintf(
             'HTTP/%s %d %s',

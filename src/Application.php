@@ -54,7 +54,12 @@ class Application
         $this->exceptionHandler = $exceptionHandler;
     }
 
-    public function run()
+    /**
+     * Runs the application and passes all errors to exception handler.
+     *
+     * @return void
+     */
+    public function run(): void
     {
         try {
             $this->dispatch();
@@ -65,7 +70,17 @@ class Application
         }
     }
 
-    protected function dispatch()
+    /**
+     * Analyzes the request using the router and calls corresponding action.
+     * Throws HTTP excpetions in case request could not be assigned to an action.
+
+     * @throws BadRequestException
+     * @throws MethodNotAllowedException
+     * @throws NotFoundException
+     * @throws ShinyCoreException
+     * @return void
+     */
+    protected function dispatch(): void
     {
         $httpMethod = $this->request->getRequestMethod();
         $uri = $this->request->getRequestUri();
@@ -88,6 +103,13 @@ class Application
         }
     }
 
+    /**
+     * Calls an action.
+     *
+     * @param string $handler
+     * @param array $arguments
+     * @throws ShinyCoreException
+     */
     public function callAction(string $handler, array $arguments = [])
     {
         if (!class_exists($handler)) {

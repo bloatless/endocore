@@ -10,5 +10,12 @@ interface RouterInterface
     const FOUND = 1;
     const METHOD_NOT_ALLOWED = 2;
 
-    public function dispatch(string $httpMethod, string $uri) : array;
+    /**
+     * Dispatches HTTP request and returns route information.
+     *
+     * @param string $httpMethod
+     * @param string $uri
+     * @return array
+     */
+    public function dispatch(string $httpMethod, string $uri): array;
 }
