@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore;
+namespace Nekudo\ShinyCore\Http;
 
 class Request
 {

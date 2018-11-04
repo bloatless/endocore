@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Nekudo\ShinyCore\Actions;
 
-use Nekudo\ShinyCore\Responder\ResponderInterface;
+use Nekudo\ShinyCore\Http\Response;
 
 interface ActionInterface
 {
@@ -12,13 +12,7 @@ interface ActionInterface
      * Executes the action.
      *
      * @param array $arguments
+     * @return Response
      */
-    public function __invoke(array $arguments = []): void;
-
-    /**
-     * Returns the responder.
-     *
-     * @return ResponderInterface
-     */
-    public function getResponder(): ResponderInterface;
+    public function __invoke(array $arguments = []): Response;
 }

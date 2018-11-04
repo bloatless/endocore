@@ -4,7 +4,7 @@ namespace Nekudo\ShinyCore\Tests\Unit;
 
 use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Responder\HtmlResponder;
-use Nekudo\ShinyCore\Request;
+use Nekudo\ShinyCore\Http\Request;
 use Nekudo\ShinyCore\Tests\Mocks\HelloWorldHtmlAction;
 use PHPUnit\Framework\TestCase;
 

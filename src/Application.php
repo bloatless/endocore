@@ -9,6 +9,8 @@ use Nekudo\ShinyCore\Exceptions\ExceptionHandlerInterface;
 use Nekudo\ShinyCore\Exceptions\Http\BadRequestException;
 use Nekudo\ShinyCore\Exceptions\Http\MethodNotAllowedException;
 use Nekudo\ShinyCore\Exceptions\Http\NotFoundException;
+use Nekudo\ShinyCore\Http\Request;
+use Nekudo\ShinyCore\Http\Response;
 use Nekudo\ShinyCore\Logger\LoggerInterface;
 use Nekudo\ShinyCore\Router\RouterInterface;
 use Nekudo\ShinyCore\Router\Router;
@@ -57,17 +59,22 @@ class Application
     /**
      * Runs the application and passes all errors to exception handler.
      *
-     * @return void
+     * @return Response
      */
-    public function run(): void
+    public function run(): Response
     {
         try {
-            $this->dispatch();
+            $response = $this->dispatch();
+            $this->send($response);
         } catch (\Error $e) {
-            $this->exceptionHandler->handleError($e);
+            $response = $this->exceptionHandler->handleError($e);
+            $this->send($response);
         } catch (\Exception $e) {
-            $this->exceptionHandler->handleException($e);
+            $response = $this->exceptionHandler->handleException($e);
+            $this->send($response);
         }
+
+        return $response;
     }
 
     /**
@@ -78,9 +85,9 @@ class Application
      * @throws MethodNotAllowedException
      * @throws NotFoundException
      * @throws ShinyCoreException
-     * @return void
+     * @return Response
      */
-    protected function dispatch(): void
+    protected function dispatch(): Response
     {
         $httpMethod = $this->request->getRequestMethod();
         $uri = $this->request->getRequestUri();
@@ -96,8 +103,7 @@ class Application
             case Router::FOUND:
                 $action = $routeInfo[1];
                 $arguments = $routeInfo[2];
-                $this->callAction($action, $arguments);
-                break;
+                return $this->callAction($action, $arguments);
             default:
                 throw new BadRequestException('Unable to parse request.');
         }
@@ -109,8 +115,9 @@ class Application
      * @param string $handler
      * @param array $arguments
      * @throws ShinyCoreException
+     * @return Response
      */
-    public function callAction(string $handler, array $arguments = [])
+    public function callAction(string $handler, array $arguments = []): Response
     {
         if (!class_exists($handler)) {
             throw new ShinyCoreException('Action class not found.');
@@ -118,7 +125,32 @@ class Application
 
         /** @var \Nekudo\ShinyCore\Actions\ActionInterface $action */
         $action = new $handler($this->config, $this->request);
-        $action->__invoke($arguments);
-        $action->getResponder()->respond();
+        return $action->__invoke($arguments);
+    }
+
+    /**
+     * Sends response to client.
+     *
+     * @param Response $response
+     * @return void
+     */
+    public function send(Response $response): void
+    {
+        // send http header:
+        $httpHeader = sprintf(
+            'HTTP/%s %d %s',
+            $response->getProtocolVersion(),
+            $response->getStatus(),
+            $response->getStatusMessage()
+        );
+        header($httpHeader, true);
+
+        // send additional headers:
+        foreach ($response->getHeaders() as $name => $value) {
+            header(sprintf('%s: %s', $name, $value), true);
+        }
+
+        // send body:
+        echo $response->getBody();
     }
 }

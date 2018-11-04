@@ -6,12 +6,13 @@ namespace Nekudo\ShinyCore\Responder;
 
 use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Exceptions\Application\ShinyCoreException;
+use Nekudo\ShinyCore\Http\Response;
 
 /**
  * @property string $view
  */
 
-class HtmlResponder extends HttpResponder
+class HtmlResponder extends Responder
 {
     /**
      * @var RendererInterface $renderer
@@ -21,7 +22,7 @@ class HtmlResponder extends HttpResponder
     public function __construct(Config $config)
     {
         parent::__construct($config);
-        $this->addHeader('Content-Type', 'text/html; charset=utf-8');
+        $this->response->addHeader('Content-Type', 'text/html; charset=utf-8');
         $this->initRenderer();
     }
 
@@ -89,11 +90,11 @@ class HtmlResponder extends HttpResponder
      *
      * @param string $view
      * @param array $templateVars
-     * @return void
+     * @return Response
      */
-    public function show(string $view, array $templateVars = []): void
+    public function show(string $view, array $templateVars = []): Response
     {
-        $this->found([
+        return $this->found([
             'view' => $view,
             'vars' => $templateVars
         ]);
@@ -103,60 +104,65 @@ class HtmlResponder extends HttpResponder
      * Renders view defined in data array and passes it to http-responder.
      *
      * @param array $data
-     * @return void
+     * @return Response
      */
-    public function found(array $data): void
+    public function found(array $data): Response
     {
         $view = $data['view'] ?? '';
         $templateVars = $data['vars'] ?? [];
-        $this->setBody(
+        $this->response->setBody(
             $this->renderer->render($view, $templateVars)
         );
+        return $this->response;
     }
 
     /**
      * Respond with an error message.
      *
-     * @return void
+     * @return Response
      */
-    public function badRequest(): void
+    public function badRequest(): Response
     {
-        $this->setStatus(400);
-        $this->setBody('<html><title>400 Bad Request</title>400 Bad Request</html>');
+        $this->response->setStatus(400);
+        $this->response->setBody('<html><title>400 Bad Request</title>400 Bad Request</html>');
+        return $this->response;
     }
 
     /**
      * Respond with an not found message.
      *
-     * @return void
+     * @return Response
      */
-    public function notFound(): void
+    public function notFound(): Response
     {
-        $this->setStatus(404);
-        $this->setBody('<html><title>404 Not found</title>404 Not found</html>');
+        $this->response->setStatus(404);
+        $this->response->setBody('<html><title>404 Not found</title>404 Not found</html>');
+        return $this->response;
     }
 
     /**
      * Respond with an error message.
      *
-     * @return void
+     * @return Response
      */
-    public function methodNotAllowed(): void
+    public function methodNotAllowed(): Response
     {
-        $this->setStatus(405);
-        $this->setBody('<html><title>405 Method not allowed</title>405 Method not allowed</html>');
+        $this->response->setStatus(405);
+        $this->response->setBody('<html><title>405 Method not allowed</title>405 Method not allowed</html>');
+        return $this->response;
     }
 
     /**
      * Respond with an error message.
      *
      * @param array $errors
-     * @return void
+     * @return Response
      */
-    public function error(array $errors): void
+    public function error(array $errors): Response
     {
-        $this->setStatus(500);
+        $this->response->setStatus(500);
         $bodyTemplate = '<html><title>Error 500</title><h1>Server Error</h1><pre>%s</pre></html>';
-        $this->setBody(sprintf($bodyTemplate, print_r($errors, true)));
+        $this->response->setBody(sprintf($bodyTemplate, print_r($errors, true)));
+        return $this->response;
     }
 }

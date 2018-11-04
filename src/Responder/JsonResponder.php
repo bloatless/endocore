@@ -5,65 +5,71 @@ declare(strict_types=1);
 namespace Nekudo\ShinyCore\Responder;
 
 use Nekudo\ShinyCore\Config;
+use Nekudo\ShinyCore\Http\Response;
 
-class JsonResponder extends HttpResponder
+class JsonResponder extends Responder
 {
     public function __construct(Config $config)
     {
         parent::__construct($config);
-        $this->addHeader('Content-Type', 'application/json');
+        $this->response->addHeader('Content-Type', 'application/json');
     }
 
     /**
      * Respond with data.
      *
      * @param array $data
-     * @return void
+     * @return Response
      */
-    public function found(array $data): void
+    public function found(array $data): Response
     {
-        $this->setBody(json_encode(['data' => $data]));
+        $this->response->setBody(json_encode(['data' => $data]));
+        return $this->response;
     }
 
     /**
      * Respond with an error code 400.
      *
-     * @return void
+     * @return Response
      */
-    public function badRequest(): void
+    public function badRequest(): Response
     {
-        $this->setStatus(400);
+        $this->response->setStatus(400);
+        return $this->response;
     }
 
     /**
      * Respond with an error code 404.
      *
-     * @return void
+     * @return Response
      */
-    public function notFound(): void
+    public function notFound(): Response
     {
-        $this->setStatus(404);
+        $this->response->setStatus(404);
+        return $this->response;
     }
 
     /**
      * Respond with an error code 405.
      *
-     * @return void
+     * @return Response
      */
-    public function methodNotAllowed(): void
+    public function methodNotAllowed(): Response
     {
-        $this->setStatus(405);
+        $this->response->setStatus(405);
+        return $this->response;
     }
 
     /**
      * Respond with an error (code 500).
      *
      * @param array $errors
-     * @return void
+     * @return Response
      */
-    public function error(array $errors): void
+    public function error(array $errors): Response
     {
-        $this->setStatus(500);
-        $this->setBody(json_encode(['errors' => $errors]));
+        $this->response->setStatus(500);
+        $this->response->setBody(json_encode(['errors' => $errors]));
+        return $this->response;
     }
 }

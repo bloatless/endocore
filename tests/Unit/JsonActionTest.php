@@ -4,7 +4,7 @@ namespace Nekudo\ShinyCore\Tests\Unit;
 
 use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Responder\JsonResponder;
-use Nekudo\ShinyCore\Request;
+use Nekudo\ShinyCore\Http\Request;
 use Nekudo\ShinyCore\Tests\Mocks\HelloWorldJsonAction;
 use PHPUnit\Framework\TestCase;
 

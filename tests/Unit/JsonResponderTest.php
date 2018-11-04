@@ -19,39 +19,39 @@ class JsonResponderTest extends TestCase
     public function testSuccess()
     {
         $responder = new JsonResponder($this->config);
-        $responder->found(['foo' => 'bar']);
-        $this->assertEquals('{"data":{"foo":"bar"}}', $responder->getBody());
+        $response = $responder->found(['foo' => 'bar']);
+        $this->assertEquals('{"data":{"foo":"bar"}}', $response->getBody());
     }
 
     public function testError()
     {
         $responder = new JsonResponder($this->config);
-        $responder->error(['foo' => 'bar']);
-        $this->assertEquals(500, $responder->getStatus());
-        $this->assertEquals('{"errors":{"foo":"bar"}}', $responder->getBody());
+        $response = $responder->error(['foo' => 'bar']);
+        $this->assertEquals(500, $response->getStatus());
+        $this->assertEquals('{"errors":{"foo":"bar"}}', $response->getBody());
     }
 
     public function testBadRequest()
     {
         $responder = new JsonResponder($this->config);
-        $responder->badRequest();
-        $this->assertEquals('', $responder->getBody());
-        $this->assertEquals(400, $responder->getStatus());
+        $response = $responder->badRequest();
+        $this->assertEquals('', $response->getBody());
+        $this->assertEquals(400, $response->getStatus());
     }
 
     public function testNotFound()
     {
         $responder = new JsonResponder($this->config);
-        $responder->notFound();
-        $this->assertEquals('', $responder->getBody());
-        $this->assertEquals(404, $responder->getStatus());
+        $response = $responder->notFound();
+        $this->assertEquals('', $response->getBody());
+        $this->assertEquals(404, $response->getStatus());
     }
 
     public function testMethodNotAllowed()
     {
         $responder = new JsonResponder($this->config);
-        $responder->methodNotAllowed();
-        $this->assertEquals('', $responder->getBody());
-        $this->assertEquals(405, $responder->getStatus());
+        $response = $responder->methodNotAllowed();
+        $this->assertEquals('', $response->getBody());
+        $this->assertEquals(405, $response->getStatus());
     }
 }

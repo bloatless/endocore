@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Nekudo\ShinyCore\Actions;
 
 use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Request;
+use Nekudo\ShinyCore\Http\Request;
 use Nekudo\ShinyCore\Responder\ResponderInterface;
 
-abstract class BaseAction implements ActionInterface
+abstract class Action implements ActionInterface
 {
     /**
      * @var Config $config
@@ -40,5 +40,15 @@ abstract class BaseAction implements ActionInterface
     public function setResponder(ResponderInterface $responder): void
     {
         $this->responder = $responder;
+    }
+
+    /**
+     * Returns the responder.
+     *
+     * @return ResponderInterface
+     */
+    public function getResponder(): ResponderInterface
+    {
+        return $this->responder;
     }
 }

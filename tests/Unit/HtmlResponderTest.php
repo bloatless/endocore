@@ -71,46 +71,46 @@ class HtmlResponderTest extends TestCase
     public function testShow()
     {
         $responder = new HtmlResponder($this->config);
-        $responder->show('simple_view', ['mock' => 'foobar']);
-        $this->assertEquals('foobar', $responder->getBody());
+        $response = $responder->show('simple_view', ['mock' => 'foobar']);
+        $this->assertEquals('foobar', $response->getBody());
     }
 
     public function testFound()
     {
         $responder = new HtmlResponder($this->config);
-        $responder->found([
+        $response = $responder->found([
             'view' => 'simple_view',
             'vars' => ['mock' => 'bar'],
         ]);
-        $this->assertEquals('bar', $responder->getBody());
+        $this->assertEquals('bar', $response->getBody());
     }
 
     public function testBadRequest()
     {
         $responder = new HtmlResponder($this->config);
-        $responder->badRequest();
-        $this->assertEquals(400, $responder->getStatus());
+        $response = $responder->badRequest();
+        $this->assertEquals(400, $response->getStatus());
     }
 
     public function testNotFound()
     {
         $responder = new HtmlResponder($this->config);
-        $responder->notFound();
-        $this->assertEquals(404, $responder->getStatus());
+        $response = $responder->notFound();
+        $this->assertEquals(404, $response->getStatus());
     }
 
     public function testMethodNotAllowed()
     {
         $responder = new HtmlResponder($this->config);
-        $responder->methodNotAllowed();
-        $this->assertEquals(405, $responder->getStatus());
+        $response = $responder->methodNotAllowed();
+        $this->assertEquals(405, $response->getStatus());
     }
 
     public function testError()
     {
         $responder = new HtmlResponder($this->config);
-        $responder->error(['foo' => 'testing error']);
-        $this->assertEquals(500, $responder->getStatus());
-        $this->assertContains('testing error', $responder->getBody());
+        $response = $responder->error(['foo' => 'testing error']);
+        $this->assertEquals(500, $response->getStatus());
+        $this->assertContains('testing error', $response->getBody());
     }
 }

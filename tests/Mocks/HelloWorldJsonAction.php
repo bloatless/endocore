@@ -3,11 +3,12 @@
 namespace Nekudo\ShinyCore\Tests\Mocks;
 
 use Nekudo\ShinyCore\Actions\JsonAction;
+use Nekudo\ShinyCore\Http\Response;
 
 class HelloWorldJsonAction extends JsonAction
 {
-    public function __invoke(array $arguments = []): void
+    public function __invoke(array $arguments = []): Response
     {
-        echo "Hello World!";
+        return new Response(200, [], 'Hello World!');
     }
 }

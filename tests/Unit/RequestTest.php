@@ -2,7 +2,7 @@
 
 namespace Nekudo\ShinyCore\Tests\Unit;
 
-use Nekudo\ShinyCore\Request;
+use Nekudo\ShinyCore\Http\Request;
 use PHPUnit\Framework\TestCase;
 
 class RequestTest extends TestCase

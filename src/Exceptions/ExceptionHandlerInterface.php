@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Nekudo\ShinyCore\Exceptions;
 
 use Nekudo\ShinyCore\Config;
+use Nekudo\ShinyCore\Http\Response;
 use Nekudo\ShinyCore\Logger\LoggerInterface;
-use Nekudo\ShinyCore\Request;
+use Nekudo\ShinyCore\Http\Request;
 
 interface ExceptionHandlerInterface
 {
@@ -16,13 +17,15 @@ interface ExceptionHandlerInterface
      * Handles internal php errors.
      *
      * @param \Error $e
+     * @return Response
      */
-    public function handleError(\Error $e): void;
+    public function handleError(\Error $e): Response;
 
     /**
      * Handles exceptions.
      *
      * @param \Exception $e
+     * @return Response
      */
-    public function handleException(\Exception $e): void;
+    public function handleException(\Exception $e): Response;
 }

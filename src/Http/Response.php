@@ -2,28 +2,29 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Responder;
+namespace Nekudo\ShinyCore\Http;
 
-use Nekudo\ShinyCore\Config;
-
-abstract class HttpResponder implements ResponderInterface
+class Response
 {
-    /** @var Config $config */
-    protected $config;
+    /**
+     * @var string $protocolVersion
+     */
+    protected $protocolVersion = '1.1';
 
     /**
-     * HTTP status code to use in response.
-     *
      * @var int $statusCode
      */
     protected $statusCode = 200;
 
     /**
-     * HTTP protocol version.
-     *
-     * @var string $version
+     * @var array $headers
      */
-    protected $version = '1.1';
+    protected $headers = [];
+
+    /**
+     * @var string $body
+     */
+    protected $body = '';
 
     /**
      * List of available HTTP status codes and names.
@@ -91,30 +92,36 @@ abstract class HttpResponder implements ResponderInterface
         511 => 'Network Authentication Required',
     ];
 
-    /**
-     * Additional HTTP headers.
-     *
-     * @var array $headers
-     */
-    protected $headers = [];
-
-    /**
-     * The HTTP body.
-     *
-     * @var string $body
-     */
-    protected $body = '';
-
-    /**
-     * @param Config $config
-     */
-    public function __construct(Config $config)
+    public function __construct(int $statusCode = 200, array $headers = [], string $body = '')
     {
-        $this->config = $config;
+        $this->setStatus($statusCode);
+        $this->setHeaders($headers);
+        $this->setBody($body);
     }
 
     /**
-     * Sets HTTP status code.
+     * Returns protocol version.
+     *
+     * @return string
+     */
+    public function getProtocolVersion(): string
+    {
+        return $this->protocolVersion;
+    }
+
+    /**
+     * Sets protocol version.
+     *
+     * @param string $version
+     * @return void
+     */
+    public function setProtocolVersion(string $version): void
+    {
+        $this->protocolVersion = $version;
+    }
+
+    /**
+     * Returns HTTP status code.
      *
      * @return int
      */
@@ -124,35 +131,39 @@ abstract class HttpResponder implements ResponderInterface
     }
 
     /**
-     * Returns HTTP status code.
+     * Sets HTTP status code.
      *
      * @param int $statusCode
      * @return void
+     * @throws \InvalidArgumentException
      */
     public function setStatus(int $statusCode): void
     {
+        if (!isset($this->statusMessages[$statusCode])) {
+            throw new \InvalidArgumentException('Invalid HTTP status code.');
+        }
         $this->statusCode = $statusCode;
     }
 
     /**
-     * Returns HTTP version.
+     * Returns HTTP status message.
      *
      * @return string
      */
-    public function getVersion(): string
+    public function getStatusMessage(): string
     {
-        return $this->version;
+        return $this->statusMessages[$this->statusCode];
     }
 
     /**
-     * Sets HTTP version.
+     * (Re)Sets all HTTP headers.
      *
-     * @param string $version
+     * @param array $headers
      * @return void
      */
-    public function setVersion(string $version): void
+    public function setHeaders(array $headers): void
     {
-        $this->version = $version;
+        $this->headers = $headers;
     }
 
     /**
@@ -199,17 +210,7 @@ abstract class HttpResponder implements ResponderInterface
     }
 
     /**
-     * Returns the HTTP message body.
-     *
-     * @return string
-     */
-    public function getBody(): string
-    {
-        return $this->body;
-    }
-
-    /**
-     * Sets the HTTP message body.
+     * Sets HTTP body.
      *
      * @param string $body
      * @return void
@@ -220,60 +221,38 @@ abstract class HttpResponder implements ResponderInterface
     }
 
     /**
-     * Sends and HTTP message/response to the browser.
+     * Returns HTTP body.
      *
-     * @return void
+     * @return string
      */
-    public function respond(): void
+    public function getBody(): string
     {
-        $this->sendHttpHeader();
-        $this->sendAdditionalHeaders();
-        $this->sendBody();
+        return $this->body;
     }
 
     /**
-     * Sends the HTTP header to the browser.
+     * Converts HTTP response to string.
      *
-     * @return void
+     * @return string
      */
-    protected function sendHttpHeader(): void
+    public function __toString(): string
     {
-        $header = sprintf(
-            'HTTP/%s %d %s',
-            $this->version,
-            $this->statusCode,
-            $this->statusMessages[$this->statusCode]
+        // add http header to output:
+        $output = sprintf(
+            "HTTP/%s %d %s\r\n",
+            $this->getProtocolVersion(),
+            $this->getStatus(),
+            $this->getStatusMessage()
         );
-        header($header, true);
-    }
 
-    /**
-     * Sends additional HTTP headers to the browser.
-     *
-     * @return bool
-     */
-    protected function sendAdditionalHeaders(): bool
-    {
-        if (empty($this->headers)) {
-            return true;
-        }
+        // add additional headers to output:
         foreach ($this->headers as $name => $value) {
-            header($name .': ' . $value, true);
+            sprintf("%s: %s\r\n", $name, $value);
         }
-        return true;
-    }
 
-    /**
-     * Sends the HTTP message body to the browser.
-     *
-     * @return bool
-     */
-    protected function sendBody(): bool
-    {
-        if (mb_strlen($this->body) === 0) {
-            return true;
-        }
-        echo $this->body;
-        return true;
+        // add body to output:
+        $output .= $this->getBody();
+
+        return $output;
     }
 }

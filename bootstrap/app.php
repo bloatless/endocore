@@ -9,7 +9,7 @@ try {
 
     // init dependencies:
     $config = (new \Nekudo\ShinyCore\Config)->fromArray($configuration);
-    $request = new \Nekudo\ShinyCore\Request($_GET, $_POST, $_SERVER);
+    $request = new \Nekudo\ShinyCore\Http\Request($_GET, $_POST, $_SERVER);
     $router = new \Nekudo\ShinyCore\Router\Router($routes);
     $logger = new \Nekudo\ShinyCore\Logger\FileLogger($config);
     $exceptionHandler = new \Nekudo\ShinyCore\Exceptions\ExceptionHandler($config, $logger, $request);

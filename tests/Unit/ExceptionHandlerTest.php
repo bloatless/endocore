@@ -9,7 +9,7 @@ use Nekudo\ShinyCore\Exceptions\Http\BadRequestException;
 use Nekudo\ShinyCore\Exceptions\Http\MethodNotAllowedException;
 use Nekudo\ShinyCore\Exceptions\Http\NotFoundException;
 use Nekudo\ShinyCore\Logger\NullLogger;
-use Nekudo\ShinyCore\Request;
+use Nekudo\ShinyCore\Http\Request;
 use PHPUnit\Framework\TestCase;
 
 class ExceptionHandlerTest extends TestCase
@@ -37,38 +37,28 @@ class ExceptionHandlerTest extends TestCase
         $this->assertInstanceOf(ExceptionHandler::class, $this->handler);
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
     public function testHandlesInternalError()
     {
         $error = new \Error('Test', 42);
-        $this->handler->handleError($error);
-        $this->expectOutputRegex('/<title>Error 500<\/title>/');
-        $this->expectOutputRegex('/ExceptionHandlerTest\.php/');
+        $response = $this->handler->handleError($error);
+        $this->assertEquals(500, $response->getStatus());
+        $this->assertContains('ExceptionHandlerTest.php', $response->getBody());
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
     public function testHandlesBadRequestException()
     {
         $error = new BadRequestException('bad request');
-        $this->handler->handleException($error);
-        $this->expectOutputRegex('/<title>400 Bad Request<\/title>/');
+        $response = $this->handler->handleException($error);
+        $this->assertEquals(400, $response->getStatus());
+        $this->assertContains('<title>400 Bad Request</title>', $response->getBody());
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
     public function testHandlesNotFoundException()
     {
         $error = new NotFoundException('not found');
-        $this->handler->handleException($error);
-        $this->expectOutputRegex('/<title>404 Not found<\/title>/');
+        $response = $this->handler->handleException($error);
+        $this->assertEquals(404, $response->getStatus());
+        $this->assertContains('<title>404 Not found</title>', $response->getBody());
     }
 
     /**
@@ -78,35 +68,27 @@ class ExceptionHandlerTest extends TestCase
     public function testHandlesMethodNotAllowedException()
     {
         $error = new MethodNotAllowedException('method not allowed');
-        $this->handler->handleException($error);
-        $this->expectOutputRegex('/<title>405 Method not allowed<\/title>/');
+        $response = $this->handler->handleException($error);
+        $this->assertEquals(405, $response->getStatus());
+        $this->assertContains('<title>405 Method not allowed</title>', $response->getBody());
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
     public function testHandlesGeneralException()
     {
         $error = new ShinyCoreException('foobar error');
-        $this->handler->handleException($error);
-        $this->expectOutputRegex('/<title>Error 500<\/title>/');
-        $this->expectOutputRegex('/foobar error/');
+        $response = $this->handler->handleException($error);
+        $this->assertEquals(500, $response->getStatus());
+        $this->assertContains('<title>Error 500</title>', $response->getBody());
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
     public function testRespondsWithJson()
     {
         $request = new Request([], [], ['CONTENT_TYPE' => 'application/json']);
         $handler = new ExceptionHandler($this->config, $this->logger, $request);
         $error = new ShinyCoreException('json error');
-        $handler->handleException($error);
-        $this->expectOutputRegex('/json error/');
-        $output = $this->getActualOutput();
-        $outputDecoded = json_decode($output, true);
-        $this->assertArrayHasKey('errors', $outputDecoded);
+        $response = $handler->handleException($error);
+        $this->assertContains('json error', $response->getBody());
+        $bodyDecoded = json_decode($response->getBody(), true);
+        $this->assertArrayHasKey('errors', $bodyDecoded);
     }
 }

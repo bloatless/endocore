@@ -8,8 +8,9 @@ use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Exceptions\Http\BadRequestException;
 use Nekudo\ShinyCore\Exceptions\Http\MethodNotAllowedException;
 use Nekudo\ShinyCore\Exceptions\Http\NotFoundException;
+use Nekudo\ShinyCore\Http\Response;
 use Nekudo\ShinyCore\Logger\LoggerInterface;
-use Nekudo\ShinyCore\Request;
+use Nekudo\ShinyCore\Http\Request;
 use Nekudo\ShinyCore\Responder\HtmlResponder;
 use Nekudo\ShinyCore\Responder\JsonResponder;
 use Nekudo\ShinyCore\Responder\ResponderInterface;
@@ -42,108 +43,108 @@ class ExceptionHandler implements ExceptionHandlerInterface
      * Handles internal php errors.
      *
      * @param \Error $e
+     * @return Response
      */
-    public function handleError(\Error $e): void
+    public function handleError(\Error $e): Response
     {
         $this->logger->error(sprintf('%s in %s:%d', $e->getMessage(), $e->getFile(), $e->getLine()));
-        $this->respondPhpError($e);
+        return $this->providePhpErrorResponse($e);
     }
 
     /**
      * Handles exceptions thrown by application.
      *
      * @param \Exception $e
+     * @return Response
      */
-    public function handleException(\Exception $e): void
+    public function handleException(\Exception $e): Response
     {
         if ($e instanceof NotFoundException) {
             $this->logger->info('404 Not Found: ' . $this->request->getRequestUri());
-            $this->respondNotFound();
+            $response = $this->provideNotFoundResponse();
         } elseif ($e instanceof MethodNotAllowedException) {
             $this->logger->notice('Method not allowed.', [
                 'request_uri' => $this->request->getRequestUri(),
                 'request_method' => $this->request->getRequestMethod(),
             ]);
-            $this->respondMethodNotAllowed();
+            $response = $this->provideMethodNotAllowedResponse();
         } elseif ($e instanceof BadRequestException) {
             $this->logger->notice('Bad request.', [
                 'request_uri' => $this->request->getRequestUri(),
                 'request_method' => $this->request->getRequestMethod(),
             ]);
-            $this->respondBadRequest();
+            $response = $this->provideBadRequestResponse();
         } else {
             $this->logger->error(sprintf('%s in %s:%d', $e->getMessage(), $e->getFile(), $e->getLine()));
-            $this->respondGeneralError($e);
+            $response = $this->provideGeneralErrorResponse($e);
         }
+
+        return $response;
     }
 
     /**
      * Responds to client in case of a "400 bad request" http error.
      *
-     * @return void
+     * @return Response
      */
-    protected function respondBadRequest(): void
+    protected function provideBadRequestResponse(): Response
     {
         $responder = $this->provideResponder();
-        $responder->badRequest();
-        $responder->respond();
+        return $responder->badRequest();
     }
 
     /**
      * Responds to client in case of a "404 not found" http error.
      *
-     * @return void
+     * @return Response
      */
-    protected function respondNotFound(): void
+    protected function provideNotFoundResponse(): Response
     {
         $responder = $this->provideResponder();
-        $responder->notFound();
-        $responder->respond();
+        return $responder->notFound();
     }
 
     /**
      * Responds to client in case of a "405 method not allowed" http error.
      *
-     * @return void
+     * @return Response
      */
-    protected function respondMethodNotAllowed(): void
+    protected function provideMethodNotAllowedResponse(): Response
     {
         $responder = $this->provideResponder();
-        $responder->methodNotAllowed();
-        $responder->respond();
+        return $responder->methodNotAllowed();
     }
 
     /**
      * Responds to client in case of a general server error (500).
      *
      * @param \Exception $e
-     * @return void
+     * @return Response
      */
-    protected function respondGeneralError(\Exception $e): void
+    protected function provideGeneralErrorResponse(\Exception $e): Response
     {
         $responder = $this->provideResponder();
-        $responder->error([
+        return $responder->error([
             'Message' => $e->getMessage(),
             'File' => $e->getFile(),
             'Line' => $e->getLine(),
         ]);
-        $responder->respond();
     }
 
     /**
      * Responds to client in case of a PHP error.
      *
      * @param \Error $e
+     * @return Response
      */
-    protected function respondPhpError(\Error $e): void
+    protected function providePhpErrorResponse(\Error $e): Response
     {
         $responder = $this->provideResponder();
-        $responder->error([
+        return $responder->error([
             'Message' => $e->getMessage(),
             'File' => $e->getFile(),
             'Line' => $e->getLine(),
         ]);
-        $responder->respond();
     }
 
     /**

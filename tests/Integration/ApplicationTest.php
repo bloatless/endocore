@@ -6,7 +6,7 @@ use Nekudo\ShinyCore\Application;
 use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Exceptions\ExceptionHandler;
 use Nekudo\ShinyCore\Logger\NullLogger;
-use Nekudo\ShinyCore\Request;
+use Nekudo\ShinyCore\Http\Request;
 use Nekudo\ShinyCore\Router\Router;
 use PHPUnit\Framework\TestCase;
 
