@@ -117,6 +117,9 @@ class PhtmlRenderer implements RendererInterface
     protected function renderView(): string
     {
         $viewFile = $this->config->getPath('views') . '/' . $this->view . '.phtml';
+        if (!file_exists($viewFile)) {
+            throw new ShinyCoreException(sprintf('View file not found. (%s)', $viewFile));
+        }
         $viewContent = file_get_contents($viewFile);
         if (preg_match('/<!-- extends "(.+)" -->/Usi', $viewContent, $matches) === 1) {
             $this->setLayout($matches[1]);

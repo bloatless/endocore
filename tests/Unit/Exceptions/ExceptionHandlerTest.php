@@ -1,6 +1,6 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit;
+namespace Nekudo\ShinyCore\Tests\Unit\Exceptions;
 
 use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Exceptions\Application\ShinyCoreException;
@@ -25,7 +25,7 @@ class ExceptionHandlerTest extends TestCase
 
     public function setUp()
     {
-        $configData = include __DIR__ . '/../Mocks/config.php';
+        $configData = include __DIR__ . '/../../Mocks/config.php';
         $this->config = (new Config)->fromArray($configData);
         $this->logger = new NullLogger;
         $request = new Request;
@@ -61,10 +61,6 @@ class ExceptionHandlerTest extends TestCase
         $this->assertContains('<title>404 Not found</title>', $response->getBody());
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
     public function testHandlesMethodNotAllowedException()
     {
         $error = new MethodNotAllowedException('method not allowed');

@@ -1,8 +1,9 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit;
+namespace Nekudo\ShinyCore\Tests\Unit\Responder;
 
 use Nekudo\ShinyCore\Config;
+use Nekudo\ShinyCore\Http\Response;
 use Nekudo\ShinyCore\Responder\JsonResponder;
 use PHPUnit\Framework\TestCase;
 
@@ -12,8 +13,15 @@ class JsonResponderTest extends TestCase
 
     public function setUp()
     {
-        $configData = include __DIR__ . '/../Mocks/config.php';
+        $configData = include __DIR__ . '/../../Mocks/config.php';
         $this->config = (new Config)->fromArray($configData);
+    }
+
+    public function testGetSetResponder()
+    {
+        $responder = new JsonResponder($this->config);
+        $responder->setResponse(new Response());
+        $this->assertInstanceOf(Response::class, $responder->getResponse());
     }
 
     public function testSuccess()

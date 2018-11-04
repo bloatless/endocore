@@ -1,6 +1,6 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit;
+namespace Nekudo\ShinyCore\Tests\Unit\Logger;
 
 use Nekudo\ShinyCore\Logger\LogLevel;
 use Nekudo\ShinyCore\Logger\NullLogger;

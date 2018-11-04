@@ -247,7 +247,7 @@ class Response
 
         // add additional headers to output:
         foreach ($this->headers as $name => $value) {
-            sprintf("%s: %s\r\n", $name, $value);
+            $output .= sprintf("%s: %s\r\n", $name, $value);
         }
 
         // add body to output:

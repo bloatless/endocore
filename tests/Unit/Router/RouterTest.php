@@ -1,6 +1,6 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit;
+namespace Nekudo\ShinyCore\Tests\Unit\Router;
 
 use Nekudo\ShinyCore\Router\Router;
 use PHPUnit\Framework\TestCase;

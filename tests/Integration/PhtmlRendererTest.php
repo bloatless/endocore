@@ -3,6 +3,7 @@
 namespace Nekudo\ShinyCore\Tests\Integration;
 
 use Nekudo\ShinyCore\Config;
+use Nekudo\ShinyCore\Exceptions\Application\ShinyCoreException;
 use Nekudo\ShinyCore\Responder\PhtmlRenderer;
 use PHPUnit\Framework\TestCase;
 
@@ -24,11 +25,25 @@ class PhtmlRendererTest extends TestCase
         $this->assertEquals('Hello World!', $out);
     }
 
+    public function testRenderInvalidView()
+    {
+        $renderer = new PhtmlRenderer($this->config);
+        $this->expectException(ShinyCoreException::class);
+        $renderer->render('foobar');
+    }
+
     public function testRenderViewWithLayout()
     {
         $renderer = new PhtmlRenderer($this->config);
         $this->assertInstanceOf(PhtmlRenderer::class, $renderer);
         $out = $renderer->render('layout_view', ['mock' => 'Hallo Layout!']);
         $this->assertEquals('Hallo Layout!', $out);
+    }
+
+    public function testRenderViewWithInvalidLayout()
+    {
+        $renderer = new PhtmlRenderer($this->config);
+        $this->expectException(ShinyCoreException::class);
+        $renderer->render('invalid_layout_view', ['mock' => 'foo']);
     }
 }

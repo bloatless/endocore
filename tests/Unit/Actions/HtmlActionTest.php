@@ -1,6 +1,6 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit;
+namespace Nekudo\ShinyCore\Tests\Unit\Actions;
 
 use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Responder\HtmlResponder;
@@ -14,7 +14,7 @@ class HtmlActionTest extends TestCase
 
     public function setUp()
     {
-        $config = include __DIR__ . '/../Mocks/config.php';
+        $config = include __DIR__ . '/../../Mocks/config.php';
         $this->config = (new Config)->fromArray($config);
     }
 

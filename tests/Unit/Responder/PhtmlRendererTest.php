@@ -1,6 +1,6 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit;
+namespace Nekudo\ShinyCore\Tests\Unit\Responder;
 
 use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Responder\PhtmlRenderer;
@@ -12,15 +12,8 @@ class PhtmlRendererTest extends TestCase
 
     public function setUp()
     {
-        $configData = include __DIR__ . '/../Mocks/config.php';
+        $configData = include __DIR__ . '/../../Mocks/config.php';
         $this->config = (new Config)->fromArray($configData);
-    }
-
-    public function testGetSetView()
-    {
-        $renderer = new PhtmlRenderer($this->config);
-        $renderer->setView('mock');
-        $this->assertEquals('mock', $renderer->getView());
     }
 
     public function testGetSetLayout()
@@ -28,5 +21,12 @@ class PhtmlRendererTest extends TestCase
         $renderer = new PhtmlRenderer($this->config);
         $renderer->setLayout('mock_layout');
         $this->assertEquals('mock_layout', $renderer->getLayout());
+    }
+
+    public function testGetSetView()
+    {
+        $renderer = new PhtmlRenderer($this->config);
+        $renderer->setView('mock');
+        $this->assertEquals('mock', $renderer->getView());
     }
 }

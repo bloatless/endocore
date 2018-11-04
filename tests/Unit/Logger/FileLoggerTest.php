@@ -1,6 +1,6 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit;
+namespace Nekudo\ShinyCore\Tests\Unit\Logger;
 
 use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Exceptions\Application\ShinyCoreException;
@@ -15,7 +15,7 @@ class FileLoggerTest extends TestCase
 
     public function setUp()
     {
-        $configData = include __DIR__ . '/../Mocks/config.php';
+        $configData = include __DIR__ . '/../../Mocks/config.php';
         $this->config = (new Config)->fromArray($configData);
     }
 
@@ -27,7 +27,7 @@ class FileLoggerTest extends TestCase
 
     public function testInitWithInvalidLogPath()
     {
-        $configData = include __DIR__ . '/../Mocks/config.php';
+        $configData = include __DIR__ . '/../../Mocks/config.php';
         $config = (new Config)->fromArray($configData);
         $config->setPath('logs', 'foo');
         $this->expectException(ShinyCoreException::class);

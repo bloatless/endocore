@@ -1,9 +1,10 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit;
+namespace Nekudo\ShinyCore\Tests\Unit\Responder;
 
 use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Exceptions\Application\ShinyCoreException;
+use Nekudo\ShinyCore\Http\Response;
 use Nekudo\ShinyCore\Responder\HtmlResponder;
 use Nekudo\ShinyCore\Responder\PhtmlRenderer;
 use PHPUnit\Framework\TestCase;
@@ -16,8 +17,15 @@ class HtmlResponderTest extends TestCase
 
     public function setUp()
     {
-        $this->configData = include __DIR__ . '/../Mocks/config.php';
+        $this->configData = include __DIR__ . '/../../Mocks/config.php';
         $this->config = (new Config)->fromArray($this->configData);
+    }
+
+    public function testGetSetResponder()
+    {
+        $responder = new HtmlResponder($this->config);
+        $responder->setResponse(new Response);
+        $this->assertInstanceOf(Response::class, $responder->getResponse());
     }
 
     public function testInitWithDefaultRenderer()
