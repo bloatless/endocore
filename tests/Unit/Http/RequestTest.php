@@ -14,11 +14,19 @@ class RequestTest extends TestCase
 
     public function setUp()
     {
-        $this->request = new Request([], [], [
-            'REQUEST_METHOD' => 'GET',
-            'REQUEST_URI' => '/foo',
-            'CONTENT_TYPE' => 'text/plain'
-        ]);
+        $this->request = new Request(
+            [
+                'page' => 'home',
+            ],
+            [
+                'name' => 'Homer'
+            ],
+            [
+                'REQUEST_METHOD' => 'GET',
+                'REQUEST_URI' => '/foo',
+                'CONTENT_TYPE' => 'text/plain'
+            ]
+        );
     }
 
     public function testGetRequestMethod()
@@ -34,5 +42,26 @@ class RequestTest extends TestCase
     public function testGetContentType()
     {
         $this->assertEquals('text/plain', $this->request->getContentType());
+    }
+
+    public function testGetServerParams()
+    {
+        $request = new Request([], [], ['foo' => 'bar']);
+        $this->assertEquals(['foo' => 'bar'], $request->getServerParams());
+    }
+
+    public function testGetServerParam()
+    {
+        $this->assertEquals('/foo', $this->request->getServerParam('REQUEST_URI'));
+        $this->assertEquals(null, $this->request->getServerParam('foo'));
+        $this->assertEquals('bar', $this->request->getServerParam('foo', 'bar'));
+    }
+
+    public function testGetParam()
+    {
+        $this->assertEquals('home', $this->request->getParam('page'));
+        $this->assertEquals('Homer', $this->request->getParam('name'));
+        $this->assertEquals(null, $this->request->getParam('not_existing'));
+        $this->assertEquals('test', $this->request->getParam('not_existing', 'test'));
     }
 }
