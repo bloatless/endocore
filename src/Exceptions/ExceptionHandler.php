@@ -154,7 +154,8 @@ class ExceptionHandler implements ExceptionHandlerInterface
      */
     protected function provideResponder(): ResponderInterface
     {
-        if ($this->request->getContentType() === 'application/json') {
+        $acceptHeader = $this->request->getServerParam('HTTP_ACCEPT', '');
+        if (strpos($acceptHeader, 'application/json') !== false) {
             return new JsonResponder($this->config);
         }
         return new HtmlResponder($this->config);

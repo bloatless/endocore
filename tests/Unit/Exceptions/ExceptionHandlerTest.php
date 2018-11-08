@@ -79,7 +79,7 @@ class ExceptionHandlerTest extends TestCase
 
     public function testRespondsWithJson()
     {
-        $request = new Request([], [], ['CONTENT_TYPE' => 'application/json']);
+        $request = new Request([], [], ['HTTP_ACCEPT' => 'application/json']);
         $handler = new ExceptionHandler($this->config, $this->logger, $request);
         $error = new ShinyCoreException('json error');
         $response = $handler->handleException($error);
