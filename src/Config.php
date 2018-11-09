@@ -11,12 +11,22 @@ class Config
     /**
      * @var array $classes
      */
-    public $classes = [];
+    protected $classes = [];
 
     /**
      * @var array $paths
      */
-    public $paths = [];
+    protected $paths = [];
+
+    /**
+     * @var array $dbConfigs
+     */
+    protected $dbConfigs = [];
+
+    /**
+     * @var string $defaultDb
+     */
+    protected $defaultDb = '';
 
     /**
      * Loads configuration from given config file.
@@ -38,6 +48,7 @@ class Config
      * Loads configuration from given array.
      *
      * @param array $config
+     * @throws ShinyCoreException
      * @return Config
      */
     public function fromArray(array $config): Config
@@ -52,7 +63,32 @@ class Config
             $this->setPath($name, $path);
         }
 
+        if (!empty($config['db'])) {
+            $this->intiDbConfig($config['db']);
+        }
+
         return $this;
+    }
+
+    /**
+     * Initialized database configuration.
+     *
+     * @param array $dbConfig
+     * @throws ShinyCoreException
+     * @return void
+     */
+    private function intiDbConfig(array $dbConfig): void
+    {
+        if (empty($dbConfig['connections'])) {
+            throw new ShinyCoreException('There needs to be at least one database connection. Check config.');
+        }
+        if (empty($dbConfig['default_connection'])) {
+            throw new ShinyCoreException('Default database connection not set. Check config.');
+        }
+        foreach ($dbConfig['connections'] as $connectionName => $credentials) {
+            $this->addDbConfig($connectionName, $credentials);
+        }
+        $this->setDefaultDatabase($dbConfig['default_connection']);
     }
 
     /**
@@ -68,7 +104,7 @@ class Config
     }
 
     /**
-     * Returns a class name from configuraiton.
+     * Returns a class name from configuration.
      *
      * @param string $name
      * @param string $class
@@ -99,5 +135,71 @@ class Config
     public function setPath(string $name, string $path): void
     {
         $this->paths[$name] = $path;
+    }
+
+    /**
+     * Adds a database configuration.
+     *
+     * @param string $connectionName
+     * @param array $credentials
+     * @return void
+     */
+    public function addDbConfig(string $connectionName, array $credentials): void
+    {
+        $this->dbConfigs[$connectionName] = $credentials;
+    }
+
+    /**
+     * Retrieves a database configuration.
+     *
+     * @param string $connectionName
+     * @return array
+     */
+    public function getDbConfig(string $connectionName): array
+    {
+        if (!isset($this->dbConfigs[$connectionName])) {
+            throw new \InvalidArgumentException('Unknown database connection name. Please check config.');
+        }
+        return $this->dbConfigs[$connectionName];
+    }
+
+    /**
+     * Retrieves default database configuration.
+     *
+     * @return array
+     * @throws ShinyCoreException
+     */
+    public function getDefaultDbConfig(): array
+    {
+        if (empty($this->defaultDb)) {
+            throw new ShinyCoreException('Default database is not set.');
+        }
+        return $this->dbConfigs[$this->defaultDb];
+    }
+
+    /**
+     * Set default database/connection name.
+
+     * @param string $connectionName
+     * @return void
+     */
+    public function setDefaultDatabase(string $connectionName): void
+    {
+        if (!isset($this->dbConfigs[$connectionName])) {
+            throw new \InvalidArgumentException(
+                sprintf('Can not set default database to %s as this config does not exist.', $connectionName)
+            );
+        }
+        $this->defaultDb = $connectionName;
+    }
+
+    /**
+     * Retreives default database/connection name.
+     *
+     * @return string
+     */
+    public function getDefaultDatabase(): string
+    {
+        return $this->defaultDb;
     }
 }

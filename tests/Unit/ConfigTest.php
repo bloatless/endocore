@@ -19,8 +19,9 @@ class ConfigTest extends TestCase
     {
         $config = (new Config)->fromFile($this->pathToConfigfile);
         $this->assertInstanceOf(Config::class, $config);
-        $this->assertTrue(count($config->classes) > 0);
-        $this->assertTrue(count($config->paths) >0);
+        $this->assertNotEmpty($config->getClass('html_renderer'));
+        $this->assertNotEmpty($config->getPath('logs'));
+        $this->assertNotEmpty($config->getDefaultDbConfig());
 
         $this->expectException(ShinyCoreException::class);
         $config = (new Config)->fromFile('/invalid/path');
@@ -31,8 +32,9 @@ class ConfigTest extends TestCase
         $configData = include $this->pathToConfigfile;
         $config = (new Config)->fromArray($configData);
         $this->assertInstanceOf(Config::class, $config);
-        $this->assertTrue(count($config->classes) > 0);
-        $this->assertTrue(count($config->paths) >0);
+        $this->assertNotEmpty($config->getClass('html_renderer'));
+        $this->assertNotEmpty($config->getPath('logs'));
+        $this->assertNotEmpty($config->getDefaultDbConfig());
     }
 
     public function testSetGetClass()
@@ -49,5 +51,37 @@ class ConfigTest extends TestCase
         $config->setPath('foo', 'bar');
         $this->assertEquals('bar', $config->getPath('foo'));
         $this->assertEquals('baz', $config->getPath('xxx', 'baz'));
+    }
+
+    public function testSetGetDbConfig()
+    {
+        $config = new Config;
+        $config->addDbConfig('foo', ['host' => 'localhost']);
+        $this->assertArrayHasKey('host', $config->getDbConfig('foo'));
+
+        $this->expectException(\InvalidArgumentException::class);
+        $config->getDbConfig('bar');
+    }
+
+    public function testSetGetDefaultDatabase()
+    {
+        $config = (new Config)->fromFile($this->pathToConfigfile);
+        $this->assertEquals('db1', $config->getDefaultDatabase());
+
+        $this->expectException(\InvalidArgumentException::class);
+        $config->setDefaultDatabase('bar');
+
+        $config->addDbConfig('bar', ['host' => 'bar']);
+        $this->assertArrayHasKey('host', $config->getDbConfig('bar'));
+    }
+
+    public function testGetDefaultDbConfig()
+    {
+        $config = (new Config)->fromFile($this->pathToConfigfile);
+        $this->assertArrayHasKey('host', $config->getDefaultDbConfig());
+
+        $config = new Config;
+        $this->expectException(ShinyCoreException::class);
+        $config->getDefaultDbConfig();
     }
 }

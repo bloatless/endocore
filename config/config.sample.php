@@ -11,5 +11,18 @@ return [
         'html_renderer' => '\Nekudo\ShinyCore\Responder\PhtmlRenderer',
     ],
 
-    'db' => []
+    'db' => [
+        'connections' => [
+            'db1' => [
+                'driver' => 'mysql',
+                'host' => 'localhost',
+                'database' => 'db1',
+                'username' => 'root',
+                'password' => 'your-password',
+                'charset' => 'utf8', // Optional
+            ]
+        ],
+
+        'default_connection' => 'db1',
+    ],
 ];
