@@ -12,7 +12,7 @@ try {
     $request = new \Nekudo\ShinyCore\Http\Request($_GET, $_POST, $_SERVER);
     $router = new \Nekudo\ShinyCore\Router\Router($routes);
     $logger = new \Nekudo\ShinyCore\Logger\FileLogger($config);
-    $exceptionHandler = new \Nekudo\ShinyCore\Exceptions\ExceptionHandler($config, $logger, $request);
+    $exceptionHandler = new \Nekudo\ShinyCore\Exception\ExceptionHandler($config, $logger, $request);
 
     // create application:
     $app = new \Nekudo\ShinyCore\Application(
@@ -24,6 +24,6 @@ try {
     );
 
     return $app;
-} catch (\Nekudo\ShinyCore\Exceptions\Application\ShinyCoreException $e) {
+} catch (\Nekudo\ShinyCore\Exception\Application\ShinyCoreException $e) {
     exit('Error: ' . $e->getMessage());
 }

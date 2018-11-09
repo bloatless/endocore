@@ -1,13 +1,13 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit\Exceptions;
+namespace Nekudo\ShinyCore\Tests\Unit\Exception;
 
 use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Exceptions\Application\ShinyCoreException;
-use Nekudo\ShinyCore\Exceptions\ExceptionHandler;
-use Nekudo\ShinyCore\Exceptions\Http\BadRequestException;
-use Nekudo\ShinyCore\Exceptions\Http\MethodNotAllowedException;
-use Nekudo\ShinyCore\Exceptions\Http\NotFoundException;
+use Nekudo\ShinyCore\Exception\Application\ShinyCoreException;
+use Nekudo\ShinyCore\Exception\ExceptionHandler;
+use Nekudo\ShinyCore\Exception\Http\BadRequestException;
+use Nekudo\ShinyCore\Exception\Http\MethodNotAllowedException;
+use Nekudo\ShinyCore\Exception\Http\NotFoundException;
 use Nekudo\ShinyCore\Logger\NullLogger;
 use Nekudo\ShinyCore\Http\Request;
 use PHPUnit\Framework\TestCase;

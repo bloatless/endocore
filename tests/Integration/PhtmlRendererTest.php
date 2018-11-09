@@ -3,7 +3,7 @@
 namespace Nekudo\ShinyCore\Tests\Integration;
 
 use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Exceptions\Application\ShinyCoreException;
+use Nekudo\ShinyCore\Exception\Application\ShinyCoreException;
 use Nekudo\ShinyCore\Responder\PhtmlRenderer;
 use PHPUnit\Framework\TestCase;
 

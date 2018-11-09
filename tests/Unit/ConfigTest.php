@@ -3,7 +3,7 @@
 namespace Nekudo\ShinyCore\Tests\Unit;
 
 use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Exceptions\Application\ShinyCoreException;
+use Nekudo\ShinyCore\Exception\Application\ShinyCoreException;
 use PHPUnit\Framework\TestCase;
 
 class ConfigTest extends TestCase

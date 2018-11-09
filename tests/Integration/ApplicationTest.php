@@ -4,7 +4,7 @@ namespace Nekudo\ShinyCore\Tests\Integration;
 
 use Nekudo\ShinyCore\Application;
 use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Exceptions\ExceptionHandler;
+use Nekudo\ShinyCore\Exception\ExceptionHandler;
 use Nekudo\ShinyCore\Logger\NullLogger;
 use Nekudo\ShinyCore\Http\Request;
 use Nekudo\ShinyCore\Router\Router;
@@ -48,7 +48,7 @@ class ApplicationTest extends TestCase
         $this->assertInstanceOf('Nekudo\ShinyCore\Http\Request', $app->request);
         $this->assertInstanceOf('Nekudo\ShinyCore\Router\RouterInterface', $app->router);
         $this->assertInstanceOf('Nekudo\ShinyCore\Logger\LoggerInterface', $app->logger);
-        $this->assertInstanceOf('Nekudo\ShinyCore\Exceptions\ExceptionHandler', $app->exceptionHandler);
+        $this->assertInstanceOf('Nekudo\ShinyCore\Exception\ExceptionHandler', $app->exceptionHandler);
     }
 
     /**

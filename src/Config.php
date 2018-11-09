@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Nekudo\ShinyCore;
 
-use Nekudo\ShinyCore\Exceptions\Application\ShinyCoreException;
+use Nekudo\ShinyCore\Exception\Application\ShinyCoreException;
 
 class Config
 {

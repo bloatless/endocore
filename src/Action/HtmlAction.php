@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Actions;
+namespace Nekudo\ShinyCore\Action;
 
 use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Http\Request;

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Exceptions;
+namespace Nekudo\ShinyCore\Exception;
 
 use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Exceptions\Http\BadRequestException;
-use Nekudo\ShinyCore\Exceptions\Http\MethodNotAllowedException;
-use Nekudo\ShinyCore\Exceptions\Http\NotFoundException;
+use Nekudo\ShinyCore\Exception\Http\BadRequestException;
+use Nekudo\ShinyCore\Exception\Http\MethodNotAllowedException;
+use Nekudo\ShinyCore\Exception\Http\NotFoundException;
 use Nekudo\ShinyCore\Http\Response;
 use Nekudo\ShinyCore\Logger\LoggerInterface;
 use Nekudo\ShinyCore\Http\Request;

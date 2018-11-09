@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Nekudo\ShinyCore;
 
-use Nekudo\ShinyCore\Exceptions\Application\ShinyCoreException;
-use Nekudo\ShinyCore\Exceptions\ExceptionHandlerInterface;
-use Nekudo\ShinyCore\Exceptions\Http\BadRequestException;
-use Nekudo\ShinyCore\Exceptions\Http\MethodNotAllowedException;
-use Nekudo\ShinyCore\Exceptions\Http\NotFoundException;
+use Nekudo\ShinyCore\Exception\Application\ShinyCoreException;
+use Nekudo\ShinyCore\Exception\ExceptionHandlerInterface;
+use Nekudo\ShinyCore\Exception\Http\BadRequestException;
+use Nekudo\ShinyCore\Exception\Http\MethodNotAllowedException;
+use Nekudo\ShinyCore\Exception\Http\NotFoundException;
 use Nekudo\ShinyCore\Http\Request;
 use Nekudo\ShinyCore\Http\Response;
 use Nekudo\ShinyCore\Logger\LoggerInterface;
@@ -123,7 +123,7 @@ class Application
             throw new ShinyCoreException('Action class not found.');
         }
 
-        /** @var \Nekudo\ShinyCore\Actions\ActionInterface $action */
+        /** @var \Nekudo\ShinyCore\Action\ActionInterface $action */
         $action = new $handler($this->config, $this->request);
         return $action->__invoke($arguments);
     }

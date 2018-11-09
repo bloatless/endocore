@@ -3,7 +3,7 @@
 namespace Nekudo\ShinyCore\Tests\Unit\Logger;
 
 use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Exceptions\Application\ShinyCoreException;
+use Nekudo\ShinyCore\Exception\Application\ShinyCoreException;
 use Nekudo\ShinyCore\Logger\FileLogger;
 use Nekudo\ShinyCore\Logger\LogLevel;
 use PHPUnit\Framework\TestCase;

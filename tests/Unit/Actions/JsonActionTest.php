@@ -1,6 +1,6 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit\Actions;
+namespace Nekudo\ShinyCore\Tests\Unit\Action;
 
 use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Responder\JsonResponder;

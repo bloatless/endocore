@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Exceptions;
+namespace Nekudo\ShinyCore\Exception;
 
 use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Http\Response;

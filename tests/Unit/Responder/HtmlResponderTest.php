@@ -3,7 +3,7 @@
 namespace Nekudo\ShinyCore\Tests\Unit\Responder;
 
 use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Exceptions\Application\ShinyCoreException;
+use Nekudo\ShinyCore\Exception\Application\ShinyCoreException;
 use Nekudo\ShinyCore\Http\Response;
 use Nekudo\ShinyCore\Responder\HtmlResponder;
 use Nekudo\ShinyCore\Responder\PhtmlRenderer;

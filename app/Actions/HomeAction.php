@@ -2,7 +2,7 @@
 
 namespace Nekudo\ShinyCoreApp\Actions;
 
-use Nekudo\ShinyCore\Actions\HtmlAction;
+use Nekudo\ShinyCore\Action\HtmlAction;
 use Nekudo\ShinyCore\Http\Response;
 use Nekudo\ShinyCoreApp\Domains\HomeDomain;
 

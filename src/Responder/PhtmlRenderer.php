@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Nekudo\ShinyCore\Responder;
 
 use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Exceptions\Application\ShinyCoreException;
+use Nekudo\ShinyCore\Exception\Application\ShinyCoreException;
 
 class PhtmlRenderer implements RendererInterface
 {
