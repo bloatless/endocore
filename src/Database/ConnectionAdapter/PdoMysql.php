@@ -6,7 +6,7 @@ namespace Nekudo\ShinyCore\Database\ConnectionAdapter;
 
 use Nekudo\ShinyCore\Exception\Application\DatabaseException;
 
-class Mysql implements ConnectionAdapterInterface
+class PdoMysql implements ConnectionAdapterInterface
 {
     /**
      * @todo Add support for unix socket
@@ -35,7 +35,9 @@ class Mysql implements ConnectionAdapterInterface
         $dsn .= implode(';', $dsnParams);
 
         try {
-            return new \PDO($dsn, $credentials['username'], $credentials['password']);
+            $pdo = new \PDO($dsn, $credentials['username'], $credentials['password']);
+            $pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
+            return $pdo;
         } catch (\PDOException $e) {
             throw new DatabaseException(sprintf('Error connecting to database (%s)', $e->getMessage()));
         }

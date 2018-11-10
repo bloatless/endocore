@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Nekudo\ShinyCore\Database;
 
 use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Database\ConnectionAdapter\Mysql;
+use Nekudo\ShinyCore\Database\ConnectionAdapter\PdoMysql;
+use Nekudo\ShinyCore\Database\QueryBuilder\SelectBuilder;
 use Nekudo\ShinyCore\Exception\Application\DatabaseException;
 
 class Factory
@@ -16,76 +17,76 @@ class Factory
     protected $config;
 
     /**
-     * @var array $builders
+     * @var array $connections
      */
-    protected $builders = [];
+    protected $connections = [];
 
     public function __construct(Config $config)
     {
         $this->config = $config;
     }
 
-    /**
-     * Creates and returns a QueryBuilder instance. Each instance is only created once.
-     *
-     * @todo Add support for additional drivers.
-     *
-     * @param string $connectionName
-     * @return QueryBuilder
-     * @throws DatabaseException
-     * @throws \Nekudo\ShinyCore\Exception\Application\ShinyCoreException
-     */
-    public function createDb(string $connectionName = ''): QueryBuilder
+    public function makeInsert(string $connectionName = '')
     {
-        if (isset($this->builders[$connectionName])) {
-            return $this->builders[$connectionName];
+
+    }
+
+    public function makeSelect(string $connectionName = ''): SelectBuilder
+    {
+        $connection = $this->provideConnection($connectionName);
+        return new SelectBuilder($connection);
+    }
+
+    public function makeUpdate(string $connectionName = '')
+    {
+
+    }
+
+    public function makeDelete(string $connectionName = '')
+    {
+
+    }
+
+    public function provideConnection(string $connectionName = ''): \PDO
+    {
+        if (empty($connectionName)) {
+            $connectionName = $this->config->getDefaultDatabase();
+        }
+        if ($this->hasConnection($connectionName) === true) {
+            return $this->getConnection($connectionName);
         }
 
-        if (!empty($connectionName)) {
-            $dbConfig = $this->config->getDbConfig($connectionName);
-        } else {
-            $dbConfig = $this->config->getDefaultDbConfig();
-        }
+        $dbConfig = $this->config->getDbConfig($connectionName);
 
         switch ($dbConfig['driver']) {
             case 'mysql':
-                $adapter = new Mysql;
+                $adapter = new PdoMysql;
                 break;
             default:
                 throw new DatabaseException('Unsupported database driver. Check config.');
         }
 
         $connection = $adapter->connect($dbConfig);
-        $builder = new QueryBuilder($connection);
-        $this->addBuilder($connectionName, $builder);
+        $this->addConnection($connectionName, $connection);
 
-        return $builder;
+        return $connection;
     }
 
-    /**
-     * Adds QueryBuilder instance to pool.
-     *
-     * @param string $connectionName
-     * @param QueryBuilder $builder
-     * @return void
-     */
-    public function addBuilder(string $connectionName, QueryBuilder $builder): void
+    public function hasConnection(string $connectionName): bool
     {
-        $this->builders[$connectionName] = $builder;
+        return isset($this->connections[$connectionName]);
     }
 
-    /**
-     * Retreives QueryBuilder from pool.
-     *
-     * @param string $connectionName
-     * @return QueryBuilder
-     * @throws DatabaseException
-     */
-    public function getBuilder(string $connectionName): QueryBuilder
+    public function addConnection(string $connectionName, \PDO $connection): void
     {
-        if (!isset($this->builders[$connectionName])) {
+        $this->connections[$connectionName] = $connection;
+    }
+
+    public function getConnection(string $connectionName): \PDO
+    {
+        if (!isset($this->connections[$connectionName])) {
             throw new DatabaseException(sprintf('Connection (%s) not found in pool.', $connectionName));
         }
-        return $this->builders[$connectionName];
+        return $this->connections[$connectionName];
     }
 }

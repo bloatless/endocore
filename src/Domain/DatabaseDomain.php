@@ -16,8 +16,6 @@ class DatabaseDomain
     public function __construct(Config $config)
     {
         $this->config = $config;
-
-        $databaseFactory = new Factory($config);
-        $this->db = $databaseFactory->createDb();
+        $this->db = new Factory($config);
     }
 }
