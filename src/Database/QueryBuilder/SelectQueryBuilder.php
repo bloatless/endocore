@@ -4,45 +4,93 @@ declare(strict_types=1);
 
 namespace Nekudo\ShinyCore\Database\QueryBuilder;
 
-use Nekudo\ShinyCore\Exception\Application\DatabaseException;
-
 /**
  * @property \Nekudo\ShinyCore\Database\StatementBuilder\SelectStatementBuilder $statementBuilder
  */
 class SelectQueryBuilder extends QueryBuilder
 {
+    /**
+     * @var array $flags
+     */
     protected $flags = [];
 
+    /**
+     * @var array $cols
+     */
     protected $cols = ['*'];
 
+    /**
+     * @var string $from
+     */
     protected $from = '';
 
+    /**
+     * @var array $join
+     */
     protected $join = [];
 
+    /**
+     * @var array $where
+     */
     protected $where = [];
 
+    /**
+     * @var array $groupBy
+     */
     protected $groupBy = [];
 
+    /**
+     * @var array $orderBy
+     */
     protected $orderBy = [];
 
+    /**
+     * @var array $having
+     */
     protected $having = [];
 
+    /**
+     * @var int $limit
+     */
     protected $limit = 0;
 
+    /**
+     * @var int $offset
+     */
     protected $offset = 0;
 
+    /**
+     * Add fields to select from table(s).
+     *
+     * @param array $cols
+     * @return SelectQueryBuilder
+     */
     public function cols(array $cols = ['*'])
     {
         $this->cols = $cols;
         return $this;
     }
 
+    /**
+     * Sets base table to select from.
+     *
+     * @param string $table
+     * @return SelectQueryBuilder
+     */
     public function from(string $table)
     {
         $this->from = $table;
         return $this;
     }
 
+    /**
+     * Adds a where condition.
+
+     * @param string $key
+     * @param string $operator
+     * @param mixed $value
+     * @return SelectQueryBuilder
+     */
     public function where(string $key, string $operator, $value)
     {
         array_push($this->where, [
@@ -53,20 +101,23 @@ class SelectQueryBuilder extends QueryBuilder
         return $this;
     }
 
-    public function get()
+    /**
+     * Executes select query and returns all matching rows as array of objects.
+     *
+     * @return array
+     * @throws \Nekudo\ShinyCore\Exception\Application\DatabaseQueryException
+     */
+    public function get(): array
     {
         $pdoStatement = $this->provideStatement();
         return $pdoStatement->fetchAll(\PDO::FETCH_OBJ);
     }
 
-
-    protected function provideStatement(): \PDOStatement
-    {
-        $sqlStatement = $this->buildStatement();
-        $bindingValues = $this->statementBuilder->getBindingValues();
-        return $this->prepare($sqlStatement, $bindingValues);
-    }
-
+    /**
+     * Builds the SQL statement from all attributes previously set.
+     *
+     * @return string
+     */
     protected function buildStatement(): string
     {
         $this->statementBuilder->addFlags($this->flags);
@@ -80,36 +131,5 @@ class SelectQueryBuilder extends QueryBuilder
         $this->statementBuilder->addLimitOffset($this->limit, $this->offset);
 
         return $this->statementBuilder->getStatement();
-    }
-
-    /**
-     * @todo introduce query exception
-     * @return \PDOStatement
-     * @throws DatabaseException
-     */
-    protected function prepare(string $sqlStatement, array $bindingValues): \PDOStatement
-    {
-        $pdoStatement = $this->connection->prepare($sqlStatement);
-
-        foreach ($bindingValues as $key => $value) {
-            if (is_int($value)) {
-                $pdoStatement->bindValue($key, $value, \PDO::PARAM_INT);
-            } elseif (is_bool($value)) {
-                $pdoStatement->bindValue($key, $value, \PDO::PARAM_BOOL);
-            } elseif (is_null($value)) {
-                $pdoStatement->bindValue($key, $value, \PDO::PARAM_NULL);
-            } else {
-                $pdoStatement->bindValue($key, $value, \PDO::PARAM_STR);
-            }
-        }
-
-        $result = $pdoStatement->execute();
-        if ($result === false) {
-            $pdoError = $pdoStatement->errorInfo();
-            $errorMessage = $pdoError[2] ?? 'Unspecified SQL error.';
-            throw new DatabaseException($errorMessage);
-        }
-
-        return $pdoStatement;
     }
 }
