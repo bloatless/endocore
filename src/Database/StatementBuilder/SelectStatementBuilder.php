@@ -71,13 +71,17 @@ class SelectStatementBuilder extends StatementBuilder
             return;
         }
 
-        $conditions = [];
-        foreach ($where as $condition) {
-            $placeholder = $this->addBindingValue($condition['key'], $condition['value']);
-            array_push($conditions, sprintf('%s %s :%s', $condition['key'], $condition['operator'], $placeholder));
-        }
+        $firstClause = true;
         $this->statement .= ' WHERE ';
-        $this->statement .= implode(PHP_EOL . 'AND ', $conditions);
+        foreach ($where as $clause) {
+            $placeholder = $this->addBindingValue($clause['key'], $clause['value']);
+            if ($firstClause === false) {
+                $this->statement .= ' ' . $clause['concatenator'] . ' ';
+            }
+            $this->statement .= sprintf('%s %s :%s', $clause['key'], $clause['operator'], $placeholder);
+            $this->statement .= PHP_EOL;
+            $firstClause = false;
+        }
     }
 
     /**

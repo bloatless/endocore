@@ -65,7 +65,7 @@ class SelectQueryBuilder extends QueryBuilder
      * @param array $cols
      * @return SelectQueryBuilder
      */
-    public function cols(array $cols = ['*'])
+    public function cols(array $cols = ['*']): SelectQueryBuilder
     {
         $this->cols = $cols;
         return $this;
@@ -77,7 +77,7 @@ class SelectQueryBuilder extends QueryBuilder
      * @param string $table
      * @return SelectQueryBuilder
      */
-    public function from(string $table)
+    public function from(string $table): SelectQueryBuilder
     {
         $this->from = $table;
         return $this;
@@ -91,14 +91,42 @@ class SelectQueryBuilder extends QueryBuilder
      * @param mixed $value
      * @return SelectQueryBuilder
      */
-    public function where(string $key, string $operator, $value)
+    public function where(string $key, string $operator, $value): SelectQueryBuilder
+    {
+        $this->addWhere($key, $operator, $value, 'AND');
+        return $this;
+    }
+
+    /**
+     * Adds a "or where" condition.
+     *
+     * @param string $key
+     * @param string $operator
+     * @param mixed $value
+     * @return SelectQueryBuilder
+     */
+    public function orWhere(string $key, string $operator, $value): SelectQueryBuilder
+    {
+        $this->addWhere($key, $operator, $value, 'OR');
+        return $this;
+    }
+
+    /**
+     * Adds where condition to pool.
+     *
+     * @param string $key
+     * @param string $operator
+     * @param $value
+     * @param string $concatenator
+     */
+    protected function addWhere(string $key, string $operator, $value, $concatenator = 'AND'): void
     {
         array_push($this->where, [
             'key' => $key,
             'operator' => $operator,
-            'value' => $value
+            'value' => $value,
+            'concatenator' => $concatenator,
         ]);
-        return $this;
     }
 
     /**
