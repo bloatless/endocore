@@ -6,7 +6,8 @@ namespace Nekudo\ShinyCore\Database;
 
 use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Database\ConnectionAdapter\PdoMysql;
-use Nekudo\ShinyCore\Database\QueryBuilder\SelectBuilder;
+use Nekudo\ShinyCore\Database\QueryBuilder\SelectQueryBuilder;
+use Nekudo\ShinyCore\Database\StatementBuilder\SelectStatementBuilder;
 use Nekudo\ShinyCore\Exception\Application\DatabaseException;
 
 class Factory
@@ -31,10 +32,11 @@ class Factory
 
     }
 
-    public function makeSelect(string $connectionName = ''): SelectBuilder
+    public function makeSelect(string $connectionName = ''): SelectQueryBuilder
     {
         $connection = $this->provideConnection($connectionName);
-        return new SelectBuilder($connection);
+        $statementBuilder = new SelectStatementBuilder;
+        return new SelectQueryBuilder($connection, $statementBuilder);
     }
 
     public function makeUpdate(string $connectionName = '')
