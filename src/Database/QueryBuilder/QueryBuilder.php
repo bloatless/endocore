@@ -74,6 +74,9 @@ abstract class QueryBuilder
     protected function prepareStatement(string $sqlStatement, array $bindingValues): \PDOStatement
     {
         $pdoStatement = $this->connection->prepare($sqlStatement);
+        if ($pdoStatement === false) {
+            $this->throwError($this->connection->errorInfo());
+        }
 
         foreach ($bindingValues as $key => $value) {
             if (is_int($value)) {
@@ -89,12 +92,23 @@ abstract class QueryBuilder
 
         $result = $pdoStatement->execute();
         if ($result === false) {
-            $pdoError = $pdoStatement->errorInfo();
-            $errorMessage = $pdoError[2] ?? 'Unspecified SQL error.';
-            throw new DatabaseQueryException($errorMessage);
+            $this->throwError($pdoStatement->errorInfo());
         }
 
         return $pdoStatement;
+    }
+
+    /**
+     * Throws a query exception with error message from PDO.
+     *
+     * @param array $errorInfo
+     * @throws DatabaseQueryException
+     * @return void
+     */
+    protected function throwError(array $errorInfo): void
+    {
+        $errorMessage = $errorInfo[2] ?? 'Unspecified SQL error.';
+        throw new DatabaseQueryException($errorMessage);
     }
 
     /**
