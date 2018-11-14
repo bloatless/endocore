@@ -98,6 +98,18 @@ class SelectQueryBuilder extends QueryBuilder
     }
 
     /**
+     * Adds "where equals" condition.
+     *
+     * @param string $key
+     * @param mixed $value
+     * @return SelectQueryBuilder
+     */
+    public function whereEquals(string $key, $value): SelectQueryBuilder
+    {
+        return $this->where($key, '=', $value);
+    }
+
+    /**
      * Adds a "or where" condition.
      *
      * @param string $key
