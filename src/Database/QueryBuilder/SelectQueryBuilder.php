@@ -112,6 +112,19 @@ class SelectQueryBuilder extends QueryBuilder
     }
 
     /**
+     * Adds a "where in" condition.
+     *
+     * @param string $key
+     * @param array $values
+     * @return SelectQueryBuilder
+     */
+    public function whereIn(string $key, array $values): SelectQueryBuilder
+    {
+        $this->addWhere($key, 'IN', $values, 'AND');
+        return $this;
+    }
+
+    /**
      * Adds where condition to pool.
      *
      * @param string $key

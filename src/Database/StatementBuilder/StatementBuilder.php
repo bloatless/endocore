@@ -51,7 +51,7 @@ abstract class StatementBuilder
      */
     public function addBindingValue(string $key, $value): string
     {
-        $placeholder = $key;
+        $placeholder = ':' . $key;
         if (!isset($this->bindingValues[$key])) {
             $this->bindingValues[$key] = $value;
             $this->bindingValueCounts[$key] = 1;

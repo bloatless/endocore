@@ -39,7 +39,7 @@ class SelectStatementBuilder extends StatementBuilder
     }
 
     /**
-     * Adds from-table to SQL statemtent.
+     * Adds from-table to SQL statement.
      *
      * @param string $from
      * @return void
@@ -74,14 +74,56 @@ class SelectStatementBuilder extends StatementBuilder
         $firstClause = true;
         $this->statement .= ' WHERE ';
         foreach ($where as $clause) {
-            $placeholder = $this->addBindingValue($clause['key'], $clause['value']);
             if ($firstClause === false) {
                 $this->statement .= ' ' . $clause['concatenator'] . ' ';
             }
-            $this->statement .= sprintf('%s %s :%s', $clause['key'], $clause['operator'], $placeholder);
-            $this->statement .= PHP_EOL;
+            switch ($clause['operator']) {
+                case 'IN':
+                    $this->addWhereIn($clause['key'], $clause['value']);
+                    break;
+                case 'BETWEEN':
+                    break;
+                default:
+                    $this->addSimpleWhere($clause['key'], $clause['operator'], $clause['value']);
+                    break;
+            }
+
             $firstClause = false;
         }
+    }
+
+    /**
+     * Adds a regular where clause to the statement.
+     *
+     * @param string $key
+     * @param string $operator
+     * @param mixed $value
+     * @return void
+     */
+    protected function addSimpleWhere(string $key, string $operator, $value): void
+    {
+        $placeholder = $this->addBindingValue($key, $value);
+        $this->statement .= sprintf('%s %s %s', $key, $operator, $placeholder);
+        $this->statement .= PHP_EOL;
+    }
+
+    /**
+     * Adds a "where in" clause to the statement.
+     *
+     * @param string $key
+     * @param array $values
+     * @return  void
+     */
+    protected function addWhereIn(string $key, array $values): void
+    {
+        $placeholders = [];
+        foreach ($values as $value) {
+            $placeholder = $this->addBindingValue($key, $value);
+            array_push($placeholders, $placeholder);
+        }
+        $placeholdersList = implode(',', $placeholders);
+        $this->statement .= sprintf('%s IN (%s)', $key, $placeholdersList);
+        $this->statement .= PHP_EOL;
     }
 
     /**
