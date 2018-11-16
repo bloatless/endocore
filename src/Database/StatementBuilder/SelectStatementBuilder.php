@@ -79,7 +79,10 @@ class SelectStatementBuilder extends StatementBuilder
             }
             switch ($clause['operator']) {
                 case 'IN':
-                    $this->addWhereIn($clause['key'], $clause['value']);
+                    $this->addWhereIn($clause['key'], $clause['value'], false);
+                    break;
+                case 'NOT IN':
+                    $this->addWhereIn($clause['key'], $clause['value'], true);
                     break;
                 case 'BETWEEN':
                     $this->addWhereBetween($clause['key'], $clause['value']['min'], $clause['value']['max']);
@@ -109,13 +112,14 @@ class SelectStatementBuilder extends StatementBuilder
     }
 
     /**
-     * Adds a "where in" clause to the statement.
+     * Adds a "where (not) in" clause to the statement.
      *
      * @param string $key
      * @param array $values
+     * @param bool $not
      * @return  void
      */
-    protected function addWhereIn(string $key, array $values): void
+    protected function addWhereIn(string $key, array $values, bool $not = false): void
     {
         $placeholders = [];
         foreach ($values as $value) {
@@ -123,7 +127,9 @@ class SelectStatementBuilder extends StatementBuilder
             array_push($placeholders, $placeholder);
         }
         $placeholdersList = implode(',', $placeholders);
-        $this->statement .= sprintf('%s IN (%s)', $key, $placeholdersList);
+        $pattern = ($not === true) ? '%s NOT IN (%s)' : '%s IN (%s)';
+
+        $this->statement .= sprintf($pattern, $key, $placeholdersList);
         $this->statement .= PHP_EOL;
     }
 

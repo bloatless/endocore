@@ -136,6 +136,12 @@ class SelectQueryBuilder extends QueryBuilder
         return $this;
     }
 
+    public function whereNotIn(string $key, array $values): SelectQueryBuilder
+    {
+        $this->addWhere($key, 'NOT IN', $values, 'AND');
+        return $this;
+    }
+
     /**
      * Adds a "where between" condition.
      *
