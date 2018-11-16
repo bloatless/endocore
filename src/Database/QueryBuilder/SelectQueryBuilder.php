@@ -137,6 +137,21 @@ class SelectQueryBuilder extends QueryBuilder
     }
 
     /**
+     * Adds a "where between" condition.
+     *
+     * @param string $key
+     * @param int $min
+     * @param int $max
+     * @return SelectQueryBuilder
+     */
+    public function whereBetween(string $key, int $min, int $max): SelectQueryBuilder
+    {
+        $values = ['min' => $min, 'max' => $max];
+        $this->addWhere($key, 'BETWEEN', $values, 'AND');
+        return$this;
+    }
+
+    /**
      * Adds where condition to pool.
      *
      * @param string $key

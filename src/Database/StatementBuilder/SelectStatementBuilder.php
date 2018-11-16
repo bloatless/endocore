@@ -82,6 +82,7 @@ class SelectStatementBuilder extends StatementBuilder
                     $this->addWhereIn($clause['key'], $clause['value']);
                     break;
                 case 'BETWEEN':
+                    $this->addWhereBetween($clause['key'], $clause['value']['min'], $clause['value']['max']);
                     break;
                 default:
                     $this->addSimpleWhere($clause['key'], $clause['operator'], $clause['value']);
@@ -123,6 +124,21 @@ class SelectStatementBuilder extends StatementBuilder
         }
         $placeholdersList = implode(',', $placeholders);
         $this->statement .= sprintf('%s IN (%s)', $key, $placeholdersList);
+        $this->statement .= PHP_EOL;
+    }
+
+    /**
+     * Adds a "where between" clause to statement.
+     *
+     * @param string $key
+     * @param int $min
+     * @param int $max
+     */
+    protected function addWhereBetween(string $key, int $min, int $max): void
+    {
+        $phMin = $this->addBindingValue($key, $min);
+        $phMax = $this->addBindingValue($key, $max);
+        $this->statement .= sprintf('%s BETWEEN %s AND %s', $key, $phMin, $phMax);
         $this->statement .= PHP_EOL;
     }
 
