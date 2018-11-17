@@ -309,6 +309,18 @@ class SelectQueryBuilder extends QueryBuilder
     }
 
     /**
+     * Adds a field to "group by".
+     *
+     * @param string $key
+     * @return SelectQueryBuilder
+     */
+    public function groupBy(string $key): SelectQueryBuilder
+    {
+        array_push($this->groupBy, $key);
+        return $this;
+    }
+
+    /**
      * Adds where condition to pool.
      *
      * @param string $key

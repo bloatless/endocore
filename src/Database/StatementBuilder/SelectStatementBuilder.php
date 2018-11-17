@@ -197,6 +197,11 @@ class SelectStatementBuilder extends StatementBuilder
      */
     public function addGroupBy(array $groupBy): void
     {
+        if (empty($groupBy)) {
+            return;
+        }
+        $groupByList = implode(', ', $groupBy);
+        $this->statement .= ' GROUP BY ' . $groupByList . PHP_EOL;
     }
 
     /**
