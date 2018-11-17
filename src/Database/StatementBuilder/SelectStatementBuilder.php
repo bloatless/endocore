@@ -55,11 +55,28 @@ class SelectStatementBuilder extends StatementBuilder
     /**
      * Adds joins to SQL statement.
      *
-     * @param array $join
+     * @param array $joins
      * @return void
      */
-    public function addJoin(array $join): void
+    public function addJoin(array $joins): void
     {
+        if (empty($joins)) {
+            return;
+        }
+
+        foreach ($joins as $join) {
+            $keyword = strtoupper($join['type']);
+            $pattern = '%s JOIN %s ON %s %s %s';
+            $this->statement .= sprintf(
+                $pattern,
+                $keyword,
+                $join['table'],
+                $join['key'],
+                $join['operator'],
+                $join['value']
+            );
+            $this->statement .= PHP_EOL;
+        }
     }
 
     /**

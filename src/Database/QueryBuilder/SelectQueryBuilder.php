@@ -95,6 +95,50 @@ class SelectQueryBuilder extends QueryBuilder
     }
 
     /**
+     * Adds an "inner join".
+     *
+     * @param string $table
+     * @param string $key
+     * @param string $operator
+     * @param string $value
+     * @return SelectQueryBuilder
+     */
+    public function join(string $table, string $key, string $operator, string $value): SelectQueryBuilder
+    {
+        $this->addJoin($table, $key, $operator, $value, 'inner');
+        return $this;
+    }
+
+    /**
+     * Adds an "left join".
+     *
+     * @param string $table
+     * @param string $key
+     * @param string $operator
+     * @param string $value
+     * @return SelectQueryBuilder
+     */
+    public function leftJoin(string $table, string $key, string $operator, string $value): SelectQueryBuilder
+    {
+        $this->addJoin($table, $key, $operator, $value, 'left');
+        return $this;
+    }
+    /**
+     * Adds an "right join".
+     *
+     * @param string $table
+     * @param string $key
+     * @param string $operator
+     * @param string $value
+     * @return SelectQueryBuilder
+     */
+    public function rightJoin(string $table, string $key, string $operator, string $value): SelectQueryBuilder
+    {
+        $this->addJoin($table, $key, $operator, $value, 'right');
+        return $this;
+    }
+
+    /**
      * Adds a where condition.
 
      * @param string $key
@@ -279,6 +323,32 @@ class SelectQueryBuilder extends QueryBuilder
             'operator' => $operator,
             'value' => $value,
             'concatenator' => $concatenator,
+        ]);
+    }
+
+    /**
+     * Adds new join to the pool.
+     *
+     * @param string $table
+     * @param string $key
+     * @param string $operator
+     * @param string $value
+     * @param string $type
+     * @return void
+     */
+    protected function addJoin(
+        string $table,
+        string $key,
+        string $operator,
+        string $value,
+        string $type = 'inner'
+    ): void {
+        array_push($this->join, [
+            'table' => $table,
+            'key' => $key,
+            'operator' => $operator,
+            'value' => $value,
+            'type' => $type,
         ]);
     }
 

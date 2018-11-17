@@ -51,6 +51,7 @@ abstract class StatementBuilder
      */
     public function addBindingValue(string $key, $value): string
     {
+        $key = $this->removeTableFromKey($key);
         $placeholder = ':' . $key;
         if (!isset($this->bindingValues[$key])) {
             $this->bindingValues[$key] = $value;
@@ -62,5 +63,20 @@ abstract class StatementBuilder
         $this->bindingValueCounts[$key]++;
         $this->bindingValues[$placeholder] = $value;
         return $placeholder;
+    }
+
+    /**
+     * Returns a key/field-name without the table prefix.
+     *
+     * @param string $key
+     * @return string
+     */
+    protected function removeTableFromKey(string $key): string
+    {
+        if (strpos($key, '.') === false) {
+            return $key;
+        }
+        $keyParts = explode('.', $key);
+        return array_pop($keyParts);
     }
 }
