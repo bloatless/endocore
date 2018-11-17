@@ -98,7 +98,7 @@ class SelectQueryBuilder extends QueryBuilder
     }
 
     /**
-     * Adds "where equals" condition.
+     * Adds "where equals" condition. (Shortcut for where method with '=' operator).
      *
      * @param string $key
      * @param mixed $value
@@ -136,9 +136,42 @@ class SelectQueryBuilder extends QueryBuilder
         return $this;
     }
 
+    /**
+     * Adds a "where not in" condition.
+     *
+     * @param string $key
+     * @param array $values
+     * @return SelectQueryBuilder
+     */
     public function whereNotIn(string $key, array $values): SelectQueryBuilder
     {
         $this->addWhere($key, 'NOT IN', $values, 'AND');
+        return $this;
+    }
+
+    /**
+     * Adds a "or where not in" condition.
+     *
+     * @param string $key
+     * @param array $values
+     * @return SelectQueryBuilder
+     */
+    public function orWhereIn(string $key, array $values): SelectQueryBuilder
+    {
+        $this->addWhere($key, 'IN', $values, 'OR');
+        return $this;
+    }
+
+    /**
+     * Adds a "or where not in" condition.
+     *
+     * @param string $key
+     * @param array $values
+     * @return SelectQueryBuilder
+     */
+    public function orWhereNotIn(string $key, array $values): SelectQueryBuilder
+    {
+        $this->addWhere($key, 'NOT IN', $values, 'OR');
         return $this;
     }
 
@@ -154,6 +187,21 @@ class SelectQueryBuilder extends QueryBuilder
     {
         $values = ['min' => $min, 'max' => $max];
         $this->addWhere($key, 'BETWEEN', $values, 'AND');
+        return$this;
+    }
+
+    /**
+     * Adds a "or where between" condition.
+     *
+     * @param string $key
+     * @param int $min
+     * @param int $max
+     * @return SelectQueryBuilder
+     */
+    public function orWhereBetween(string $key, int $min, int $max): SelectQueryBuilder
+    {
+        $values = ['min' => $min, 'max' => $max];
+        $this->addWhere($key, 'BETWEEN', $values, 'OR');
         return$this;
     }
 
@@ -178,6 +226,30 @@ class SelectQueryBuilder extends QueryBuilder
     public function whereNotNull(string $key): SelectQueryBuilder
     {
         $this->addWhere($key, 'NOT NULL', [], 'AND');
+        return $this;
+    }
+
+    /**
+     * Adds a "or where null" condition.
+     *
+     * @param string $key
+     * @return SelectQueryBuilder
+     */
+    public function orWhereNull(string $key): SelectQueryBuilder
+    {
+        $this->addWhere($key, 'NULL', [], 'OR');
+        return $this;
+    }
+
+    /**
+     * Adds a "or where not null" condition.
+     *
+     * @param string $key
+     * @return SelectQueryBuilder
+     */
+    public function orWhereNotNull(string $key): SelectQueryBuilder
+    {
+        $this->addWhere($key, 'NOT NULL', [], 'OR');
         return $this;
     }
 
