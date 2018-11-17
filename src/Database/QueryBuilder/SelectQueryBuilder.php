@@ -321,6 +321,22 @@ class SelectQueryBuilder extends QueryBuilder
     }
 
     /**
+     * Adds an order by clause to query.
+     *
+     * @param string $key
+     * @param string $direction
+     * @return SelectQueryBuilder
+     */
+    public function orderBy(string $key, string $direction = 'ASC'): SelectQueryBuilder
+    {
+        array_push($this->orderBy, [
+            'key' => $key,
+            'direction' => strtoupper($direction),
+        ]);
+        return $this;
+    }
+
+    /**
      * Adds where condition to pool.
      *
      * @param string $key

@@ -215,13 +215,23 @@ class SelectStatementBuilder extends StatementBuilder
     }
 
     /**
-     * Adds "order by clause(s) to SQL statement.
+     * Adds "order by" clause(s) to SQL statement.
      *
      * @param array $orderBy
      * @return void
      */
     public function addOrderBy(array $orderBy): void
     {
+        if (empty($orderBy)) {
+            return;
+        }
+        $orderByList = [];
+        foreach ($orderBy as $clause) {
+            array_push($orderByList, $clause['key'] . ' ' . $clause['direction']);
+        }
+        $pattern = ' ORDER BY %s';
+        $this->statement .= sprintf($pattern, implode(', ', $orderByList));
+        $this->statement .= PHP_EOL;
     }
 
     /**
