@@ -158,6 +158,30 @@ class SelectQueryBuilder extends QueryBuilder
     }
 
     /**
+     * Adds a "where null" condition.
+     *
+     * @param string $key
+     * @return SelectQueryBuilder
+     */
+    public function whereNull(string $key): SelectQueryBuilder
+    {
+        $this->addWhere($key, 'NULL', [], 'AND');
+        return $this;
+    }
+
+    /**
+     * Adds a "where not null" condition.
+     *
+     * @param string $key
+     * @return SelectQueryBuilder
+     */
+    public function whereNotNull(string $key): SelectQueryBuilder
+    {
+        $this->addWhere($key, 'NOT NULL', [], 'AND');
+        return $this;
+    }
+
+    /**
      * Adds where condition to pool.
      *
      * @param string $key

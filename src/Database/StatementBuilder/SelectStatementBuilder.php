@@ -87,6 +87,12 @@ class SelectStatementBuilder extends StatementBuilder
                 case 'BETWEEN':
                     $this->addWhereBetween($clause['key'], $clause['value']['min'], $clause['value']['max']);
                     break;
+                case 'NULL':
+                    $this->addWhereNull($clause['key'], false);
+                    break;
+                case 'NOT NULL':
+                    $this->addWhereNull($clause['key'], true);
+                    break;
                 default:
                     $this->addSimpleWhere($clause['key'], $clause['operator'], $clause['value']);
                     break;
@@ -117,7 +123,7 @@ class SelectStatementBuilder extends StatementBuilder
      * @param string $key
      * @param array $values
      * @param bool $not
-     * @return  void
+     * @return void
      */
     protected function addWhereIn(string $key, array $values, bool $not = false): void
     {
@@ -139,12 +145,27 @@ class SelectStatementBuilder extends StatementBuilder
      * @param string $key
      * @param int $min
      * @param int $max
+     * @return void
      */
     protected function addWhereBetween(string $key, int $min, int $max): void
     {
         $phMin = $this->addBindingValue($key, $min);
         $phMax = $this->addBindingValue($key, $max);
         $this->statement .= sprintf('%s BETWEEN %s AND %s', $key, $phMin, $phMax);
+        $this->statement .= PHP_EOL;
+    }
+
+    /**
+     * Adds "where (not) null" clause to statement.
+     *
+     * @param string $key
+     * @param bool $not
+     * @return void
+     */
+    protected function addWhereNull(string $key, bool $not = false): void
+    {
+        $pattern = ($not === true) ? '%s IS NOT NULL': '%s IS NULL';
+        $this->statement .= sprintf($pattern, $key);
         $this->statement .= PHP_EOL;
     }
 
