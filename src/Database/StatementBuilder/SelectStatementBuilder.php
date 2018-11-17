@@ -212,6 +212,21 @@ class SelectStatementBuilder extends StatementBuilder
      */
     public function addHaving(array $having): void
     {
+        if (empty($having)) {
+            return;
+        }
+
+        $firstClause = true;
+        $this->statement .= ' HAVING ';
+        foreach ($having as $clause) {
+            if ($firstClause === false) {
+                $this->statement .= ' ' . $clause['concatenator'] . ' ';
+            }
+            $placeholder = $this->addBindingValue($clause['key'], $clause['value']);
+            $this->statement .= sprintf('%s %s %s', $clause['key'], $clause['operator'], $placeholder);
+            $this->statement .= PHP_EOL;
+            $firstClause = false;
+        }
     }
 
     /**

@@ -337,6 +337,34 @@ class SelectQueryBuilder extends QueryBuilder
     }
 
     /**
+     * Adds a having clause.
+     *
+     * @param string $key
+     * @param string $operator
+     * @param mixed $value
+     * @return SelectQueryBuilder
+     */
+    public function having(string $key, string $operator, $value): SelectQueryBuilder
+    {
+        $this->addHaving($key, $operator, $value, 'AND');
+        return $this;
+    }
+
+    /**
+     * Adds a "or having" clause.
+     *
+     * @param string $key
+     * @param string $operator
+     * @param mixed $value
+     * @return SelectQueryBuilder
+     */
+    public function orHaving(string $key, string $operator, $value): SelectQueryBuilder
+    {
+        $this->addHaving($key, $operator, $value, 'OR');
+        return $this;
+    }
+
+    /**
      * Adds where condition to pool.
      *
      * @param string $key
@@ -344,7 +372,7 @@ class SelectQueryBuilder extends QueryBuilder
      * @param $value
      * @param string $concatenator
      */
-    protected function addWhere(string $key, string $operator, $value, $concatenator = 'AND'): void
+    protected function addWhere(string $key, string $operator, $value, string $concatenator = 'AND'): void
     {
         array_push($this->where, [
             'key' => $key,
@@ -377,6 +405,24 @@ class SelectQueryBuilder extends QueryBuilder
             'operator' => $operator,
             'value' => $value,
             'type' => $type,
+        ]);
+    }
+
+    /**
+     * Adds "having clause" to the pool.
+     *
+     * @param string $key
+     * @param string $operator
+     * @param mixed $value
+     * @param string $concatenator
+     */
+    protected function addHaving(string $key, string $operator, $value, string $concatenator = 'AND'): void
+    {
+        array_push($this->having, [
+            'key' => $key,
+            'operator' => $operator,
+            'value' => $value,
+            'concatenator' => $concatenator,
         ]);
     }
 
