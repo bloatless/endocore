@@ -60,6 +60,17 @@ class SelectQueryBuilder extends QueryBuilder
     protected $offset = 0;
 
     /**
+     * Sets the "distinct" flag.
+     *
+     * @return SelectQueryBuilder
+     */
+    public function distinct(): SelectQueryBuilder
+    {
+        $this->flags['distinct'] = true;
+        return $this;
+    }
+
+    /**
      * Add fields to select from table(s).
      *
      * @param array $cols

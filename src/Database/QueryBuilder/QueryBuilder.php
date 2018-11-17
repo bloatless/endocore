@@ -59,7 +59,6 @@ abstract class QueryBuilder
     protected function provideStatement(): \PDOStatement
     {
         $sqlStatement = $this->buildStatement();
-        var_dump($sqlStatement);
         $bindingValues = $this->statementBuilder->getBindingValues();
         return $this->prepareStatement($sqlStatement, $bindingValues);
     }

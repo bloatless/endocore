@@ -19,6 +19,9 @@ class SelectStatementBuilder extends StatementBuilder
      */
     public function addFlags(array $flags): void
     {
+        if (!empty($flags['distinct'])) {
+            $this->statement .= ' DISTINCT';
+        }
     }
 
     /**
