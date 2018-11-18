@@ -365,6 +365,30 @@ class SelectQueryBuilder extends QueryBuilder
     }
 
     /**
+     * Sets a limit.
+     *
+     * @param int $limit
+     * @return SelectQueryBuilder
+     */
+    public function limit(int $limit = 0): SelectQueryBuilder
+    {
+        $this->limit = $limit;
+        return $this;
+    }
+
+    /**
+     * Sets the offset.
+     *
+     * @param int $offset
+     * @return SelectQueryBuilder
+     */
+    public function offset(int $offset = 0): SelectQueryBuilder
+    {
+        $this->offset = $offset;
+        return $this;
+    }
+
+    /**
      * Adds where condition to pool.
      *
      * @param string $key
