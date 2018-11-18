@@ -79,4 +79,51 @@ abstract class StatementBuilder
         $keyParts = explode('.', $key);
         return array_pop($keyParts);
     }
+
+    /**
+     * Quotes a table or field name.
+     *
+     * @param string $name
+     * @return string
+     */
+    protected function quoteName(string $name): string
+    {
+        $name = str_replace('`', '', $name);
+        if (stripos($name, ' AS ') === false) {
+            return $this->quoteSimpleName($name);
+        }
+        return $this->quoteAliasedName($name);
+    }
+
+    /**
+     * Quotes a table of field name without  alias.
+     * Example: user.id will become `user`.`id`
+     *
+     * @param string $name
+     * @return string
+     */
+    private function quoteSimpleName(string $name): string
+    {
+        $parts = explode('.', $name);
+        foreach ($parts as $i => $part) {
+            $parts[$i] = sprintf('`%s`', $part);
+        }
+        return implode('.', $parts);
+    }
+
+    /**
+     * Quotes table or field name with alias.
+     * Example: "select from users as u" will become "select from `users` as `u`"
+     *
+     * @param string $name
+     * @return string
+     */
+    private function quoteAliasedName(string $name): string
+    {
+        $parts = preg_split('/ AS /i', $name);
+        foreach ($parts as $i => $part) {
+            $parts[$i] = $this->quoteSimpleName($part);
+        }
+        return implode(' AS ', $parts);
+    }
 }

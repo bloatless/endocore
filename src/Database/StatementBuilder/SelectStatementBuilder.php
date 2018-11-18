@@ -36,6 +36,10 @@ class SelectStatementBuilder extends StatementBuilder
             return;
         }
 
+        foreach ($cols as $i => $col) {
+            $cols[$i] = $this->quoteName($col);
+        }
+
         $this->statement .= ' ';
         $this->statement .= implode(', ', $cols);
         $this->statement .= PHP_EOL;
@@ -49,6 +53,7 @@ class SelectStatementBuilder extends StatementBuilder
      */
     public function addFrom(string $from): void
     {
+        $from = $this->quoteName($from);
         $this->statement .= ' FROM ' . $from . PHP_EOL;
     }
 
@@ -70,10 +75,10 @@ class SelectStatementBuilder extends StatementBuilder
             $this->statement .= sprintf(
                 $pattern,
                 $keyword,
-                $join['table'],
-                $join['key'],
+                $this->quoteName($join['table']),
+                $this->quoteName($join['key']),
                 $join['operator'],
-                $join['value']
+                $this->quoteName($join['value'])
             );
             $this->statement .= PHP_EOL;
         }
@@ -133,6 +138,7 @@ class SelectStatementBuilder extends StatementBuilder
     protected function addSimpleWhere(string $key, string $operator, $value): void
     {
         $placeholder = $this->addBindingValue($key, $value);
+        $key = $this->quoteName($key);
         $this->statement .= sprintf('%s %s %s', $key, $operator, $placeholder);
         $this->statement .= PHP_EOL;
     }
@@ -155,6 +161,7 @@ class SelectStatementBuilder extends StatementBuilder
         $placeholdersList = implode(',', $placeholders);
         $pattern = ($not === true) ? '%s NOT IN (%s)' : '%s IN (%s)';
 
+        $key = $this->quoteName($key);
         $this->statement .= sprintf($pattern, $key, $placeholdersList);
         $this->statement .= PHP_EOL;
     }
@@ -171,6 +178,7 @@ class SelectStatementBuilder extends StatementBuilder
     {
         $phMin = $this->addBindingValue($key, $min);
         $phMax = $this->addBindingValue($key, $max);
+        $key = $this->quoteName($key);
         $this->statement .= sprintf('%s BETWEEN %s AND %s', $key, $phMin, $phMax);
         $this->statement .= PHP_EOL;
     }
@@ -184,6 +192,7 @@ class SelectStatementBuilder extends StatementBuilder
      */
     protected function addWhereNull(string $key, bool $not = false): void
     {
+        $key = $this->quoteName($key);
         $pattern = ($not === true) ? '%s IS NOT NULL': '%s IS NULL';
         $this->statement .= sprintf($pattern, $key);
         $this->statement .= PHP_EOL;
@@ -199,6 +208,9 @@ class SelectStatementBuilder extends StatementBuilder
     {
         if (empty($groupBy)) {
             return;
+        }
+        foreach ($groupBy as $i => $field) {
+            $groupBy[$i] = $this->quoteName($field);
         }
         $groupByList = implode(', ', $groupBy);
         $this->statement .= ' GROUP BY ' . $groupByList . PHP_EOL;
@@ -223,7 +235,8 @@ class SelectStatementBuilder extends StatementBuilder
                 $this->statement .= ' ' . $clause['concatenator'] . ' ';
             }
             $placeholder = $this->addBindingValue($clause['key'], $clause['value']);
-            $this->statement .= sprintf('%s %s %s', $clause['key'], $clause['operator'], $placeholder);
+            $key = $this->quoteName($clause['key']);
+            $this->statement .= sprintf('%s %s %s', $key, $clause['operator'], $placeholder);
             $this->statement .= PHP_EOL;
             $firstClause = false;
         }
@@ -242,6 +255,7 @@ class SelectStatementBuilder extends StatementBuilder
         }
         $orderByList = [];
         foreach ($orderBy as $clause) {
+            $clause['key'] = $this->quoteName($clause['key']);
             array_push($orderByList, $clause['key'] . ' ' . $clause['direction']);
         }
         $pattern = ' ORDER BY %s';
