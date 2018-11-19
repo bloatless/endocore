@@ -6,7 +6,9 @@ namespace Nekudo\ShinyCore\Database;
 
 use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Database\ConnectionAdapter\PdoMysql;
+use Nekudo\ShinyCore\Database\QueryBuilder\InsertQueryBuilder;
 use Nekudo\ShinyCore\Database\QueryBuilder\SelectQueryBuilder;
+use Nekudo\ShinyCore\Database\StatementBuilder\InsertStatementBuilder;
 use Nekudo\ShinyCore\Database\StatementBuilder\SelectStatementBuilder;
 use Nekudo\ShinyCore\Exception\Application\DatabaseException;
 
@@ -31,9 +33,14 @@ class Factory
      * Creates a new InsertQueryBuilder instance.
      *
      * @param string $connectionName
+     * @return InsertQueryBuilder
+     * @throws DatabaseException
      */
     public function makeInsert(string $connectionName = '')
     {
+        $connection = $this->provideConnection($connectionName);
+        $statementBuilder = new InsertStatementBuilder;
+        return new InsertQueryBuilder($connection, $statementBuilder);
     }
 
     /**
