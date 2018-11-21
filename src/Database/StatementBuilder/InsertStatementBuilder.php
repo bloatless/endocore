@@ -10,4 +10,14 @@ class InsertStatementBuilder extends StatementBuilder
     {
         $this->statement = 'INSERT';
     }
+
+    public function addInto(string $table): void
+    {
+
+    }
+
+    public function addRows(array $rows): void
+    {
+
+    }
 }
