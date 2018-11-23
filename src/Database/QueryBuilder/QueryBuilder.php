@@ -90,6 +90,18 @@ abstract class QueryBuilder
             }
         }
 
+        return $pdoStatement;
+    }
+
+    /**
+     * Executes a PDO statement.
+     *
+     * @param \PDOStatement $pdoStatement
+     * @return \PDOStatement
+     * @throws DatabaseQueryException
+     */
+    public function execute(\PDOStatement $pdoStatement): \PDOStatement
+    {
         $result = $pdoStatement->execute();
         if ($result === false) {
             $this->throwError($pdoStatement->errorInfo());

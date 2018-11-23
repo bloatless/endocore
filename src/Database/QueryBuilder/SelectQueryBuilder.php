@@ -459,6 +459,7 @@ class SelectQueryBuilder extends QueryBuilder
     public function get(): array
     {
         $pdoStatement = $this->provideStatement();
+        $pdoStatement = $this->execute($pdoStatement);
         return $pdoStatement->fetchAll(\PDO::FETCH_OBJ);
     }
 

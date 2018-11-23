@@ -15,9 +15,9 @@ class InsertQueryBuilder extends QueryBuilder
     protected $into = '';
 
     /**
-     * @var array $insert
+     * @var array $rows
      */
-    protected $insert = [];
+    protected $rows = [];
 
     /**
      * Sets table name to insert data into.
@@ -31,16 +31,32 @@ class InsertQueryBuilder extends QueryBuilder
         return $this;
     }
 
-    public function insert(array $data): int
+    /**
+     * Inserts new row into database and returns insert-id.
+     *
+     * @param array $data
+     * @return int
+     * @throws \Nekudo\ShinyCore\Exception\Application\DatabaseQueryException
+     */
+    public function row(array $data): int
     {
-        $this->insert = $data;
-        // @todo execute statement and return insert id
+        array_push($this->rows, $data);
+        $pdoStatement = $this->provideStatement();
+        $this->execute($pdoStatement);
+        return $this->getLastInsertId();
     }
 
-    public function insertMultiple(array $data): array
+    /**
+     * Inserts multiple rows into database.
+     *
+     * @param array $data
+     * @throws \Nekudo\ShinyCore\Exception\Application\DatabaseQueryException
+     */
+    public function rows(array $data): void
     {
-        $this->insert = $data;
-        // todo execute statement and return insert ids
+        $this->rows = $data;
+        $pdoStatement = $this->provideStatement();
+        $this->execute($pdoStatement);
     }
 
     /**
@@ -51,7 +67,17 @@ class InsertQueryBuilder extends QueryBuilder
     protected function buildStatement(): string
     {
         $this->statementBuilder->addInto($this->into);
-        $this->statementBuilder->addRows($this->insert);
+        $this->statementBuilder->addRows($this->rows);
         return $this->statementBuilder->getStatement();
+    }
+
+    /**
+     * Fetches last insert-id.
+     *
+     * @return int
+     */
+    public function getLastInsertId(): int
+    {
+        return (int) $this->connection->lastInsertId();
     }
 }
