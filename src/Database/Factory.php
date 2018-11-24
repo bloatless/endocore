@@ -8,8 +8,10 @@ use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Database\ConnectionAdapter\PdoMysql;
 use Nekudo\ShinyCore\Database\QueryBuilder\InsertQueryBuilder;
 use Nekudo\ShinyCore\Database\QueryBuilder\SelectQueryBuilder;
+use Nekudo\ShinyCore\Database\QueryBuilder\UpdateQueryBuilder;
 use Nekudo\ShinyCore\Database\StatementBuilder\InsertStatementBuilder;
 use Nekudo\ShinyCore\Database\StatementBuilder\SelectStatementBuilder;
+use Nekudo\ShinyCore\Database\StatementBuilder\UpdateStatementBuilder;
 use Nekudo\ShinyCore\Exception\Application\DatabaseException;
 
 class Factory
@@ -61,9 +63,14 @@ class Factory
      * Creates a new UpdateQueryBuilder instance.
      *
      * @param string $connectionName
+     * @throws DatabaseException
+     * @return UpdateQueryBuilder
      */
-    public function makeUpdate(string $connectionName = '')
+    public function makeUpdate(string $connectionName = ''): UpdateQueryBuilder
     {
+        $connection = $this->provideConnection($connectionName);
+        $statementBuilder = new UpdateStatementBuilder;
+        return new UpdateQueryBuilder($connection, $statementBuilder);
     }
 
     /**
