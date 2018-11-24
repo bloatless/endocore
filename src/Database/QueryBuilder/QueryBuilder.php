@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Nekudo\ShinyCore\Database\QueryBuilder;
 
 use Nekudo\ShinyCore\Database\StatementBuilder\StatementBuilder;
-use Nekudo\ShinyCore\Exception\Application\DatabaseQueryException;
+use Nekudo\ShinyCore\Exception\Application\DatabaseException;
 
 abstract class QueryBuilder
 {
@@ -54,7 +54,7 @@ abstract class QueryBuilder
      * Builds the SQL statement and converts it into an PDO prepared statement object.
      *
      * @return \PDOStatement
-     * @throws DatabaseQueryException
+     * @throws DatabaseException()
      */
     protected function provideStatement(): \PDOStatement
     {
@@ -69,7 +69,7 @@ abstract class QueryBuilder
      * @param string $sqlStatement
      * @param array $bindingValues
      * @return \PDOStatement
-     * @throws DatabaseQueryException
+     * @throws DatabaseException()
      */
     protected function prepareStatement(string $sqlStatement, array $bindingValues): \PDOStatement
     {
@@ -98,7 +98,7 @@ abstract class QueryBuilder
      *
      * @param \PDOStatement $pdoStatement
      * @return \PDOStatement
-     * @throws DatabaseQueryException
+     * @throws DatabaseException()
      */
     public function execute(\PDOStatement $pdoStatement): \PDOStatement
     {
@@ -114,13 +114,13 @@ abstract class QueryBuilder
      * Throws a query exception with error message from PDO.
      *
      * @param array $errorInfo
-     * @throws DatabaseQueryException
+     * @throws DatabaseException()
      * @return void
      */
     protected function throwError(array $errorInfo): void
     {
         $errorMessage = $errorInfo[2] ?? 'Unspecified SQL error.';
-        throw new DatabaseQueryException($errorMessage);
+        throw new DatabaseException($errorMessage);
     }
 
     /**

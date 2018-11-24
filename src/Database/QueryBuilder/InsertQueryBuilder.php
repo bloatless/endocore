@@ -36,7 +36,7 @@ class InsertQueryBuilder extends QueryBuilder
      *
      * @param array $data
      * @return int
-     * @throws \Nekudo\ShinyCore\Exception\Application\DatabaseQueryException
+     * @throws \Nekudo\ShinyCore\Exception\Application\DatabaseException
      */
     public function row(array $data): int
     {
@@ -50,7 +50,7 @@ class InsertQueryBuilder extends QueryBuilder
      * Inserts multiple rows into database.
      *
      * @param array $data
-     * @throws \Nekudo\ShinyCore\Exception\Application\DatabaseQueryException
+     * @throws \Nekudo\ShinyCore\Exception\Application\DatabaseException
      */
     public function rows(array $data): void
     {
@@ -62,6 +62,7 @@ class InsertQueryBuilder extends QueryBuilder
     /**
      * Builds the SQL statement from all attributes previously set.
      *
+     * @throws \Nekudo\ShinyCore\Exception\Application\DatabaseException
      * @return string
      */
     protected function buildStatement(): string

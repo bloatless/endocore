@@ -454,7 +454,7 @@ class SelectQueryBuilder extends QueryBuilder
      * Executes select query and returns all matching rows as array of objects.
      *
      * @return array
-     * @throws \Nekudo\ShinyCore\Exception\Application\DatabaseQueryException
+     * @throws \Nekudo\ShinyCore\Exception\Application\DatabaseException
      */
     public function get(): array
     {
