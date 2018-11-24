@@ -10,6 +10,11 @@ namespace Nekudo\ShinyCore\Database\QueryBuilder;
 class InsertQueryBuilder extends QueryBuilder
 {
     /**
+     * @var array $flags
+     */
+    protected $flags = [];
+
+    /**
      * @var string $into
      */
     protected $into = '';
@@ -18,6 +23,16 @@ class InsertQueryBuilder extends QueryBuilder
      * @var array $rows
      */
     protected $rows = [];
+
+    /**
+     * Sets the ignore flag.
+     *
+     * @return InsertQueryBuilder
+     */
+    public function ignore(): InsertQueryBuilder
+    {
+        $this->flags['ignore'] = true;
+    }
 
     /**
      * Sets table name to insert data into.
@@ -67,6 +82,7 @@ class InsertQueryBuilder extends QueryBuilder
      */
     protected function buildStatement(): string
     {
+        $this->statementBuilder->addFlags($this->flags);
         $this->statementBuilder->addInto($this->into);
         $this->statementBuilder->addRows($this->rows);
         return $this->statementBuilder->getStatement();

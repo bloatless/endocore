@@ -14,6 +14,19 @@ class InsertStatementBuilder extends StatementBuilder
     }
 
     /**
+     * Adds possible flags to statement.
+     *
+     * @param array $flags
+     * @return void
+     */
+    public function addFlags(array $flags): void
+    {
+        if (isset($flags['ignore']) && $flags['ignore'] === true) {
+            $this->statement .= ' IGNORE';
+        }
+    }
+
+    /**
      * Adds table name to insert statement.
      *
      * @param string $table
