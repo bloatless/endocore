@@ -47,7 +47,7 @@ class UpdateQueryBuilder extends WhereQueryBuilder
     }
 
     /**
-     * Builds the UPDATE state from all attributes previously set.
+     * Builds the UPDATE statement from all attributes previously set.
      *
      * @return string
      */

@@ -6,9 +6,11 @@ namespace Nekudo\ShinyCore\Database;
 
 use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Database\ConnectionAdapter\PdoMysql;
+use Nekudo\ShinyCore\Database\QueryBuilder\DeleteQueryBuilder;
 use Nekudo\ShinyCore\Database\QueryBuilder\InsertQueryBuilder;
 use Nekudo\ShinyCore\Database\QueryBuilder\SelectQueryBuilder;
 use Nekudo\ShinyCore\Database\QueryBuilder\UpdateQueryBuilder;
+use Nekudo\ShinyCore\Database\StatementBuilder\DeleteStatementBuilder;
 use Nekudo\ShinyCore\Database\StatementBuilder\InsertStatementBuilder;
 use Nekudo\ShinyCore\Database\StatementBuilder\SelectStatementBuilder;
 use Nekudo\ShinyCore\Database\StatementBuilder\UpdateStatementBuilder;
@@ -77,9 +79,14 @@ class Factory
      * Creates a new UpdateQueryBuilder instance.
      *
      * @param string $connectionName
+     * @throws DatabaseException
+     * @return DeleteQueryBuilder
      */
-    public function makeDelete(string $connectionName = '')
+    public function makeDelete(string $connectionName = ''): DeleteQueryBuilder
     {
+        $connection = $this->provideConnection($connectionName);
+        $statementBuilder = new DeleteStatementBuilder;
+        return new DeleteQueryBuilder($connection, $statementBuilder);
     }
 
     /**
