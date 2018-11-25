@@ -17,9 +17,9 @@ abstract class WhereQueryBuilder extends QueryBuilder
      * @param string $key
      * @param string $operator
      * @param mixed $value
-     * @return WhereQueryBuilder
+     * @return QueryBuilder
      */
-    public function where(string $key, string $operator, $value): WhereQueryBuilder
+    public function where(string $key, string $operator, $value): QueryBuilder
     {
         $this->addWhere($key, $operator, $value, 'AND');
         return $this;
@@ -30,9 +30,9 @@ abstract class WhereQueryBuilder extends QueryBuilder
      *
      * @param string $key
      * @param mixed $value
-     * @return WhereQueryBuilder
+     * @return QueryBuilder
      */
-    public function whereEquals(string $key, $value): WhereQueryBuilder
+    public function whereEquals(string $key, $value): QueryBuilder
     {
         return $this->where($key, '=', $value);
     }
@@ -43,9 +43,9 @@ abstract class WhereQueryBuilder extends QueryBuilder
      * @param string $key
      * @param string $operator
      * @param mixed $value
-     * @return WhereQueryBuilder
+     * @return QueryBuilder
      */
-    public function orWhere(string $key, string $operator, $value): WhereQueryBuilder
+    public function orWhere(string $key, string $operator, $value): QueryBuilder
     {
         $this->addWhere($key, $operator, $value, 'OR');
         return $this;
@@ -56,9 +56,9 @@ abstract class WhereQueryBuilder extends QueryBuilder
      *
      * @param string $key
      * @param array $values
-     * @return WhereQueryBuilder
+     * @return QueryBuilder
      */
-    public function whereIn(string $key, array $values): WhereQueryBuilder
+    public function whereIn(string $key, array $values): QueryBuilder
     {
         $this->addWhere($key, 'IN', $values, 'AND');
         return $this;
@@ -69,9 +69,9 @@ abstract class WhereQueryBuilder extends QueryBuilder
      *
      * @param string $key
      * @param array $values
-     * @return WhereQueryBuilder
+     * @return QueryBuilder
      */
-    public function whereNotIn(string $key, array $values): WhereQueryBuilder
+    public function whereNotIn(string $key, array $values): QueryBuilder
     {
         $this->addWhere($key, 'NOT IN', $values, 'AND');
         return $this;
@@ -82,9 +82,9 @@ abstract class WhereQueryBuilder extends QueryBuilder
      *
      * @param string $key
      * @param array $values
-     * @return WhereQueryBuilder
+     * @return QueryBuilder
      */
-    public function orWhereIn(string $key, array $values): WhereQueryBuilder
+    public function orWhereIn(string $key, array $values): QueryBuilder
     {
         $this->addWhere($key, 'IN', $values, 'OR');
         return $this;
@@ -95,9 +95,9 @@ abstract class WhereQueryBuilder extends QueryBuilder
      *
      * @param string $key
      * @param array $values
-     * @return WhereQueryBuilder
+     * @return QueryBuilder
      */
-    public function orWhereNotIn(string $key, array $values): WhereQueryBuilder
+    public function orWhereNotIn(string $key, array $values): QueryBuilder
     {
         $this->addWhere($key, 'NOT IN', $values, 'OR');
         return $this;
@@ -109,9 +109,9 @@ abstract class WhereQueryBuilder extends QueryBuilder
      * @param string $key
      * @param int $min
      * @param int $max
-     * @return WhereQueryBuilder
+     * @return QueryBuilder
      */
-    public function whereBetween(string $key, int $min, int $max): WhereQueryBuilder
+    public function whereBetween(string $key, int $min, int $max): QueryBuilder
     {
         $values = ['min' => $min, 'max' => $max];
         $this->addWhere($key, 'BETWEEN', $values, 'AND');
@@ -124,9 +124,9 @@ abstract class WhereQueryBuilder extends QueryBuilder
      * @param string $key
      * @param int $min
      * @param int $max
-     * @return WhereQueryBuilder
+     * @return QueryBuilder
      */
-    public function orWhereBetween(string $key, int $min, int $max): WhereQueryBuilder
+    public function orWhereBetween(string $key, int $min, int $max): QueryBuilder
     {
         $values = ['min' => $min, 'max' => $max];
         $this->addWhere($key, 'BETWEEN', $values, 'OR');
@@ -137,9 +137,9 @@ abstract class WhereQueryBuilder extends QueryBuilder
      * Adds a "where null" condition.
      *
      * @param string $key
-     * @return WhereQueryBuilder
+     * @return QueryBuilder
      */
-    public function whereNull(string $key): WhereQueryBuilder
+    public function whereNull(string $key): QueryBuilder
     {
         $this->addWhere($key, 'NULL', [], 'AND');
         return $this;
@@ -149,9 +149,9 @@ abstract class WhereQueryBuilder extends QueryBuilder
      * Adds a "where not null" condition.
      *
      * @param string $key
-     * @return WhereQueryBuilder
+     * @return QueryBuilder
      */
-    public function whereNotNull(string $key): WhereQueryBuilder
+    public function whereNotNull(string $key): QueryBuilder
     {
         $this->addWhere($key, 'NOT NULL', [], 'AND');
         return $this;
@@ -161,9 +161,9 @@ abstract class WhereQueryBuilder extends QueryBuilder
      * Adds a "or where null" condition.
      *
      * @param string $key
-     * @return WhereQueryBuilder
+     * @return QueryBuilder
      */
-    public function orWhereNull(string $key): WhereQueryBuilder
+    public function orWhereNull(string $key): QueryBuilder
     {
         $this->addWhere($key, 'NULL', [], 'OR');
         return $this;
@@ -173,9 +173,9 @@ abstract class WhereQueryBuilder extends QueryBuilder
      * Adds a "or where not null" condition.
      *
      * @param string $key
-     * @return WhereQueryBuilder
+     * @return QueryBuilder
      */
-    public function orWhereNotNull(string $key): WhereQueryBuilder
+    public function orWhereNotNull(string $key): QueryBuilder
     {
         $this->addWhere($key, 'NOT NULL', [], 'OR');
         return $this;
