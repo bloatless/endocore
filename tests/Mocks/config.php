@@ -16,9 +16,9 @@ return [
             'db1' => [
                 'driver' => 'mysql',
                 'host' => 'localhost',
-                'database' => 'db1',
-                'username' => 'root',
-                'password' => 'your-password',
+                'database' => 'shinycore_test',
+                'username' => 'shinycore',
+                'password' => '',
                 'charset' => 'utf8', // Optional
             ]
         ],
