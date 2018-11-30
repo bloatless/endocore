@@ -1,0 +1,142 @@
+<?xml version="1.0" ?>
+<dataset>
+	<table name="customers">
+		<column>customer_id</column>
+		<column>firstname</column>
+		<column>lastname</column>
+		<column>email</column>
+		<row>
+			<value>1</value>
+			<value>Homer</value>
+			<value>Simpson</value>
+			<value>homer@simpsons.com</value>
+		</row>
+		<row>
+			<value>2</value>
+			<value>Marge</value>
+			<value>Simpson</value>
+			<value>marge@simpsons.com</value>
+		</row>
+		<row>
+			<value>3</value>
+			<value>Bart</value>
+			<value>Simpson</value>
+			<value>bart@simpsons.com</value>
+		</row>
+		<row>
+			<value>4</value>
+			<value>Lisa</value>
+			<value>Simpson</value>
+			<value>lisa@simpsons.com</value>
+		</row>
+	</table>
+
+	<table name="products">
+		<column>product_id</column>
+		<column>title</column>
+		<column>price</column>
+		<row>
+			<value>1</value>
+			<value>Duff Beer</value>
+			<value>3.00</value>
+		</row>
+		<row>
+			<value>2</value>
+			<value>White Shirt</value>
+			<value>10.00</value>
+		</row>
+		<row>
+			<value>3</value>
+			<value>Red Shirt</value>
+			<value>8.00</value>
+		</row>
+		<row>
+			<value>4</value>
+			<value>Blue Pants</value>
+			<value>35.00</value>
+		</row>
+		<row>
+			<value>5</value>
+			<value>Blue Pants</value>
+			<value>35.00</value>
+		</row>
+		<row>
+			<value>6</value>
+			<value>Green Dress</value>
+			<value>50.00</value>
+		</row>
+		<row>
+			<value>7</value>
+			<value>Black Dress</value>
+			<value>90.00</value>
+		</row>
+	</table>
+
+	<table name="orders">
+		<column>order_id</column>
+		<column>customer_id</column>
+		<column>order_sum</column>
+		<row>
+			<value>1</value>
+			<value>1</value>
+			<value>230.00</value>
+		</row>
+		<row>
+			<value>2</value>
+			<value>1</value>
+			<value>30.00</value>
+		</row>
+		<row>
+			<value>3</value>
+			<value>2</value>
+			<value>340.00</value>
+		</row>
+	</table>
+
+	<table name="orders_x_products">
+		<column>order_id</column>
+		<column>product_id</column>
+		<row>
+			<value>1</value>
+			<value>2</value>
+		</row>
+		<row>
+			<value>1</value>
+			<value>3</value>
+		</row>
+		<row>
+			<value>1</value>
+			<value>4</value>
+		</row>
+		<row>
+			<value>1</value>
+			<value>5</value>
+		</row>
+
+		<row>
+			<value>2</value>
+			<value>1</value>
+		</row>
+		<row>
+			<value>2</value>
+			<value>4</value>
+		</row>
+
+		<row>
+			<value>3</value>
+			<value>2</value>
+		</row>
+		<row>
+			<value>3</value>
+			<value>1</value>
+		</row>
+		<row>
+			<value>3</value>
+			<value>5</value>
+		</row>
+		<row>
+			<value>3</value>
+			<value>4</value>
+		</row>
+	</table>
+</dataset>

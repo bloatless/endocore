@@ -1,5 +1,0 @@
-<?xml version="1.0" ?>
-<dataset>
-	<testdata id="1" item_name="foo" item_value="bar" />
-	<testdata id="2" item_name="more" item_value="data" />
-</dataset>

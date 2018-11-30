@@ -48,7 +48,7 @@ abstract class DatabaseTest extends TestCase
 
     public function getDataSet()
     {
-        return $this->createFlatXMLDataSet(__DIR__ . '/../../Mocks/seeds/query_builder_testdata.xml');
+        return $this->createXMLDataSet(__DIR__ . '/../../Mocks/seeds/testdata.xml');
     }
 
     public function tearDown()
