@@ -40,5 +40,6 @@ class DeleteQueryBuilderTest extends DatabaseTest
             ->whereEquals('customer_id', 4)
             ->delete();
         $this->assertEquals(1, $affectedRows);
+        $this->assertEquals(3, $this->getConnection()->getRowCount('customers'));
     }
 }

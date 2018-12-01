@@ -32,6 +32,7 @@ class InsertQueryBuilder extends QueryBuilder
     public function ignore(): InsertQueryBuilder
     {
         $this->flags['ignore'] = true;
+        return $this;
     }
 
     /**
