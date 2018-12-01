@@ -11,7 +11,7 @@ class PdoMysqlTest extends DatabaseTest
 {
     public function testConnect()
     {
-        $configData = include __DIR__ . '/../../../Mocks/config.php';
+        $configData = include SC_TESTS . '/Mocks/config.php';
         $config = (new Config)->fromArray($configData);
         $credentials = $config->getDefaultDbConfig();
         $credentials['port'] = 3306;

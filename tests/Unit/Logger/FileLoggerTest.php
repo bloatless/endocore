@@ -15,7 +15,7 @@ class FileLoggerTest extends TestCase
 
     public function setUp()
     {
-        $configData = include __DIR__ . '/../../Mocks/config.php';
+        $configData = include SC_TESTS . '/Mocks/config.php';
         $this->config = (new Config)->fromArray($configData);
     }
 
@@ -27,7 +27,7 @@ class FileLoggerTest extends TestCase
 
     public function testInitWithInvalidLogPath()
     {
-        $configData = include __DIR__ . '/../../Mocks/config.php';
+        $configData = include SC_TESTS . '/Mocks/config.php';
         $config = (new Config)->fromArray($configData);
         $config->setPath('logs', 'foo');
         $this->expectException(ShinyCoreException::class);

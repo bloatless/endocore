@@ -25,9 +25,9 @@ class ApplicationTest extends TestCase
 
     public function setUp()
     {
-        $config = include __DIR__ . '/../Mocks/config.php';
+        $config = include SC_TESTS . '/Mocks/config.php';
         $this->config = (new Config)->fromArray($config);
-        $this->routes = include __DIR__ . '/../Mocks/routes.php';
+        $this->routes = include SC_TESTS . '/Mocks/routes.php';
         $this->logger = new NullLogger;
         $request = new Request;
         $this->exceptionHandler = new ExceptionHandler($this->config, $this->logger, $request);

@@ -1,7 +1,9 @@
 <?php
 
+define('SC_TESTS', __DIR__);
+
 /** @var \Composer\Autoload\ClassLoader $autoloader */
-$autoloader = require __DIR__ . '/../vendor/autoload.php';
+$autoloader = require SC_TESTS . '/../vendor/autoload.php';
 
 // Register test classes
-$autoloader->addPsr4('Nekudo\ShinyCore\Tests\\', __DIR__);
+$autoloader->addPsr4('Nekudo\ShinyCore\Tests\\', SC_TESTS);

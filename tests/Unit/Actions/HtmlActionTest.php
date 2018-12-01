@@ -14,7 +14,7 @@ class HtmlActionTest extends TestCase
 
     public function setUp()
     {
-        $config = include __DIR__ . '/../../Mocks/config.php';
+        $config = include SC_TESTS . '/Mocks/config.php';
         $this->config = (new Config)->fromArray($config);
     }
 

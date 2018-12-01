@@ -22,7 +22,7 @@ class DeleteQueryBuilderTest extends DatabaseTest
     public function setUp(): void
     {
         parent::setUp();
-        $config = include __DIR__ . '/../../../Mocks/config.php';
+        $config = include SC_TESTS . '/Mocks/config.php';
         $this->config = (new Config)->fromArray($config);
         $this->factory = new Factory($this->config);
     }

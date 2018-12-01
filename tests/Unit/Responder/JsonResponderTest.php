@@ -13,7 +13,7 @@ class JsonResponderTest extends TestCase
 
     public function setUp()
     {
-        $configData = include __DIR__ . '/../../Mocks/config.php';
+        $configData = include SC_TESTS . '/Mocks/config.php';
         $this->config = (new Config)->fromArray($configData);
     }
 

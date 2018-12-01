@@ -12,7 +12,7 @@ class ConfigTest extends TestCase
 
     public function setUp()
     {
-        $this->pathToConfigfile = __DIR__ . '/../Mocks/config.php';
+        $this->pathToConfigfile = SC_TESTS . '/Mocks/config.php';
     }
 
     public function testFromFile()

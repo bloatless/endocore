@@ -48,7 +48,7 @@ abstract class DatabaseTest extends TestCase
 
     public function getDataSet()
     {
-        return $this->createXMLDataSet(__DIR__ . '/../../Mocks/seeds/testdata.xml');
+        return $this->createXMLDataSet(SC_TESTS . '/Mocks/seeds/testdata.xml');
     }
 
     public function tearDown()
@@ -59,13 +59,13 @@ abstract class DatabaseTest extends TestCase
 
     public function initDatabase()
     {
-        $statement = file_get_contents(__DIR__ . '/../../Mocks/seeds/create_tables.sql');
+        $statement = file_get_contents(SC_TESTS . '/Mocks/seeds/create_tables.sql');
         $this->pdo->query($statement);
     }
 
     public function tearDownDatabase()
     {
-        $statement = file_get_contents(__DIR__ . '/../../Mocks/seeds/drop_tables.sql');
+        $statement = file_get_contents(SC_TESTS . '/Mocks/seeds/drop_tables.sql');
         $this->pdo->query($statement);
     }
 }
