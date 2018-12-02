@@ -12,17 +12,12 @@ abstract class DatabaseTest extends TestCase
     /**
      * @var \PDO $pdo
      */
-    private $pdo = null;
+    static private $pdo = null;
 
     /**
      * @var \PHPUnit\DbUnit\Database\Connection $connection
      */
     private $connection = null;
-
-    /**
-     * @var bool $initialized
-     */
-    private $initialized = false;
 
     /**
      * Initialized connection to database.
@@ -31,17 +26,14 @@ abstract class DatabaseTest extends TestCase
      */
     final public function getConnection()
     {
-        if ($this->pdo === null) {
-            $this->pdo = new \PDO($GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWD']);
+        if (self::$pdo === null) {
+            self::$pdo = new \PDO($GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWD']);
         }
         if ($this->connection === null) {
-            $this->connection = $this->createDefaultDBConnection($this->pdo, $GLOBALS['DB_DBNAME']);
+            $this->connection = $this->createDefaultDBConnection(self::$pdo, $GLOBALS['DB_DBNAME']);
         }
 
-        if ($this->initialized === false) {
-            $this->initDatabase();
-            $this->initialized = true;
-        }
+        $this->initDatabase();
 
         return $this->connection;
     }
@@ -60,12 +52,12 @@ abstract class DatabaseTest extends TestCase
     public function initDatabase()
     {
         $statement = file_get_contents(SC_TESTS . '/Mocks/seeds/create_tables.sql');
-        $this->pdo->query($statement);
+        self::$pdo->query($statement);
     }
 
     public function tearDownDatabase()
     {
         $statement = file_get_contents(SC_TESTS . '/Mocks/seeds/drop_tables.sql');
-        $this->pdo->query($statement);
+        self::$pdo->query($statement);
     }
 }

@@ -23,27 +23,29 @@ class QueryBuilderTest extends DatabaseTest
      */
     public $factory;
 
+    public $connection;
+
     public function setUp(): void
     {
         parent::setUp();
         $config = include SC_TESTS . '/Mocks/config.php';
         $this->config = (new Config)->fromArray($config);
         $this->factory = new Factory($this->config);
+        $this->connection = (new PdoMysql)->connect($this->config->getDefaultDbConfig());
     }
 
     public function testCanBeInitialized()
     {
-        $connection = (new PdoMysql)->connect($this->config->getDefaultDbConfig());
+
         $statementBuilder = new StatementBuilderMock;
-        $queryBuilder = new QueryBuilderMock($connection, $statementBuilder);
+        $queryBuilder = new QueryBuilderMock($this->connection, $statementBuilder);
         $this->assertInstanceOf(QueryBuilderMock::class, $queryBuilder);
     }
 
     public function testSetGetStatementBuilder()
     {
-        $connection = (new PdoMysql)->connect($this->config->getDefaultDbConfig());
         $statementBuilder = new StatementBuilderMock;
-        $queryBuilder = new QueryBuilderMock($connection, $statementBuilder);
+        $queryBuilder = new QueryBuilderMock($this->connection, $statementBuilder);
 
         $selectStatementBuilder = new SelectStatementBuilder;
         $queryBuilder->setStatementBuilder($selectStatementBuilder);
@@ -52,17 +54,45 @@ class QueryBuilderTest extends DatabaseTest
 
     public function testExecute()
     {
-        $connection = (new PdoMysql)->connect($this->config->getDefaultDbConfig());
         $statementBuilder = new StatementBuilderMock;
-        $queryBuilder = new QueryBuilderMock($connection, $statementBuilder);
+        $queryBuilder = new QueryBuilderMock($this->connection, $statementBuilder);
 
         // test valid statement:
-        $statement = $connection->prepare('SELECT COUNT(*) FROM `customers`');
+        $statement = $this->connection->prepare('SELECT COUNT(*) FROM `customers`');
         $this->assertInstanceOf(\PDOStatement::class, $queryBuilder->execute($statement));
 
         // test invalid statement:
-        $statement = $connection->prepare('SELECT * FROM `customers` WHERE customer_id = ?');
+        $statement = $this->connection->prepare('SELECT * FROM `customers` WHERE customer_id = ?');
         $this->expectException(DatabaseException::class);
         $queryBuilder->execute($statement);
+    }
+
+    public function testProvideStatement()
+    {
+        $statementBuilder = new StatementBuilderMock;
+        $queryBuilder = new QueryBuilderMock($this->connection, $statementBuilder);
+        $queryBuilder->setTestStatement('SELECT COUNT(*) FROM `customers`', []);
+        $this->assertInstanceOf(\PDOStatement::class, $queryBuilder->execProvideStatement());
+    }
+
+    public function testPrepareStatement()
+    {
+        // test all datatype bindings:
+        $statementBuilder = new StatementBuilderMock;
+        $queryBuilder = new QueryBuilderMock($this->connection, $statementBuilder);
+        $statement = $queryBuilder->execPrepareStatement(
+            'SELECT * FROM customers WHERE customer_id IN (:p1,:p2,:p3,:p4)',
+            [
+                'p1' => 1,
+                'p2' => false,
+                'p3' => null,
+                'p4' => '2'
+            ]
+        );
+        $this->assertInstanceOf(\PDOStatement::class, $statement);
+
+        // test invalid query:
+        $this->expectException(DatabaseException::class);
+        $queryBuilder->execPrepareStatement('SELECT * FROM foo', []);
     }
 }
