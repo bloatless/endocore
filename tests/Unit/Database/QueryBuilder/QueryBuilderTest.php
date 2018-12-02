@@ -23,6 +23,9 @@ class QueryBuilderTest extends DatabaseTest
      */
     public $factory;
 
+    /**
+     * @var \PDO $connection
+     */
     public $connection;
 
     public function setUp(): void
