@@ -161,6 +161,9 @@ class SelectStatementBuilder extends WhereStatementBuilder
         if ($limit === 0 && $offset === 0) {
             return;
         }
+        if ($limit === 0 && $offset <> 0) {
+            return;
+        }
         if ($offset === 0) {
             $this->statement .= ' LIMIT ' . $limit;
         } else {
