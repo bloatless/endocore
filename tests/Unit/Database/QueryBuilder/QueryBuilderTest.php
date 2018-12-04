@@ -75,7 +75,7 @@ class QueryBuilderTest extends DatabaseTest
         $statementBuilder = new StatementBuilderMock;
         $queryBuilder = new QueryBuilderMock($this->connection, $statementBuilder);
         $queryBuilder->setTestStatement('SELECT COUNT(*) FROM `customers`', []);
-        $this->assertInstanceOf(\PDOStatement::class, $queryBuilder->execProvideStatement());
+        $this->assertInstanceOf(\PDOStatement::class, $queryBuilder->exposedProvideStatement());
     }
 
     public function testPrepareStatement()
@@ -83,7 +83,7 @@ class QueryBuilderTest extends DatabaseTest
         // test all datatype bindings:
         $statementBuilder = new StatementBuilderMock;
         $queryBuilder = new QueryBuilderMock($this->connection, $statementBuilder);
-        $statement = $queryBuilder->execPrepareStatement(
+        $statement = $queryBuilder->exposedPrepareStatement(
             'SELECT * FROM customers WHERE customer_id IN (:p1,:p2,:p3,:p4)',
             [
                 'p1' => 1,
@@ -96,6 +96,6 @@ class QueryBuilderTest extends DatabaseTest
 
         // test invalid query:
         $this->expectException(DatabaseException::class);
-        $queryBuilder->execPrepareStatement('SELECT * FROM foo', []);
+        $queryBuilder->exposedPrepareStatement('SELECT * FROM foo', []);
     }
 }

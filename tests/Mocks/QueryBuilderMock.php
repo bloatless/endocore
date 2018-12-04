@@ -16,12 +16,12 @@ class QueryBuilderMock extends QueryBuilder
         }
     }
 
-    public function execProvideStatement(): \PDOStatement
+    public function exposedProvideStatement(): \PDOStatement
     {
         return $this->provideStatement();
     }
 
-    public function execPrepareStatement(string $statement, array $values): \PDOStatement
+    public function exposedPrepareStatement(string $statement, array $values): \PDOStatement
     {
         return $this->prepareStatement($statement, $values);
     }
