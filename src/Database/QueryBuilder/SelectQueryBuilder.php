@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Nekudo\ShinyCore\Database\QueryBuilder;
 
+use Nekudo\ShinyCore\Exception\Application\DatabaseException;
+
 /**
  * @property \Nekudo\ShinyCore\Database\StatementBuilder\SelectStatementBuilder $statementBuilder
  */
@@ -268,6 +270,46 @@ class SelectQueryBuilder extends WhereQueryBuilder
         $pdoStatement = $this->provideStatement();
         $pdoStatement = $this->execute($pdoStatement);
         return $pdoStatement->fetchAll(\PDO::FETCH_OBJ);
+    }
+
+    /**
+     * Executes select query and returns first matching row.
+     *
+     * @return \stdClass|null
+     * @throws DatabaseException
+     */
+    public function first(): ?\stdClass
+    {
+        $pdoStatement = $this->provideStatement();
+        $pdoStatement = $this->execute($pdoStatement);
+        $row = $pdoStatement->fetch(\PDO::FETCH_OBJ);
+        return (!empty($row)) ? $row : null;
+    }
+
+    /**
+     * Executes a select query and returns values of a single column. Optionally a custom key column can be specified.
+     *
+     * @param string $column
+     * @param string $keyBy
+     * @return array
+     * @throws DatabaseException
+     */
+    public function pluck(string $column, string $keyBy = ''): array
+    {
+        $pdoStatement = $this->provideStatement();
+        $pdoStatement = $this->execute($pdoStatement);
+        $rows = $pdoStatement->fetchAll(\PDO::FETCH_ASSOC);
+        if (empty($rows)) {
+            return [];
+        }
+        if (!isset($rows[0][$column])) {
+            throw new DatabaseException('Column not found in result.');
+        }
+        if (!empty($keyBy) && !isset($rows[0][$keyBy])) {
+            throw new DatabaseException('Column to use as key not found in result.');
+        }
+        $indexKey = (!empty($keyBy)) ? $keyBy : null;
+        return array_column($rows, $column, $indexKey);
     }
 
     /**
