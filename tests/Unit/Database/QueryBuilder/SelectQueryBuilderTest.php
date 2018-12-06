@@ -121,4 +121,12 @@ class SelectQueryBuilderTest extends DatabaseTest
             ->from('customers')
             ->pluck('firstname', 'foo');
     }
+
+    public function testCount()
+    {
+        $count = $this->factory->makeSelect()
+            ->from('customers')
+            ->count();
+        $this->assertEquals(4, $count);
+    }
 }

@@ -313,6 +313,20 @@ class SelectQueryBuilder extends WhereQueryBuilder
     }
 
     /**
+     * Executes select query and returns number of matching rows.
+     *
+     * @return int
+     * @throws DatabaseException
+     */
+    public function count(): int
+    {
+        $this->flags['count'] = true;
+        $pdoStatement = $this->provideStatement();
+        $pdoStatement = $this->execute($pdoStatement);
+        return $pdoStatement->fetchColumn();
+    }
+
+    /**
      * Builds the SQL statement from all attributes previously set.
      *
      * @return string

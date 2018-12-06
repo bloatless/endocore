@@ -6,6 +6,11 @@ namespace Nekudo\ShinyCore\Database\StatementBuilder;
 
 class SelectStatementBuilder extends WhereStatementBuilder
 {
+    /**
+     * @var bool $isCount
+     */
+    protected $isCount = false;
+
     public function __construct()
     {
         $this->statement = 'SELECT';
@@ -22,6 +27,9 @@ class SelectStatementBuilder extends WhereStatementBuilder
         if (!empty($flags['distinct'])) {
             $this->statement .= ' DISTINCT';
         }
+        if (!empty($flags['count'])) {
+            $this->isCount = true;
+        }
     }
 
     /**
@@ -32,6 +40,12 @@ class SelectStatementBuilder extends WhereStatementBuilder
      */
     public function addCols(array $cols): void
     {
+        // in case of a count query we don't need to a the columns:
+        if ($this->isCount === true) {
+            $this->statement .= ' COUNT(*)' . PHP_EOL;
+            return;
+        }
+
         if (empty($cols)) {
             return;
         }

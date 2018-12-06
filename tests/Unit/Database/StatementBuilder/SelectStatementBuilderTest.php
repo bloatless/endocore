@@ -16,7 +16,10 @@ class SelectStatementBuilderTest extends TestCase
     public function testAddFlags()
     {
         $builder = new SelectStatementBuilder;
-        $builder->addFlags(['distinct' => true]);
+        $builder->addFlags([
+            'distinct' => true,
+            'count' => true
+        ]);
         $this->assertEquals('SELECT DISTINCT', $builder->getStatement());
     }
 
@@ -37,6 +40,13 @@ class SelectStatementBuilderTest extends TestCase
         $builder = new SelectStatementBuilder;
         $builder->addCols(['foo', 'bar']);
         $this->assertEquals('SELECT `foo`, `bar`' . PHP_EOL, $builder->getStatement());
+        unset($builder);
+
+        // test count:
+        $builder = new SelectStatementBuilder;
+        $builder->addFlags(['count' => true]);
+        $builder->addCols([]);
+        $this->assertEquals('SELECT COUNT(*)' . PHP_EOL, $builder->getStatement());
     }
 
     public function testAddFrom()
