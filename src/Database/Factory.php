@@ -8,10 +8,12 @@ use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Database\ConnectionAdapter\PdoMysql;
 use Nekudo\ShinyCore\Database\QueryBuilder\DeleteQueryBuilder;
 use Nekudo\ShinyCore\Database\QueryBuilder\InsertQueryBuilder;
+use Nekudo\ShinyCore\Database\QueryBuilder\RawQueryBuilder;
 use Nekudo\ShinyCore\Database\QueryBuilder\SelectQueryBuilder;
 use Nekudo\ShinyCore\Database\QueryBuilder\UpdateQueryBuilder;
 use Nekudo\ShinyCore\Database\StatementBuilder\DeleteStatementBuilder;
 use Nekudo\ShinyCore\Database\StatementBuilder\InsertStatementBuilder;
+use Nekudo\ShinyCore\Database\StatementBuilder\RawStatementBuider;
 use Nekudo\ShinyCore\Database\StatementBuilder\SelectStatementBuilder;
 use Nekudo\ShinyCore\Database\StatementBuilder\UpdateStatementBuilder;
 use Nekudo\ShinyCore\Exception\Application\DatabaseException;
@@ -87,6 +89,20 @@ class Factory
         $connection = $this->provideConnection($connectionName);
         $statementBuilder = new DeleteStatementBuilder;
         return new DeleteQueryBuilder($connection, $statementBuilder);
+    }
+
+    /**
+     * Creates a new raw RawQueryBuilderInstance.
+     *
+     * @param string $connectionName
+     * @return RawQueryBuilder
+     * @throws DatabaseException
+     */
+    public function makeRaw(string $connectionName = ''): RawQueryBuilder
+    {
+        $connection = $this->provideConnection($connectionName);
+        $statementBuilder = new RawStatementBuider;
+        return new RawQueryBuilder($connection, $statementBuilder);
     }
 
     /**

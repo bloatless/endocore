@@ -7,6 +7,7 @@ use Nekudo\ShinyCore\Database\ConnectionAdapter\PdoMysql;
 use Nekudo\ShinyCore\Database\Factory;
 use Nekudo\ShinyCore\Database\QueryBuilder\DeleteQueryBuilder;
 use Nekudo\ShinyCore\Database\QueryBuilder\InsertQueryBuilder;
+use Nekudo\ShinyCore\Database\QueryBuilder\RawQueryBuilder;
 use Nekudo\ShinyCore\Database\QueryBuilder\SelectQueryBuilder;
 use Nekudo\ShinyCore\Database\QueryBuilder\UpdateQueryBuilder;
 use Nekudo\ShinyCore\Exception\Application\DatabaseException;
@@ -49,6 +50,11 @@ class FactoryTest extends DatabaseTest
     public function testMakDelete()
     {
         $this->assertInstanceOf(DeleteQueryBuilder::class, $this->factory->makeDelete());
+    }
+
+    public function testMakeRaw()
+    {
+        $this->assertInstanceOf(RawQueryBuilder::class, $this->factory->makeRaw());
     }
 
     public function testProvideConnection()
