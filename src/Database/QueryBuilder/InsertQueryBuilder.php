@@ -76,6 +76,26 @@ class InsertQueryBuilder extends QueryBuilder
     }
 
     /**
+     * Fetches last insert-id.
+     *
+     * @return int
+     */
+    public function getLastInsertId(): int
+    {
+        return (int) $this->connection->lastInsertId();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function reset(): void
+    {
+        $this->flags = [];
+        $this->into = '';
+        $this->rows = [];
+    }
+
+    /**
      * Builds the SQL statement from all attributes previously set.
      *
      * @throws \Nekudo\ShinyCore\Exception\Application\DatabaseException
@@ -87,15 +107,5 @@ class InsertQueryBuilder extends QueryBuilder
         $this->statementBuilder->addInto($this->into);
         $this->statementBuilder->addRows($this->rows);
         return $this->statementBuilder->getStatement();
-    }
-
-    /**
-     * Fetches last insert-id.
-     *
-     * @return int
-     */
-    public function getLastInsertId(): int
-    {
-        return (int) $this->connection->lastInsertId();
     }
 }

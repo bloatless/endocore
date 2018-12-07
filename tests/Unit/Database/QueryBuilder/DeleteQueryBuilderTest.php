@@ -42,4 +42,14 @@ class DeleteQueryBuilderTest extends DatabaseTest
         $this->assertEquals(1, $affectedRows);
         $this->assertEquals(3, $this->getConnection()->getRowCount('customers'));
     }
+
+    public function testReset()
+    {
+        $queryBuilder = $this->factory->makeDelete()
+            ->from('foo')
+            ->whereEquals('bar', 1);
+        $queryBuilder->reset();
+        $this->assertAttributeEquals('', 'from', $queryBuilder);
+        $this->assertAttributeEquals([], 'where', $queryBuilder);
+    }
 }

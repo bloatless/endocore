@@ -43,4 +43,14 @@ class UpdateQueryBuilderTest extends DatabaseTest
             ]);
         $this->assertEquals(1, $rowsAffected);
     }
+
+    public function testReset()
+    {
+        $builder = $this->factory->makeUpdate()
+            ->table('customers')
+            ->whereEquals('foo', 'bar');
+        $builder->reset();
+        $this->assertAttributeEquals('', 'table', $builder);
+        $this->assertAttributeEquals([], 'where', $builder);
+    }
 }

@@ -129,4 +129,14 @@ class SelectQueryBuilderTest extends DatabaseTest
             ->count();
         $this->assertEquals(4, $count);
     }
+
+    public function testReset()
+    {
+        $builder = $this->factory->makeSelect()
+            ->from('customers')
+            ->whereEquals('foo', 'bar');
+        $builder->reset();
+        $this->assertAttributeEquals('', 'from', $builder);
+        $this->assertAttributeEquals([], 'where', $builder);
+    }
 }

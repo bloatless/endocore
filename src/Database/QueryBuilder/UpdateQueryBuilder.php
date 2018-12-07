@@ -12,7 +12,7 @@ class UpdateQueryBuilder extends WhereQueryBuilder
     /**
      * @var string $table
      */
-    protected $table;
+    protected $table = '';
 
     /**
      * @var array $cols
@@ -44,6 +44,16 @@ class UpdateQueryBuilder extends WhereQueryBuilder
         $pdoStatement = $this->provideStatement();
         $pdoStatement = $this->execute($pdoStatement);
         return $pdoStatement->rowCount();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function reset(): void
+    {
+        $this->table = '';
+        $this->cols = [];
+        $this->where = [];
     }
 
     /**

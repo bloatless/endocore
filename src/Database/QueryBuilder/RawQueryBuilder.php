@@ -59,6 +59,15 @@ class RawQueryBuilder extends QueryBuilder
     }
 
     /**
+     * @inheritdoc
+     */
+    public function reset(): void
+    {
+        $this->statement = '';
+        $this->bindings = [];
+    }
+
+    /**
      * Builds/Prepares the raw statement for execution.
      *
      * @return string

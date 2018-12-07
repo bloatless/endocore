@@ -327,6 +327,22 @@ class SelectQueryBuilder extends WhereQueryBuilder
     }
 
     /**
+     * @inheritdoc
+     */
+    public function reset(): void
+    {
+        $this->flags = [];
+        $this->cols = [];
+        $this->from = '';
+        $this->join = [];
+        $this->where = [];
+        $this->groupBy = [];
+        $this->orderBy = [];
+        $this->limit = 0;
+        $this->offset = 0;
+    }
+
+    /**
      * Builds the SQL statement from all attributes previously set.
      *
      * @return string

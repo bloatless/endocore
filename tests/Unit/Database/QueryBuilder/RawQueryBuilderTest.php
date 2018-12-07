@@ -51,4 +51,13 @@ class RawQueryBuilderTest extends DatabaseTest
         ])->run();
         $this->assertEquals(5, $this->getConnection()->getRowCount('customers'));
     }
+
+    public function testReset()
+    {
+        $builder = $this->factory->makeRaw();
+        $builder->prepare('SELECT FROM `foo`', ['foo' => 'bar']);
+        $builder->reset();
+        $this->assertAttributeEquals('', 'statement', $builder);
+        $this->assertAttributeEquals([], 'bindings', $builder);
+    }
 }

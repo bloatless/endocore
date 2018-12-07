@@ -26,6 +26,11 @@ class QueryBuilderMock extends QueryBuilder
         return $this->prepareStatement($statement, $values);
     }
 
+    public function reset(): void
+    {
+        // just a mock
+    }
+
     protected function buildStatement(): string
     {
         return $this->testStatement;

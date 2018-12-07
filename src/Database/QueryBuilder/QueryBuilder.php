@@ -129,4 +129,11 @@ abstract class QueryBuilder
      * @return string
      */
     abstract protected function buildStatement(): string;
+
+    /**
+     * Resets all previously added values.
+     *
+     * @return void
+     */
+    abstract public function reset(): void;
 }

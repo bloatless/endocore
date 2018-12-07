@@ -80,4 +80,12 @@ class InsertQueryBuilderTest extends DatabaseTest
             ]);
         $this->assertEquals(5, $builder->getLastInsertId());
     }
+
+    public function testReset()
+    {
+        $builder = $this->factory->makeInsert();
+        $builder->into('foobar');
+        $builder->reset();
+        $this->assertAttributeEquals('', 'into', $builder);
+    }
 }

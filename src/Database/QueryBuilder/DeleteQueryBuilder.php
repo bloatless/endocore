@@ -12,7 +12,7 @@ class DeleteQueryBuilder extends WhereQueryBuilder
     /**
      * @var string $from
      */
-    protected $from;
+    protected $from = '';
 
     /**
      * Sets table to delete from.
@@ -37,6 +37,15 @@ class DeleteQueryBuilder extends WhereQueryBuilder
         $pdoStatement = $this->provideStatement();
         $pdoStatement = $this->execute($pdoStatement);
         return $pdoStatement->rowCount();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function reset(): void
+    {
+        $this->from = '';
+        $this->where = [];
     }
 
     /**
