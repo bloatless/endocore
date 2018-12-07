@@ -14,12 +14,14 @@ class PdoMysql implements ConnectionAdapterInterface
      *
      * @param array $credentials
      * @throws DatabaseException
+     * @throws \Exception
      * @return \PDO
      */
     public function connect(array $credentials): \PDO
     {
         $dsn = 'mysql:';
         $dsnParams = [];
+        $pdoOptions = [];
         if (!empty($credentials['host'])) {
             array_push($dsnParams, 'host='.$credentials['host']);
         }
@@ -34,14 +36,40 @@ class PdoMysql implements ConnectionAdapterInterface
         }
         $dsn .= implode(';', $dsnParams);
 
+        if (!empty($credentials['timezone'])) {
+            $tzOffset = $this->getMysqlTimeZoneOffset($credentials['timezone']);
+            $pdoOptions = [
+                \PDO::MYSQL_ATTR_INIT_COMMAND => "SET time_zone = '" . $tzOffset . "'"
+            ];
+        }
+
         try {
             $username = $credentials['username'] ?? '';
             $password = $credentials['password'] ?? '';
-            $pdo = new \PDO($dsn, $username, $password);
+            $pdo = new \PDO($dsn, $username, $password, $pdoOptions);
             $pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
             return $pdo;
         } catch (\PDOException $e) {
             throw new DatabaseException(sprintf('Error connecting to database (%s)', $e->getMessage()));
         }
+    }
+
+    /**
+     * Calculates offset between given timezone and UTC in mysql compatible format.
+     *
+     * @param string $timezone
+     * @return string
+     * @throws \Exception
+     */
+    private function getMysqlTimeZoneOffset(string $timezone): string
+    {
+        $tzUtc = new \DateTimeZone('UTC');
+        $tLocal = new \DateTimeZone($timezone);
+        $timeUtc = new \DateTime('now', $tzUtc);
+        $offsetSeconds = $tLocal->getOffset($timeUtc);
+        $offsetHours = $offsetSeconds / 3600;
+        $offsetHours = ($offsetHours < 0) ? $offsetHours * -1 : $offsetHours;
+        $prefix = ($offsetSeconds < 0) ? '-' : '+';
+        return $prefix . sprintf('%02d:00', $offsetHours);
     }
 }

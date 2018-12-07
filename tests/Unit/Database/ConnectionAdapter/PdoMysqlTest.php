@@ -24,5 +24,10 @@ class PdoMysqlTest extends DatabaseTest
         // test invalid credentials:
         $this->expectException(DatabaseException::class);
         $adapter->connect([]);
+
+        // test with invalid timezone:
+        $credentials['timezone'] = 'Springfield';
+        $connection = $adapter->connect($credentials);
+        $this->assertInstanceOf(\PDO::class, $connection);
     }
 }

@@ -20,6 +20,7 @@ return [
                 'username' => 'root',
                 'password' => 'your-password',
                 'charset' => 'utf8', // Optional
+                'timezone' => 'Europe/Berlin', // Optional
             ]
         ],
 

@@ -20,6 +20,7 @@ return [
                 'username' => 'shinycore',
                 'password' => '',
                 'charset' => 'utf8', // Optional
+                'timezone' => 'Europe/Berlin', // Optional
             ]
         ],
 
