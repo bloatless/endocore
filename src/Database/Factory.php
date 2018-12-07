@@ -42,7 +42,7 @@ class Factory
      * @return InsertQueryBuilder
      * @throws DatabaseException
      */
-    public function makeInsert(string $connectionName = '')
+    public function makeInsert(string $connectionName = ''): InsertQueryBuilder
     {
         $connection = $this->provideConnection($connectionName);
         $statementBuilder = new InsertStatementBuilder;
