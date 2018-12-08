@@ -21,6 +21,7 @@ class FileLogger extends AbstractLogger
     public function __construct(Config $config)
     {
         $this->setLogsDir($config->getPath('logs', ''));
+        $this->setMinLevel($config->getMinLogLevel());
     }
 
     /**

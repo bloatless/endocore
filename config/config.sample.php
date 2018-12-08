@@ -26,4 +26,8 @@ return [
 
         'default_connection' => 'db1',
     ],
+
+    'logger' => [
+        'min_level' => 'warning',
+    ],
 ];

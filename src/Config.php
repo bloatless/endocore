@@ -29,6 +29,11 @@ class Config
     protected $defaultDb = '';
 
     /**
+     * @var string $minLogLevel
+     */
+    protected $minLogLevel = 'debug';
+
+    /**
      * Loads configuration from given config file.
      *
      * @param string $pathToConfigFile
@@ -63,8 +68,14 @@ class Config
             $this->setPath($name, $path);
         }
 
+        // set database configurations:
         if (!empty($config['db'])) {
             $this->intiDbConfig($config['db']);
+        }
+
+        // set min. log level:
+        if (!empty($config['logger']['min_level'])) {
+            $this->setMinLogLevel($config['logger']['min_level']);
         }
 
         return $this;
@@ -201,5 +212,26 @@ class Config
     public function getDefaultDatabase(): string
     {
         return $this->defaultDb;
+    }
+
+    /**
+     * Sets min. log level for application.
+     *
+     * @param string $level
+     * @return void
+     */
+    public function setMinLogLevel(string $level): void
+    {
+        $this->minLogLevel = $level;
+    }
+
+    /**
+     * Retrieves min. log level.
+     *
+     * @return string
+     */
+    public function getMinLogLevel(): string
+    {
+        return $this->minLogLevel;
     }
 }

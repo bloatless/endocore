@@ -84,4 +84,12 @@ class ConfigTest extends TestCase
         $this->expectException(ShinyCoreException::class);
         $config->getDefaultDbConfig();
     }
+
+    public function testSetGetMinLogLevel()
+    {
+        $config = (new Config)->fromFile($this->pathToConfigfile);
+        $this->assertEquals('debug', $config->getMinLogLevel());
+        $config->setMinLogLevel('error');
+        $this->assertEquals('error', $config->getMinLogLevel());
+    }
 }
