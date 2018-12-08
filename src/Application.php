@@ -124,7 +124,7 @@ class Application
         }
 
         /** @var \Nekudo\ShinyCore\Action\ActionInterface $action */
-        $action = new $handler($this->config, $this->request);
+        $action = new $handler($this->config, $this->logger, $this->request);
         return $action->__invoke($arguments);
     }
 

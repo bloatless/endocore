@@ -6,6 +6,7 @@ namespace Nekudo\ShinyCore\Action;
 
 use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Http\Request;
+use Nekudo\ShinyCore\Logger\LoggerInterface;
 use Nekudo\ShinyCore\Responder\ResponderInterface;
 
 abstract class Action implements ActionInterface
@@ -14,6 +15,11 @@ abstract class Action implements ActionInterface
      * @var Config $config
      */
     protected $config;
+
+    /**
+     * @var LoggerInterface $logger
+     */
+    protected $logger;
 
     /**
      * @var Request $request
@@ -25,9 +31,10 @@ abstract class Action implements ActionInterface
      */
     protected $responder;
 
-    public function __construct(Config $config, Request $request)
+    public function __construct(Config $config, LoggerInterface $logger, Request $request)
     {
         $this->config = $config;
+        $this->logger = $logger;
         $this->request = $request;
     }
 

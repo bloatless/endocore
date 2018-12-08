@@ -5,19 +5,23 @@ declare(strict_types=1);
 namespace Nekudo\ShinyCore\Domain;
 
 use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Database\Factory as DatabaseFactory;
 use Nekudo\ShinyCore\Logger\LoggerInterface;
 
-class DatabaseDomain extends Domain
+abstract class Domain
 {
     /**
-     * @var DatabaseFactory $db
+     * @var Config $config
      */
-    protected $db;
+    protected $config;
+
+    /**
+     * @var LoggerInterface $logger
+     */
+    protected $logger;
 
     public function __construct(Config $config, LoggerInterface $logger)
     {
-        parent::__construct($config, $logger);
-        $this->db = new DatabaseFactory($config);
+        $this->config = $config;
+        $this->logger = $logger;
     }
 }

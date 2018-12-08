@@ -3,13 +3,11 @@
 namespace Nekudo\ShinyCore\Tests\Unit\Action;
 
 use Nekudo\ShinyCore\Config;
+use Nekudo\ShinyCore\Domain\DatabaseDomain;
 use Nekudo\ShinyCore\Logger\NullLogger;
-use Nekudo\ShinyCore\Responder\JsonResponder;
-use Nekudo\ShinyCore\Http\Request;
-use Nekudo\ShinyCore\Tests\Mocks\HelloWorldJsonAction;
 use PHPUnit\Framework\TestCase;
 
-class JsonActionTest extends TestCase
+class DatabaseDomainTest extends TestCase
 {
     public $config;
 
@@ -22,10 +20,9 @@ class JsonActionTest extends TestCase
         $this->logger = new NullLogger;
     }
 
-    public function testGetResponder()
+    public function testCanBeInitialized()
     {
-        $request = new Request;
-        $action = new HelloWorldJsonAction($this->config, $this->logger, $request);
-        $this->assertInstanceOf(JsonResponder::class, $action->getResponder());
+        $domain = new DatabaseDomain($this->config, $this->logger);
+        $this->assertInstanceOf(DatabaseDomain::class, $domain);
     }
 }
