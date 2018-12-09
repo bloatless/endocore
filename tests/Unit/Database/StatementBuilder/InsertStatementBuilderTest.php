@@ -31,12 +31,13 @@ class InsertStatementBuilderTest extends TestCase
     public function testAddRows()
     {
         $builder = new InsertStatementBuilder;
-
-        // test valid rows:
         $builder->addRows([['firstname' => 'Homer']]);
         $this->assertEquals('INSERT (`firstname`) VALUES'.PHP_EOL.'(:firstname)', $builder->getStatement());
+    }
 
-        // test empty rows:
+    public function testAddRowsWithEmptyRows()
+    {
+        $builder = new InsertStatementBuilder;
         $this->expectException(DatabaseException::class);
         $builder->addRows([]);
     }

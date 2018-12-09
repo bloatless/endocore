@@ -23,26 +23,29 @@ class SelectStatementBuilderTest extends TestCase
         $this->assertEquals('SELECT DISTINCT', $builder->getStatement());
     }
 
-    public function testAddCols()
+    public function testAddColsWithEmptyCols()
     {
         $builder = new SelectStatementBuilder;
-
-        // test empty cols:
         $builder->addCols([]);
         $this->assertEquals('SELECT', $builder->getStatement());
+    }
 
-        // test one col:
+    public function testAddColsWithOneColumn()
+    {
+        $builder = new SelectStatementBuilder;
         $builder->addCols(['firstname']);
         $this->assertEquals('SELECT `firstname`' . PHP_EOL, $builder->getStatement());
-        unset($builder);
+    }
 
-        // test multiple cols:
+    public function testAddColsWithMultipleColumns()
+    {
         $builder = new SelectStatementBuilder;
         $builder->addCols(['foo', 'bar']);
         $this->assertEquals('SELECT `foo`, `bar`' . PHP_EOL, $builder->getStatement());
-        unset($builder);
+    }
 
-        // test count:
+    public function testAddColsWithCountFlag()
+    {
         $builder = new SelectStatementBuilder;
         $builder->addFlags(['count' => true]);
         $builder->addCols([]);
@@ -59,12 +62,6 @@ class SelectStatementBuilderTest extends TestCase
     public function testAddJoin()
     {
         $builder = new SelectStatementBuilder;
-
-        // test empty join:
-        $builder->addJoin([]);
-        $this->assertEquals('SELECT', $builder->getStatement());
-
-        // test with join
         $builder->addJoin([[
             'type' => 'INNER',
             'table' => 'foo',
@@ -75,34 +72,37 @@ class SelectStatementBuilderTest extends TestCase
         $this->assertEquals('SELECTINNER JOIN `foo` ON `a` = `b`' . PHP_EOL, $builder->getStatement());
     }
 
+    public function testAddJoinWithEmptyJoin()
+    {
+        $builder = new SelectStatementBuilder;
+        $builder->addJoin([]);
+        $this->assertEquals('SELECT', $builder->getStatement());
+    }
+
     public function testAddGroupBy()
     {
         $builder = new SelectStatementBuilder;
-
-        // test empty group-by:
-        $builder->addGroupBy([]);
-        $this->assertEquals('SELECT', $builder->getStatement());
-
-        // test one group by:
         $builder->addGroupBy(['customers']);
         $this->assertEquals('SELECT GROUP BY `customers`' . PHP_EOL, $builder->getStatement());
-        unset($builder);
+    }
 
-        // test multiple group-by:
+    public function testAddGroupByWitMultipleValues()
+    {
         $builder = new SelectStatementBuilder;
         $builder->addGroupBy(['foo', 'bar']);
         $this->assertEquals('SELECT GROUP BY `foo`, `bar`' . PHP_EOL, $builder->getStatement());
     }
 
+    public function testAddGroupByWithEmptyValue()
+    {
+        $builder = new SelectStatementBuilder;
+        $builder->addGroupBy([]);
+        $this->assertEquals('SELECT', $builder->getStatement());
+    }
+
     public function testAddHaving()
     {
         $builder = new SelectStatementBuilder;
-
-        // test empty having:
-        $builder->addHaving([]);
-        $this->assertEquals('SELECT', $builder->getStatement());
-
-        // test one having:
         $builder->addHaving([[
             'concatenator' => 'AND',
             'key' => 'foo',
@@ -110,8 +110,10 @@ class SelectStatementBuilderTest extends TestCase
             'operator' => '>'
         ]]);
         $this->assertEquals('SELECT HAVING `foo` > :foo' . PHP_EOL, $builder->getStatement());
-        unset($builder);
+    }
 
+    public function testAddHavingWithMultipleValues()
+    {
         $builder = new SelectStatementBuilder;
         $builder->addHaving([
             [
@@ -130,23 +132,25 @@ class SelectStatementBuilderTest extends TestCase
         $this->assertEquals('SELECT HAVING `a` > :a' . PHP_EOL . ' OR `b` < :b' . PHP_EOL, $builder->getStatement());
     }
 
+    public function testAddHavingWithEmptyValue()
+    {
+        $builder = new SelectStatementBuilder;
+        $builder->addHaving([]);
+        $this->assertEquals('SELECT', $builder->getStatement());
+    }
+
     public function testAddOrderBy()
     {
         $builder = new SelectStatementBuilder;
-
-        // test empty value:
-        $builder->addOrderBy([]);
-        $this->assertEquals('SELECT', $builder->getStatement());
-
-        // test with one value:
         $builder->addOrderBy([[
             'key' => 'foo',
             'direction' => 'ASC',
         ]]);
         $this->assertEquals('SELECT ORDER BY `foo` ASC' . PHP_EOL, $builder->getStatement());
-        unset($builder);
+    }
 
-        // test with multiple values:
+    public function testAddOrderByWithMultipleValues()
+    {
         $builder = new SelectStatementBuilder;
         $builder->addOrderBy([
             [
@@ -161,28 +165,38 @@ class SelectStatementBuilderTest extends TestCase
         $this->assertEquals('SELECT ORDER BY `foo` ASC, `bar` DESC' . PHP_EOL, $builder->getStatement());
     }
 
+    public function testAddOrderByWithEmptyValue()
+    {
+        $builder = new SelectStatementBuilder;
+        $builder->addOrderBy([]);
+        $this->assertEquals('SELECT', $builder->getStatement());
+    }
+
     public function testAddLimitOffset()
     {
         $builder = new SelectStatementBuilder;
+        $builder->addLimitOffset(5, 10);
+        $this->assertEquals('SELECT LIMIT 10, 5' . PHP_EOL, $builder->getStatement());
+    }
 
-        // test zero-values:
-        $builder->addLimitOffset(0, 0);
-        $this->assertEquals('SELECT', $builder->getStatement());
-
-        // test limit only:
+    public function testAddLimitOffsetWithLimitOnly()
+    {
+        $builder = new SelectStatementBuilder;
         $builder->addLimitOffset(5, 0);
         $this->assertEquals('SELECT LIMIT 5' . PHP_EOL, $builder->getStatement());
-        unset($builder);
+    }
 
-        // test offset only:
+    public function testAddLimitOffsetWithOffsetOnly()
+    {
         $builder = new SelectStatementBuilder;
         $builder->addLimitOffset(0, 5);
         $this->assertEquals('SELECT', $builder->getStatement());
-        unset($builder);
+    }
 
-        // test limit and offset:
+    public function testAddLimitOffsetWithZeroValues()
+    {
         $builder = new SelectStatementBuilder;
-        $builder->addLimitOffset(5, 10);
-        $this->assertEquals('SELECT LIMIT 10, 5' . PHP_EOL, $builder->getStatement());
+        $builder->addLimitOffset(0, 0);
+        $this->assertEquals('SELECT', $builder->getStatement());
     }
 }

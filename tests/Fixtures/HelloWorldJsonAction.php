@@ -1,6 +1,6 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Mocks;
+namespace Nekudo\ShinyCore\Tests\Fixtures;
 
 use Nekudo\ShinyCore\Action\JsonAction;
 use Nekudo\ShinyCore\Http\Response;

@@ -7,18 +7,18 @@ use PHPUnit\Framework\TestCase;
 
 class RawStatementBuilderTest extends TestCase
 {
-    public function testPrepareRawStatement()
+    public function testPrepareRawStatementWithoutBindings()
     {
-        // Without binding:
         $statementBuilder = new RawStatementBuider;
         $statementBuilder->prepareRawStatement("SELECT * FROM foo", []);
         $this->assertEquals('SELECT * FROM foo', $statementBuilder->getStatement());
-        unset($statementBuilder);
+    }
 
-        // With binding:
+    public function testPrepareRawStatementWithBindings()
+    {
         $statementBuilder = new RawStatementBuider;
         $statementBuilder->prepareRawStatement("SELECT * FROM foo WHERE id = :id", [
-           'id' => 42
+            'id' => 42
         ]);
         $this->assertEquals("SELECT * FROM foo WHERE id = :id", $statementBuilder->getStatement());
         $this->assertEquals(['id' => 42], $statementBuilder->getBindingValues());

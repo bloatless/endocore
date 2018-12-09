@@ -5,29 +5,41 @@ namespace Nekudo\ShinyCore\Tests\Unit\Database\ConnectionAdapter;
 use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Database\ConnectionAdapter\PdoMysql;
 use Nekudo\ShinyCore\Exception\Application\DatabaseException;
-use Nekudo\ShinyCore\Tests\Unit\Database\DatabaseTest;
+use PHPUnit\Framework\TestCase;
 
-class PdoMysqlTest extends DatabaseTest
+class PdoMysqlTest extends TestCase
 {
-    public function testConnect()
+    public $config;
+
+    public function setUp()
     {
-        $configData = include SC_TESTS . '/Mocks/config.php';
-        $config = (new Config)->fromArray($configData);
-        $credentials = $config->getDefaultDbConfig();
+        $configData = include SC_TESTS . '/Fixtures/config.php';
+        $this->config = (new Config)->fromArray($configData);
+    }
+
+    public function testConnectWithValidCredentails()
+    {
+        $credentials = $this->config->getDefaultDbConfig();
         $credentials['port'] = 3306;
         $adapter = new PdoMysql;
-
-        // test valid credentials:
         $connection = $adapter->connect($credentials);
         $this->assertInstanceOf(\PDO::class, $connection);
+    }
 
-        // test invalid credentials:
+    public function testConnectWithInvalidCredentails()
+    {
         $this->expectException(DatabaseException::class);
+        $adapter = new PdoMysql;
         $adapter->connect([]);
+    }
 
-        // test with invalid timezone:
+    public function testConnectWithInvalidTimezone()
+    {
+        $adapter = new PdoMysql;
+        $credentials = $this->config->getDefaultDbConfig();
         $credentials['timezone'] = 'Springfield';
+        $this->expectException(\Exception::class);
         $connection = $adapter->connect($credentials);
-        $this->assertInstanceOf(\PDO::class, $connection);
+
     }
 }

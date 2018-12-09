@@ -6,7 +6,7 @@ use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Logger\NullLogger;
 use Nekudo\ShinyCore\Responder\JsonResponder;
 use Nekudo\ShinyCore\Http\Request;
-use Nekudo\ShinyCore\Tests\Mocks\HelloWorldJsonAction;
+use Nekudo\ShinyCore\Tests\Fixtures\HelloWorldJsonAction;
 use PHPUnit\Framework\TestCase;
 
 class JsonActionTest extends TestCase
@@ -17,7 +17,7 @@ class JsonActionTest extends TestCase
 
     public function setUp()
     {
-        $config = include SC_TESTS . '/Mocks/config.php';
+        $config = include SC_TESTS . '/Fixtures/config.php';
         $this->config = (new Config)->fromArray($config);
         $this->logger = new NullLogger;
     }

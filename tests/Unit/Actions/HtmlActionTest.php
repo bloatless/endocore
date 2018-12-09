@@ -6,7 +6,7 @@ use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Logger\NullLogger;
 use Nekudo\ShinyCore\Responder\HtmlResponder;
 use Nekudo\ShinyCore\Http\Request;
-use Nekudo\ShinyCore\Tests\Mocks\HelloWorldHtmlAction;
+use Nekudo\ShinyCore\Tests\Fixtures\HelloWorldHtmlAction;
 use PHPUnit\Framework\TestCase;
 
 class HtmlActionTest extends TestCase
@@ -17,7 +17,7 @@ class HtmlActionTest extends TestCase
 
     public function setUp()
     {
-        $config = include SC_TESTS . '/Mocks/config.php';
+        $config = include SC_TESTS . '/Fixtures/config.php';
         $this->config = (new Config)->fromArray($config);
         $this->logger = new NullLogger;
     }

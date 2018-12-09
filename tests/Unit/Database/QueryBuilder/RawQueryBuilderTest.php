@@ -22,7 +22,7 @@ class RawQueryBuilderTest extends DatabaseTest
     public function setUp(): void
     {
         parent::setUp();
-        $config = include SC_TESTS . '/Mocks/config.php';
+        $config = include SC_TESTS . '/Fixtures/config.php';
         $this->config = (new Config)->fromArray($config);
         $this->factory = new Factory($this->config);
     }

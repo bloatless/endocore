@@ -17,7 +17,7 @@ class HtmlResponderTest extends TestCase
 
     public function setUp()
     {
-        $this->configData = include SC_TESTS . '/Mocks/config.php';
+        $this->configData = include SC_TESTS . '/Fixtures/config.php';
         $this->config = (new Config)->fromArray($this->configData);
     }
 

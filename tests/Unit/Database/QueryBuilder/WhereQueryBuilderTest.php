@@ -5,8 +5,8 @@ namespace Nekudo\ShinyCore\Tests\Unit\Database\QueryBuilder;
 use Nekudo\ShinyCore\Config;
 use Nekudo\ShinyCore\Database\ConnectionAdapter\PdoMysql;
 use Nekudo\ShinyCore\Database\Factory;
-use Nekudo\ShinyCore\Tests\Mocks\StatementBuilderMock;
-use Nekudo\ShinyCore\Tests\Mocks\WhereQueryBuilderMock;
+use Nekudo\ShinyCore\Tests\Fixtures\StatementBuilderMock;
+use Nekudo\ShinyCore\Tests\Fixtures\WhereQueryBuilderMock;
 use Nekudo\ShinyCore\Tests\Unit\Database\DatabaseTest;
 
 class WhereQueryBuilderTest extends DatabaseTest
@@ -24,7 +24,7 @@ class WhereQueryBuilderTest extends DatabaseTest
     public function setUp(): void
     {
         parent::setUp();
-        $config = include SC_TESTS . '/Mocks/config.php';
+        $config = include SC_TESTS . '/Fixtures/config.php';
         $this->config = (new Config)->fromArray($config);
     }
 

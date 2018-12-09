@@ -15,7 +15,7 @@ class DatabaseDomainTest extends TestCase
 
     public function setUp()
     {
-        $config = include SC_TESTS . '/Mocks/config.php';
+        $config = include SC_TESTS . '/Fixtures/config.php';
         $this->config = (new Config)->fromArray($config);
         $this->logger = new NullLogger;
     }

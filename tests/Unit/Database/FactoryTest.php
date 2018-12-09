@@ -27,7 +27,7 @@ class FactoryTest extends DatabaseTest
     public function setUp(): void
     {
         parent::setUp();
-        $config = include SC_TESTS . '/Mocks/config.php';
+        $config = include SC_TESTS . '/Fixtures/config.php';
         $this->config = (new Config)->fromArray($config);
         $this->factory = new Factory($this->config);
     }
@@ -72,7 +72,7 @@ class FactoryTest extends DatabaseTest
         unset($factory, $connection);
 
         // invalid driver:
-        $configData = include SC_TESTS . '/Mocks/config.php';
+        $configData = include SC_TESTS . '/Fixtures/config.php';
         $configData['db']['connections']['db1']['driver'] = 'foo';
         $config = (new Config)->fromArray($configData);
         $factory = new Factory($config);

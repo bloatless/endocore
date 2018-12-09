@@ -7,8 +7,8 @@ use Nekudo\ShinyCore\Database\ConnectionAdapter\PdoMysql;
 use Nekudo\ShinyCore\Database\Factory;
 use Nekudo\ShinyCore\Database\StatementBuilder\SelectStatementBuilder;
 use Nekudo\ShinyCore\Exception\Application\DatabaseException;
-use Nekudo\ShinyCore\Tests\Mocks\QueryBuilderMock;
-use Nekudo\ShinyCore\Tests\Mocks\StatementBuilderMock;
+use Nekudo\ShinyCore\Tests\Fixtures\QueryBuilderMock;
+use Nekudo\ShinyCore\Tests\Fixtures\StatementBuilderMock;
 use Nekudo\ShinyCore\Tests\Unit\Database\DatabaseTest;
 
 class QueryBuilderTest extends DatabaseTest
@@ -31,7 +31,7 @@ class QueryBuilderTest extends DatabaseTest
     public function setUp(): void
     {
         parent::setUp();
-        $config = include SC_TESTS . '/Mocks/config.php';
+        $config = include SC_TESTS . '/Fixtures/config.php';
         $this->config = (new Config)->fromArray($config);
         $this->factory = new Factory($this->config);
         $this->connection = (new PdoMysql)->connect($this->config->getDefaultDbConfig());
@@ -55,16 +55,18 @@ class QueryBuilderTest extends DatabaseTest
         $this->assertInstanceOf(SelectStatementBuilder::class, $queryBuilder->getStatementBuilder());
     }
 
-    public function testExecute()
+    public function testExecuteWithValidStatement()
     {
         $statementBuilder = new StatementBuilderMock;
         $queryBuilder = new QueryBuilderMock($this->connection, $statementBuilder);
-
-        // test valid statement:
         $statement = $this->connection->prepare('SELECT COUNT(*) FROM `customers`');
         $this->assertInstanceOf(\PDOStatement::class, $queryBuilder->execute($statement));
+    }
 
-        // test invalid statement:
+    public function testExecuteWithInvalidStatement()
+    {
+        $statementBuilder = new StatementBuilderMock;
+        $queryBuilder = new QueryBuilderMock($this->connection, $statementBuilder);
         $statement = $this->connection->prepare('SELECT * FROM `customers` WHERE customer_id = ?');
         $this->expectException(DatabaseException::class);
         $queryBuilder->execute($statement);
@@ -78,9 +80,8 @@ class QueryBuilderTest extends DatabaseTest
         $this->assertInstanceOf(\PDOStatement::class, $queryBuilder->exposedProvideStatement());
     }
 
-    public function testPrepareStatement()
+    public function testPrepareStatementWithValidStatement()
     {
-        // test all datatype bindings:
         $statementBuilder = new StatementBuilderMock;
         $queryBuilder = new QueryBuilderMock($this->connection, $statementBuilder);
         $statement = $queryBuilder->exposedPrepareStatement(
@@ -93,8 +94,12 @@ class QueryBuilderTest extends DatabaseTest
             ]
         );
         $this->assertInstanceOf(\PDOStatement::class, $statement);
+    }
 
-        // test invalid query:
+    public function testPrepareStatementWithInvalidStatement()
+    {
+        $statementBuilder = new StatementBuilderMock;
+        $queryBuilder = new QueryBuilderMock($this->connection, $statementBuilder);
         $this->expectException(DatabaseException::class);
         $queryBuilder->exposedPrepareStatement('SELECT * FROM foo', []);
     }

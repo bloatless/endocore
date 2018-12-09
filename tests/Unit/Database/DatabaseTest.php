@@ -45,19 +45,19 @@ abstract class DatabaseTest extends TestCase
 
     public function seedDatabase()
     {
-        $statement = file_get_contents(SC_TESTS . '/Mocks/seeds/testdata_seed.sql');
+        $statement = file_get_contents(SC_TESTS . '/Fixtures/seeds/testdata_seed.sql');
         $this->getConnection()->query($statement);
     }
 
     public function initDatabase()
     {
-        $statement = file_get_contents(SC_TESTS . '/Mocks/seeds/create_tables.sql');
+        $statement = file_get_contents(SC_TESTS . '/Fixtures/seeds/create_tables.sql');
         $this->getConnection()->query($statement);
     }
 
     public function tearDownDatabase()
     {
-        $statement = file_get_contents(SC_TESTS . '/Mocks/seeds/drop_tables.sql');
+        $statement = file_get_contents(SC_TESTS . '/Fixtures/seeds/drop_tables.sql');
         $this->getConnection()->query($statement);
     }
 

@@ -23,7 +23,7 @@ class SelectQueryBuilderTest extends DatabaseTest
     public function setUp(): void
     {
         parent::setUp();
-        $config = include SC_TESTS . '/Mocks/config.php';
+        $config = include SC_TESTS . '/Fixtures/config.php';
         $this->config = (new Config)->fromArray($config);
         $this->factory = new Factory($this->config);
     }
@@ -48,15 +48,16 @@ class SelectQueryBuilderTest extends DatabaseTest
 
     public function testGet()
     {
-        // test with result:
         $result = $this->factory->makeSelect()
             ->cols(['firstname', 'lastname'])
             ->from('customers')
             ->get();
         $this->assertIsArray($result);
         $this->assertCount(4, $result);
+    }
 
-        // test empty result:
+    public function testGetWithEmptyResult()
+    {
         $result = $this->factory->makeSelect()
             ->from('customers')
             ->whereEquals('customer_id', 42)
@@ -73,8 +74,10 @@ class SelectQueryBuilderTest extends DatabaseTest
             ->first();
         $this->assertInstanceOf(\stdClass::class, $result);
         $this->assertEquals($result->firstname, 'Homer');
+    }
 
-        // test empty result:
+    public function testFirstWithEmptyResult()
+    {
         $result = $this->factory->makeSelect()
             ->from('customers')
             ->whereEquals('customer_id', 42)
@@ -82,23 +85,26 @@ class SelectQueryBuilderTest extends DatabaseTest
         $this->assertEquals(null, $result);
     }
 
-    public function testPluck()
+    public function testPluckWithColumnOnly()
     {
-        // test with valid column:
         $result = $this->factory->makeSelect()
             ->from('customers')
             ->whereEquals('customer_id', 1)
             ->pluck('firstname');
         $this->assertEquals([0 => 'Homer'], $result);
+    }
 
-        // test with valid keyBy:
+    public function testPluckWithColumnAndKeyBy()
+    {
         $result = $this->factory->makeSelect()
             ->from('customers')
             ->whereEquals('customer_id', 2)
             ->pluck('firstname', 'customer_id');
         $this->assertEquals([2 => 'Marge'], $result);
+    }
 
-        // test empty result:
+    public function testPluckWithEmptyResult()
+    {
         $result = $this->factory->makeSelect()
             ->from('customers')
             ->whereEquals('customer_id', 42)

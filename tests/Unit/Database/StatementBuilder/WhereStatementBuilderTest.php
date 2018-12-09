@@ -2,7 +2,7 @@
 
 namespace Nekudo\ShinyCore\Tests\Unit\Database\StatementBuilder;
 
-use Nekudo\ShinyCore\Tests\Mocks\WhereStatementBuilderMock;
+use Nekudo\ShinyCore\Tests\Fixtures\WhereStatementBuilderMock;
 use PHPUnit\Framework\TestCase;
 
 class WhereStatementBuilderTest extends TestCase
@@ -10,12 +10,18 @@ class WhereStatementBuilderTest extends TestCase
     public function testAddWhere()
     {
         $builder = new WhereStatementBuilderMock;
+        $builder->addWhere([[
+            'key' => 'id',
+            'value' => 1,
+            'operator' => '=',
+            'concatenator' => 'AND',
+        ]]);
+        $this->assertEquals(' WHERE `id` = :id' . PHP_EOL, $builder->getStatement());
+    }
 
-        // empty value:
-        $builder->addWhere([]);
-        $this->assertEquals('', $builder->getStatement());
-
-        // concatenation:
+    public function testAddWhereWithConcatenation()
+    {
+        $builder = new WhereStatementBuilderMock;
         $builder->addWhere([
             [
                 'key' => 'id',
@@ -31,6 +37,13 @@ class WhereStatementBuilderTest extends TestCase
             ]
         ]);
         $this->assertEquals(' WHERE `id` = :id' . PHP_EOL . ' OR `id` < :id1' . PHP_EOL, $builder->getStatement());
+    }
+
+    public function testAddWhereWithEmptyValue()
+    {
+        $builder = new WhereStatementBuilderMock;
+        $builder->addWhere([]);
+        $this->assertEquals('', $builder->getStatement());
     }
 
     public function testAddWhereIn()
