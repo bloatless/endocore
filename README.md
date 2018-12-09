@@ -56,7 +56,7 @@ return [
 
 This example routes the request path `/about` to the AboutAction in your applications Actions folder.
 
-### Actions
+### Actions and Responder
 
 Every request the application receives will be dispatched to an action as defined in your routes. The action handles
 this request. Typically by requesting data from a domain using input data from the request. The data from the domain
@@ -66,16 +66,17 @@ by the action.
 ShinyCore provides responders for HTML as well as JSON content. You can use this responders by extending the appropriate
 actions. 
 
-#### JSON Actions
+#### Actions with JSON response
 
 ```php
-class SomeJsonAction extends JsonAction
+class MyJsonAction extends JsonAction
 {
     public function __invoke(array $arguments = []): Response
     {
-        return $this->responder->found([
-            'foo' => 'Some data...'
-        ]);
+        $data = [
+            'foo' => 'Some data...',
+        ];
+        return $this->responder->found($data);
     }
 }
 ```
@@ -83,7 +84,30 @@ class SomeJsonAction extends JsonAction
 This example shows how an Action inherits the JsonResponder from the JsonAction and is than able to respond json data
 using only methods provided by the framework.
 
-#### HTML Actions
+#### Actions with HTML response
+
+If you want to reply with HTML content you can inherit from the HtmlAction and make use auf the HtmlResponder. This
+responder by default provides an PhtmlRenderer so you can use basic PHP/HTML templates in your application.
+
+```php
+class MyHtmlAction extends HtmlAction
+{
+    public function __invoke(array $arguments = []): Response
+    {        
+        $tmplVars = [
+            'name' => 'Max Power',
+        ];
+        return $this->responder->show('home', $tmplVars);
+    }
+}
+```
+
+This example will render a template called `home.phtml` from your `resources/views/` folder. A `name` variable is passed
+to this template. Your `home.phtml` could look something like this:
+
+```html
+<p>Hello <?php $this->out('name'); ?></p>
+```
 
 ### Domains
 
