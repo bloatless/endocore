@@ -81,12 +81,12 @@ class MyJsonAction extends JsonAction
 }
 ```
 
-This example shows how an Action inherits the JsonResponder from the JsonAction and is than able to respond json data
+This example shows how an Action inherits the JsonResponder from the `JsonAction` and is than able to respond json data
 using only methods provided by the framework.
 
 #### Actions with HTML response
 
-If you want to reply with HTML content you can inherit from the HtmlAction and make use auf the HtmlResponder. This
+If you want to reply with HTML content you can inherit from the `HtmlAction` and make use auf the HtmlResponder. This
 responder by default provides an PhtmlRenderer so you can use basic PHP/HTML templates in your application.
 
 ```php
@@ -110,6 +110,31 @@ to this template. Your `home.phtml` could look something like this:
 ```
 
 ### Domains
+
+Domains handle the logic of your application. Domains can be a simple class or any kind of service.
+
+#### Database Domain
+
+If your application needs to interact with a database you can inherit from the `DatabaseDomain` and make use of the
+ShinyCore query builder.
+
+```php
+class QueryBuilderTestDomain extends DatabaseDomain
+{
+    public function getData(): \stdClass
+    {
+        $result = $this->db->makeSelect()
+            ->from('customers')
+            ->whereEquals('customer_id', 42)
+            ->first();
+        
+        return $result;
+    }
+}
+```
+
+When extending the `DatabaseDomain` you have access to the query builder factory which provides a powerful tool to
+execute your SQL statements.
 
 ## License
 
