@@ -47,7 +47,7 @@ class InsertQueryBuilderTest extends DatabaseTest
                 'lastname' => 'Simpson',
                 'email' => 'maggie@simpsons.com'
             ]);
-        $this->assertEquals(5, $this->getConnection()->getRowCount('customers'));
+        $this->assertEquals(5, $this->getRowCount('customers'));
     }
 
     public function testRows()
@@ -66,7 +66,7 @@ class InsertQueryBuilderTest extends DatabaseTest
                     'email' => 'snowball@simpsons.com'
                 ]
             ]);
-        $this->assertEquals(6, $this->getConnection()->getRowCount('customers'));
+        $this->assertEquals(6, $this->getRowCount('customers'));
     }
 
     public function testGetLastInsertId()

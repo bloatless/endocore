@@ -49,7 +49,7 @@ class RawQueryBuilderTest extends DatabaseTest
            'fn' => 'Maggie',
            'ln' => 'Simpson',
         ])->run();
-        $this->assertEquals(5, $this->getConnection()->getRowCount('customers'));
+        $this->assertEquals(5, $this->getRowCount('customers'));
     }
 
     public function testReset()

@@ -2,62 +2,69 @@
 
 namespace Nekudo\ShinyCore\Tests\Unit\Database;
 
-use PHPUnit\DbUnit\TestCaseTrait;
 use PHPUnit\Framework\TestCase;
 
 abstract class DatabaseTest extends TestCase
 {
-    use TestCaseTrait;
-
     /**
      * @var \PDO $pdo
      */
     static private $pdo = null;
 
     /**
-     * @var \PHPUnit\DbUnit\Database\Connection $connection
-     */
-    private $connection = null;
-
-    /**
-     * Initialized connection to database.
+     * Initializes database connection.
      *
-     * @return \PHPUnit\DbUnit\Database\Connection|\PHPUnit\DbUnit\Database\DefaultConnection
+     * @return \PDO
      */
     final public function getConnection()
     {
         if (self::$pdo === null) {
             self::$pdo = new \PDO($GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWD']);
         }
-        if ($this->connection === null) {
-            $this->connection = $this->createDefaultDBConnection(self::$pdo, $GLOBALS['DB_DBNAME']);
-        }
 
-        $this->initDatabase();
-
-        return $this->connection;
+        return self::$pdo;
     }
 
-    public function getDataSet()
+    public function setUp()
     {
-        return $this->createXMLDataSet(SC_TESTS . '/Mocks/seeds/testdata.xml');
+        $this->initDatabase();
+        $this->seedDatabase();
     }
 
     public function tearDown()
     {
-        parent::tearDown();
         $this->tearDownDatabase();
+    }
+
+    public function resetDatabase()
+    {
+        $this->tearDownDatabase();
+        $this->initDatabase();
+        $this->seedDatabase();
+    }
+
+    public function seedDatabase()
+    {
+        $statement = file_get_contents(SC_TESTS . '/Mocks/seeds/testdata_seed.sql');
+        $this->getConnection()->query($statement);
     }
 
     public function initDatabase()
     {
         $statement = file_get_contents(SC_TESTS . '/Mocks/seeds/create_tables.sql');
-        self::$pdo->query($statement);
+        $this->getConnection()->query($statement);
     }
 
     public function tearDownDatabase()
     {
         $statement = file_get_contents(SC_TESTS . '/Mocks/seeds/drop_tables.sql');
-        self::$pdo->query($statement);
+        $this->getConnection()->query($statement);
+    }
+
+    public function getRowCount($table)
+    {
+        $statement = sprintf('SELECT COUNT(*) FROM `%s`', $table);
+        $res = $this->getConnection()->query($statement);
+        return $res->fetchColumn();
     }
 }
