@@ -19,7 +19,7 @@ class RouterTest extends TestCase
 
         $router = new Router($routes);
         $routeInfo = $router->dispatch('GET', '/');
-        $this->assertInternalType('array', $routeInfo);
+        $this->assertIsArray($routeInfo);
         $this->assertEquals($routeInfo[0], Router::FOUND);
         $this->assertEquals($routeInfo[1], 'home');
     }

@@ -332,7 +332,7 @@ class SelectQueryBuilder extends WhereQueryBuilder
     public function reset(): void
     {
         $this->flags = [];
-        $this->cols = [];
+        $this->cols = ['*'];
         $this->from = '';
         $this->join = [];
         $this->where = [];

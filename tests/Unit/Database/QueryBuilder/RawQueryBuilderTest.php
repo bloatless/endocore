@@ -38,7 +38,7 @@ class RawQueryBuilderTest extends DatabaseTest
         $builder = $this->factory->makeRaw();
         $builder->prepare('SELECT `firstname` FROM `customers` WHERE `customer_id` = :id', ['id' => 1]);
         $result = $builder->get();
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertEquals('Homer', $result[0]->firstname);
     }
 
@@ -57,7 +57,8 @@ class RawQueryBuilderTest extends DatabaseTest
         $builder = $this->factory->makeRaw();
         $builder->prepare('SELECT FROM `foo`', ['foo' => 'bar']);
         $builder->reset();
-        $this->assertAttributeEquals('', 'statement', $builder);
-        $this->assertAttributeEquals([], 'bindings', $builder);
+        $res = $builder->prepare('SELECT COUNT(*) AS cnt FROM `customers`')->get();
+        $this->assertIsArray($res);
+        $this->assertEquals(4, $res[0]->cnt);
     }
 }

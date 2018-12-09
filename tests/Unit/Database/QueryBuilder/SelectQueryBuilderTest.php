@@ -53,7 +53,7 @@ class SelectQueryBuilderTest extends DatabaseTest
             ->cols(['firstname', 'lastname'])
             ->from('customers')
             ->get();
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertCount(4, $result);
 
         // test empty result:
@@ -134,9 +134,13 @@ class SelectQueryBuilderTest extends DatabaseTest
     {
         $builder = $this->factory->makeSelect()
             ->from('customers')
-            ->whereEquals('foo', 'bar');
+            ->whereEquals('customer_id', 1);
         $builder->reset();
-        $this->assertAttributeEquals('', 'from', $builder);
-        $this->assertAttributeEquals([], 'where', $builder);
+
+        $result = $builder->from('customers')
+            ->whereEquals('customer_id', 2)
+            ->first();
+        $this->assertIsObject($result);
+        $this->assertEquals('Marge', $result->firstname);
     }
 }

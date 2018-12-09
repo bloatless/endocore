@@ -83,9 +83,15 @@ class InsertQueryBuilderTest extends DatabaseTest
 
     public function testReset()
     {
-        $builder = $this->factory->makeInsert();
-        $builder->into('foobar');
+        $builder = $this->factory->makeInsert()
+            ->into('foobar');
         $builder->reset();
-        $this->assertAttributeEquals('', 'into', $builder);
+        $builder->into('customers')
+            ->row([
+                'firstname' => 'Maggie',
+                'lastname' => 'Simpson',
+                'email' => 'maggie@simpsons.com'
+            ]);
+        $this->assertEquals(5, $builder->getLastInsertId());
     }
 }

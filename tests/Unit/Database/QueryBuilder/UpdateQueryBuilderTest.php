@@ -47,10 +47,13 @@ class UpdateQueryBuilderTest extends DatabaseTest
     public function testReset()
     {
         $builder = $this->factory->makeUpdate()
-            ->table('customers')
-            ->whereEquals('foo', 'bar');
+            ->table('foobar')
+            ->whereEquals('customer_id', 1);
         $builder->reset();
-        $this->assertAttributeEquals('', 'table', $builder);
-        $this->assertAttributeEquals([], 'where', $builder);
+
+        $affectedRows = $builder->table('customers')
+            ->whereEquals('customer_id', 1)
+            ->update(['firstname' => 'Max']);
+        $this->assertEquals(1, $affectedRows);
     }
 }

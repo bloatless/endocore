@@ -45,11 +45,14 @@ class DeleteQueryBuilderTest extends DatabaseTest
 
     public function testReset()
     {
-        $queryBuilder = $this->factory->makeDelete()
-            ->from('foo')
-            ->whereEquals('bar', 1);
-        $queryBuilder->reset();
-        $this->assertAttributeEquals('', 'from', $queryBuilder);
-        $this->assertAttributeEquals([], 'where', $queryBuilder);
+        $builder = $this->factory->makeDelete()
+            ->from('customers')
+            ->whereEquals('customer_id', 1);
+        $builder->reset();
+        $affectedRows = $builder->from('customers')
+            ->whereEquals('customer_id', 42)
+            ->delete();
+        $this->assertEquals(0, $affectedRows);
+        $this->assertEquals(4, $this->getRowCount('customers'));
     }
 }
