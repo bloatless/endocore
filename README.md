@@ -15,6 +15,9 @@ composer create-project nekudo/shiny_core_app myshinyproject
 
 ## Documentation
 
+Additionally to this documentation you should also have a look into the ShinyCoreApp sourcecode. It contains some
+well documented examples.
+
 ### Directory Structure
 
 ```
@@ -43,8 +46,6 @@ supported by you application needs to be routed to an action. You can adjust rou
 #### GET Route
 
 ```php
-<?php
-
 return [
     'home' => [
         'method' => 'GET',
@@ -55,6 +56,66 @@ return [
 ```
 
 This example routes the request path `/about` to the AboutAction in your applications Actions folder.
+
+#### POST Route
+
+```php
+return [
+    'home' => [
+        'method' => 'POST',
+        'pattern' => '/customers',
+        'handler' => 'Nekudo\ShinyCoreApp\Actions\AddCustomerAction',
+    ],
+];
+```
+
+This example handles a POST request to `/customers` and calls the `AddCustomerAction` in your application.
+
+#### Other route types
+
+Of course you can also define `PUT`, `DELETE` or any other valid request types in the same manner.
+
+#### Route parameters
+
+You can use placeholders within route patterns. These parameters will be passed to your action using the `$arguments`
+array.
+
+```php
+return [
+    'customer' => [
+        'method' => 'GET',
+        'pattern' => '/customers/{id}',
+        'handler' => 'Nekudo\ShinyCoreApp\Actions\CustomerAction',
+    ],
+];
+```
+
+This route would match URLs like e.g. `/customers/123`. The CustomerAction would receive an `$arguments` array like
+this:
+
+```php
+[
+    'id' => 123
+]
+```
+
+You can additionally use a regular expression pattern to define which values the placeholder accepts.
+
+```php
+return [
+    'customer' => [
+        'method' => 'GET',
+        'pattern' => '/customers/{id:[0-9]+}',
+        'handler' => 'Nekudo\ShinyCoreApp\Actions\CustomerAction',
+    ],
+];
+```
+
+This route for example would match `/customers/123` but not `customers/abc`.
+
+Segments wrapped in square brackets are considered optional like e.g.:
+ 
+ `pattern' => '/customers[/{id:[0-9]+]'` 
 
 ### Actions and Responder
 
