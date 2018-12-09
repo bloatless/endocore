@@ -119,7 +119,7 @@ If your application needs to interact with a database you can inherit from the `
 ShinyCore query builder.
 
 ```php
-class QueryBuilderTestDomain extends DatabaseDomain
+class MyDatabaseDomain extends DatabaseDomain
 {
     public function getData(): \stdClass
     {
