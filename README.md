@@ -18,6 +18,35 @@ composer create-project nekudo/shiny_core_app myshinyproject
 Additionally to this documentation you should also have a look into the ShinyCoreApp sourcecode. It contains some
 well documented examples.
 
+
+- [Directory Structure](#directory-structure)
+- [Configuration](#configuration)
+- [Routing](#routing)
+  * [GET Route](#get-route)
+  * [POST Route](#post-route)
+  * [Other route types](#other-route-types)
+  * [Route parameters](#route-parameters)
+- [Actions and Responder](#actions-and-responder)
+  * [Actions with JSON response](#actions-with-json-response)
+  * [Actions with HTML response](#actions-with-html-response)
+- [Domains](#domains)
+  * [Database Domain](#database-domain)
+- [Query Builder](#query-builder)
+  * [Connections](#connections)
+  * [Factory](#factory)
+  * [SELECT](#select)
+    + [A simple select](#a-simple-select)
+    + [Get specific columns](#get-specific-columns)
+    + [First row only](#first-row-only)
+    + [Single column as array](#single-column-as-array)
+    + [Counting rows](#counting-rows)
+    + [Joins](#joins)
+  * [INSERT](#insert)
+  * [UPDATE](#update)
+  * [DELETE](#delete)
+  * [RAW Queries](#raw-queries)
+- [Error Handling and Logging](#error-handling-and-logging)
+
 ### Directory Structure
 
 ```
