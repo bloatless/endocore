@@ -194,8 +194,125 @@ class MyDatabaseDomain extends DatabaseDomain
 }
 ```
 
-When extending the `DatabaseDomain` you have access to the query builder factory which provides a powerful tool to
-execute your SQL statements.
+### Query Builder
+
+As mentioned earlier Database-Domains provide a powerful Query Builder. This section explains the complete usage API
+of the ShinyCore Query Builder.
+
+#### Connections
+
+You can define multiple database connections in your projects `config.php` file.
+
+```php
+'db' => [
+    'connections' => [
+        'db1' => [
+            'driver' => 'mysql',
+            'host' => 'localhost',
+            'database' => 'db1',
+            'username' => 'root',
+            'password' => 'your-password',
+            'charset' => 'utf8', // Optional
+            'timezone' => 'Europe/Berlin', // Optional
+        ],
+        
+        // add additional connections here...
+    ],
+
+    'default_connection' => 'db1',
+]
+```
+
+#### Factory
+
+Within each `DatabaseDomain` you can create new QueryBuilder instances using a Factory which is available via
+the `db` property of the domain.
+
+```php
+$selectQueryBuilder = $this->db->makeSelect();
+```
+
+With no arguments provided the default database connection is used. If you want to use a different connection you can
+pass the connection name as an argument.
+
+```php
+$updateQueryBuilder = $this->db->makeUpdate('db2');
+```
+
+#### SELECT
+
+##### A simple select
+
+```php
+$rows = $this->db->makeSelect()->from('customers')->get();
+```
+
+##### Get specific columns
+
+```php
+$rows = $this->db->makeSelect()
+    ->cols(['customer_id', 'firstname', 'lastname'])
+    ->from('customers')
+    ->get();
+```
+
+##### First row only
+
+```php
+$row = $this->db->makeSelect()
+    ->from('customers')
+    ->whereEquals('customer_id', 42)
+    ->first();
+```
+
+##### Single column as array
+
+```php
+$names = $this->db->makeSelect()
+    ->from('customers')
+    ->pluck('firstname');
+```
+
+Will fetch an array containing all first names of the `customers` table.
+
+You can specify a second column which will be used for the keys of the array:
+
+```php
+$names = $this->db->makeSelect()
+    ->from('customers')
+    ->pluck('firstname', 'customer_id');
+```
+
+Will fetch an array of all first names using the `customer_id` as array key.
+
+##### Counting rows
+
+```php
+$rowCount = $this->db->makeSelect()
+    ->from('customers')
+    ->count();
+```
+
+##### Joins
+
+You can join tables using the `join`, `leftJoin` or `rightJoin` methods.
+
+```php
+$rows = $this->db->makeSelect()
+    ->from('customers')
+    ->join('orders', 'customers.customer_id', '=', 'orders.customer_id')
+    ->get();
+```
+
+
+#### INSERT
+#### UPDATE
+#### DELETE
+#### RAW Queries
+
+### Error Handling and Logging
+
+...
 
 ## License
 
