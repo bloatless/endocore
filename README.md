@@ -67,6 +67,8 @@ well documented examples.
     + [Multiple rows](#multiple-rows)
     + [Last insert id](#last-insert-id)
   * [RAW Queries](#raw-queries)
+    + [Raw select queries](#raw-select-queries)
+    + [Other raw queries](#other-raw-queries)
 - [Error Handling and Logging](#error-handling-and-logging)
 
 ### Directory Structure
@@ -561,6 +563,30 @@ $id = $insertQueryBuilder->getLastInsertId();
 ```
 
 #### RAW Queries
+
+There will always be some kind of queries you can not build using the methods of a query builder. In those cases you
+can utilize the `RawQueryBuilder` which allows you to execute raw queries to the database.
+
+##### Raw select queries
+
+```php
+$rows = $this->db->makeRaw()
+    ->prepare("SELECT * FROM `orders` WHERE `customer_id` = :id", [
+        'id' => 42,
+    ])
+    ->get();
+```
+
+##### Other raw queries
+
+```php
+$this->db->makeRaw()
+    ->prepare("UPDATE `customers` SET `firstname` = :name WHERE `customer_id` = :id", [
+        'name' => 'Homer',
+        'id' => 42,
+    ])
+    ->run();
+```
 
 ### Error Handling and Logging
 
