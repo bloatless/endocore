@@ -63,6 +63,9 @@ well documented examples.
     + [Or where null](#or-where-null)
     + [Or where not null](#or-where-not-null)
   * [INSERT](#insert)
+    + [Single row](#single-row)
+    + [Multiple rows](#multiple-rows)
+    + [Last insert id](#last-insert-id)
   * [RAW Queries](#raw-queries)
 - [Error Handling and Logging](#error-handling-and-logging)
 
@@ -88,7 +91,7 @@ to adjust some values.
 ### Routing
 
 The routes of your application define which Action will be executed when a specified URL is requested. Each URL
-supported by you application needs to be routed to an action. You can adjust routes using the `default.php` file in the
+supported by your application needs to be routed to an action. You can adjust routes using the `default.php` file in the
 `routes` folder.
 
 #### GET Route
@@ -516,6 +519,46 @@ $rows = $this->db->makeSelect()
 ```
 
 #### INSERT
+
+##### Single row
+
+```php
+$customerId = $this->db->makeInsert()
+    ->into('customers')
+    ->row([
+        'firstname' => 'Homer',
+        'lastname' => 'Simpson',
+    ]);
+```
+
+When inserting a single row, the auto-increment value of the newly added row will be returned.
+
+##### Multiple rows
+
+You can insert multiple rows at once using the `rows` method:
+
+```php
+$this->db->makeInsert()
+    ->into('customers')
+    ->rows([
+        [
+            'firstname' => 'Homer',
+            'lastname' => 'Simpson',
+        ],
+        [
+            'firstname' => 'Marge',
+            'lastname' => 'Simpson',
+        ],
+    ]);
+```
+
+##### Last insert id
+
+In case you need to fetch the id if the last insert manually you can use the `getLastInsertId` method:
+
+```php
+$id = $insertQueryBuilder->getLastInsertId();
+```
 
 #### RAW Queries
 
