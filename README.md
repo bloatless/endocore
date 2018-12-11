@@ -36,11 +36,17 @@ well documented examples.
   * [Factory](#factory)
   * [SELECT](#select)
     + [A simple select](#a-simple-select)
+    + [Table and column alias](#table-and-column-alias)
     + [Get specific columns](#get-specific-columns)
     + [First row only](#first-row-only)
     + [Single column as array](#single-column-as-array)
     + [Counting rows](#counting-rows)
     + [Joins](#joins)
+    + [Group by](#group-by)
+    + [Order by](#order-by)
+    + [Having](#having)
+    + [Limit and Offser](#limit-and-offset)
+    + [Distinct](#distinct)
   * [INSERT](#insert)
   * [UPDATE](#update)
   * [DELETE](#delete)
@@ -276,6 +282,17 @@ $updateQueryBuilder = $this->db->makeUpdate('db2');
 $rows = $this->db->makeSelect()->from('customers')->get();
 ```
 
+##### Table and column alias
+
+Aliases can be used on table names as well as on column names.
+
+```php
+$rows = $this->db->makeSelect()
+    ->cols(['customer_id AS id', 'firstname', 'lastname'])
+    ->from('customers AS c')
+    ->get();
+```
+
 ##### Get specific columns
 
 ```php
@@ -324,7 +341,7 @@ $rowCount = $this->db->makeSelect()
 
 ##### Joins
 
-You can join tables using the `join`, `leftJoin` or `rightJoin` methods.
+You can join tables using the `join`, `leftJoin` or `rightJoin` methods. You can of course join multiple tables.
 
 ```php
 $rows = $this->db->makeSelect()
@@ -333,6 +350,52 @@ $rows = $this->db->makeSelect()
     ->get();
 ```
 
+##### Group by
+
+```php
+$rows = $this->db->makeSelect()
+    ->from('orders')
+    ->groupBy('customer_id')
+    ->get();
+```
+
+##### Order by
+
+```php
+$rows = $this->db->makeSelect()
+    ->from('customers')
+    ->orderBy('firstname', 'desc')
+    ->get();
+```
+
+##### Having
+
+```php
+$rows = $this->db->makeSelect()
+    ->from('orders')
+    ->having('amount', '>', 10)
+    ->orHaving('cart_items', '>' 5)
+    ->get();
+```
+
+##### Limit and Offset
+
+```php
+$rows = $this->db->makeSelect()
+    ->from('orders')
+    ->limit(10)
+    ->offset(20)
+    ->get();
+```
+
+##### Distinct
+
+```php
+$rows = $this->db->makeSelect()
+    ->distinct()
+    ->from('orders')
+    ->get();
+```
 
 #### INSERT
 #### UPDATE
