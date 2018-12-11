@@ -45,11 +45,24 @@ well documented examples.
     + [Group by](#group-by)
     + [Order by](#order-by)
     + [Having](#having)
-    + [Limit and Offser](#limit-and-offset)
+    + [Limit and Offset](#limit-and-offset)
     + [Distinct](#distinct)
-  * [INSERT](#insert)
   * [UPDATE](#update)
   * [DELETE](#delete)
+  * [WHERE](#where)
+    + [Simple where](#simple-where)
+    + [Or where](#or-where)
+    + [Where in](#where-in)
+    + [Where not in](#where-not-in)
+    + [Or where in](#or-where-in)
+    + [Or where not in](#or-where-not-in)
+    + [Where between](#where-between)
+    + [Or where between](#or-where-between)
+    + [Where null](#where-null)
+    + [Where not null](#where-not-null)
+    + [Or where null](#or-where-null)
+    + [Or where not null](#or-where-not-null)
+  * [INSERT](#insert)
   * [RAW Queries](#raw-queries)
 - [Error Handling and Logging](#error-handling-and-logging)
 
@@ -265,6 +278,10 @@ the `db` property of the domain.
 
 ```php
 $selectQueryBuilder = $this->db->makeSelect();
+$updateQueryBuilder = $this->db->makeUpdate();
+$deleteQueryBuilder = $this->db->makeDelete();
+$insertQueryBuilder = $this->db->makeInsert();
+$rawQueryBuilder = $this->db->makeRaw();
 ```
 
 With no arguments provided the default database connection is used. If you want to use a different connection you can
@@ -397,9 +414,109 @@ $rows = $this->db->makeSelect()
     ->get();
 ```
 
-#### INSERT
 #### UPDATE
+
+```php
+$rows = $this->db->makeUpdate()
+    ->table('customers')
+    ->where('customer_id', 42)
+    ->update([
+        'firstname' => 'Homer'
+    ]);
+```
+
 #### DELETE
+
+```php
+$rows = $this->db->makeDelete()
+    ->from('customers')
+    ->where('customer_id', 42)
+    ->delete();
+```
+
+#### WHERE
+
+You can use various where clauses on all `select`, `update` and `delete` queries:
+
+##### Simple where
+
+```php
+$rows = $this->db->makeSelect()
+    ->from('customers')
+    ->where('customer_id', '=', 42)
+    ->where('customer_id', '>', 10)
+    ->whereEquals('customer_id', 42)
+    ->get();
+```
+
+##### Or where
+
+```php
+->orWhere('customer_id', '>', 5)
+```
+
+##### Where in
+
+```php
+->whereIn('customer_id', [1,2,3])
+```
+
+##### Where not in
+
+```php
+->whereNotIn('customer_id', [1,2,3])
+```
+
+##### Or where in
+
+```php
+->orWhereIn('customer_id', [1,2,3])
+```
+
+##### Or where not in
+
+```php
+->orWhereNotIn('customer_id', [1,2,3])
+```
+
+##### Where between
+
+```php
+->whereBetween('customer_id', 5, 10)
+```
+
+##### Or where between
+
+```php
+->orWhereBetween('customer_id', 5, 10)
+```
+
+##### Where null
+
+```php
+->whereNull('customer_id')
+```
+
+##### Where not null
+
+```php
+->whereNotNull('customer_id')
+```
+
+##### Or where null
+
+```php
+->orWhereNull('customer_id')
+```
+
+##### Or where not null
+
+```php
+->orWhereNotNull('customer_id')
+```
+
+#### INSERT
+
 #### RAW Queries
 
 ### Error Handling and Logging
