@@ -69,6 +69,8 @@ well documented examples.
   * [RAW Queries](#raw-queries)
     + [Raw select queries](#raw-select-queries)
     + [Other raw queries](#other-raw-queries)
+  * [Reset](#reset)
+  * [Security](#security)
 - [Error Handling and Logging](#error-handling-and-logging)
 
 ### Directory Structure
@@ -587,6 +589,27 @@ $this->db->makeRaw()
     ])
     ->run();
 ```
+
+#### Reset
+
+All query builders have a `reset` method. This method can be used to clear all previously set values without the need
+of creating a new QueryBuilder object.
+
+```php
+$builder = $this->db->makeSelect()
+    ->from('customers')
+    ->whereEquals('customer_id', 42);
+
+$builder->reset();
+
+...
+```
+
+#### Security
+
+All query builders internally user PDO parameter binding to reduce the risk of injection attacks as much as possible.
+Additionally table names as well as field names are quoted - so you don't have to worry about that. This works simple
+names or when using aliases. Nevertheless you should always filter your inputs properly! 
 
 ### Error Handling and Logging
 
