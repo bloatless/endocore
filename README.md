@@ -4,7 +4,7 @@ ShinyCore is a framework designed to quickly build web applications following th
 
 ## Installation
 
-The easiest and recommended way to start a new ShinyCore based application is to use the ShinyCoreApp. This repository
+The easiest and recommended way to start a new ShinyCore based application is to use the [ShinyCoreApp](https://github.com/nekudo/shiny_core_app). This repository
 provides you with a boilerplate application including all necessary files and folders to start your project.
 
 You can install the ShinyCoreApp using composer:
