@@ -29,6 +29,11 @@ well documented examples.
 - [Actions and Responder](#actions-and-responder)
   * [Actions with JSON response](#actions-with-json-response)
   * [Actions with HTML response](#actions-with-html-response)
+  * [(P)HTML Templates](#phtml-templates)
+    + [Renderer configuration](#renderer-configuration)
+    + [Views and layouts](#views-and-layouts)
+    + [Template variables](#template-variables)
+    + [Displaying data](#displaying-data)
 - [Domains](#domains)
   * [Database Domain](#database-domain)
 - [Query Builder](#query-builder)
@@ -231,6 +236,28 @@ to this template. Your `home.phtml` could look something like this:
 ```html
 <p>Hello <?php $this->out('name'); ?></p>
 ```
+
+#### (P)HTML Templates
+
+The `HtmlResponder` (accessible from within each `HtmlAction`) by default comes with an (P)HTML renderer. This feature
+allows the basic usage of HTML templates and layout in your application.
+
+##### Renderer Configuration
+
+The paths to you view and layout files can be set in you `config/config.php` file:
+
+```php
+'paths' => [
+    'views' => __DIR__ . '/../resources/views',
+    'layouts' => __DIR__ . '/../resources/views/layouts',
+],
+```
+
+##### Views and layouts
+
+##### Template variables
+
+##### Displaying data
 
 ### Domains
 
