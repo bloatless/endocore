@@ -72,6 +72,13 @@ well documented examples.
   * [Reset](#reset)
   * [Security](#security)
 - [Error Handling and Logging](#error-handling-and-logging)
+  * [Using the file logger](#using-the-file-logger)
+    + [Logger configuration](#logger-configuration)
+    + [Log Levels](#log-levels)
+  * [Error responses](#error-responses)
+  * [Throwing exceptions](#throwing-exceptions)    
+    + [Generic Exceptions](#generic-exceptions)
+    + [HTTP Exceptions](#http-exceptions)
 
 ### Directory Structure
 
@@ -426,7 +433,7 @@ $rows = $this->db->makeSelect()
 ```php
 $rows = $this->db->makeUpdate()
     ->table('customers')
-    ->where('customer_id', 42)
+    ->whereEquals('customer_id', 42)
     ->update([
         'firstname' => 'Homer'
     ]);
@@ -437,7 +444,7 @@ $rows = $this->db->makeUpdate()
 ```php
 $rows = $this->db->makeDelete()
     ->from('customers')
-    ->where('customer_id', 42)
+    ->whereEquals('customer_id', 42)
     ->delete();
 ```
 
@@ -613,7 +620,138 @@ names or when using aliases. Nevertheless you should always filter your inputs p
 
 ### Error Handling and Logging
 
-...
+The shiny core framework provides some basic tools to handle errors and logging.
+
+#### Using the file logger
+
+From within any `Action` or `Domain` you have access to a PSR-3 compatible file logger.
+
+```php
+class MyHtmlAction extends HtmlAction
+{
+    public function __invoke(array $arguments = []): Response
+    {
+        $this->logger->warning('Some error occurred');  
+    }
+}
+```
+##### Logger Configuration
+
+Using you configuration file `config/config.php` you can define the target folder for your log-files as well as the
+min. log level:
+
+```php
+[
+    'paths' => [
+        'logs' => __DIR__ . '/../logs',
+    ],
+
+    'logger' => [
+        'min_level' => 'warning',
+    ],
+];
+```
+
+The log files will be stored per day with a filename like `2018-12-12_shinycore.log`.
+
+##### Log levels
+
+A PSR-3 compatible logger can log at different levels. All events with a level lower than the min. level defined
+in your configuration will be dropped. The available log levels are:
+
+```php
+$this->logger->debug('Some error occurred');
+$this->logger->notice('Some error occurred');
+$this->logger->info('Some error occurred');
+$this->logger->warning('Some error occurred');
+$this->logger->error('Some error occurred');
+$this->logger->critial('Some error occurred');
+$this->logger->alert('Some error occurred');
+$this->logger->emergency('Some error occurred');
+```
+
+There is also a generic `log` method available:
+
+```php
+$this->logger->log('warning', 'Some error occurred');
+```
+
+Additionally it is possible to provide some context information:
+
+```php
+$this->logger->warning('Some error message', [
+    'browser' => 'Firefox',
+]);
+```
+
+#### Error responses
+
+When using a `Responder` (typically from within an `Action`) you can use various methods in case an error occurrs in
+your application and you need to stop the execution:
+
+```php
+class MyHtmlAction extends HtmlAction
+{
+    public function __invoke(array $arguments = []): Response
+    {
+        // some error occurs...
+        return $this->responder->error(['data' => 'some additional data...']);
+    }
+}
+```
+
+This method will automatically respond with an HTTP status code 500 and render a simple error message.
+
+For HTTP errors there are some additional methods which will set there corresponding HTTP status codes automatically:
+
+```php
+class MyHtmlAction extends HtmlAction
+{
+    public function __invoke(array $arguments = []): Response
+    {
+        return $this->responder->badRequest(); // 400
+        return $this->responder->notFound(); // 404
+        return $this->responder->methodNotAllowed(); // 405
+    }
+}
+```
+
+#### Throwing exceptions
+
+In case you can not use a responder you are still able to respond with an error message using exceptions. You can
+throw there exceptions from anywhere in your application. 
+
+##### Generic Exceptions
+
+```php
+class MyDomain
+{
+    public function myMethod(): string
+    {
+        throw new ShinyCoreException('Something went wrong...');
+    }
+}
+```
+
+Throwing a `ShinyCoreException` will force the application to respond with an error 500 code. Also the error will be
+logged to your logfile.
+
+##### HTTP Exceptions
+
+For each HTTP error supported by a `Responder` there is a corresponding Exception which you can throw anywhere in your
+application:
+
+```php
+class MyDomain
+{
+    public function myMethod(): string
+    {
+        throw new BadRequestException(); // 400
+        throw new NotFoundException(); // 404
+        throw new MethodNotAllowedException(); // 405
+    }
+}
+```
 
 ## License
 
