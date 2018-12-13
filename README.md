@@ -239,7 +239,7 @@ to this template. Your `home.phtml` could look something like this:
 
 #### (P)HTML Templates
 
-The `HtmlResponder` (accessible from within each `HtmlAction`) by default comes with an (P)HTML renderer. This feature
+The `HtmlResponder` (accessible from within each `HtmlAction`) by default comes with a (P)HTML renderer. This feature
 allows the basic usage of HTML templates and layout in your application.
 
 ##### Renderer Configuration
@@ -255,9 +255,96 @@ The paths to you view and layout files can be set in you `config/config.php` fil
 
 ##### Views and layouts
 
+In its essence a `view` is nothing more than an html file. In a typical web-application every page corresponds to one
+`view`. You could for example have a view `home.phtml` for your homepage, a `imprint.phtml` for your imprint and so on.
+
+A `view` can be rendered and displayed from within an `action` like this:
+
+```php
+class HomeAction extends HtmlAction
+{
+    public function __invoke(array $arguments = []): Response
+    {
+        return $this->responder->show('home');
+    }
+}
+```
+
+A `layout` is normally some code that this shared by multiple views like e.g. the websites basic structure including
+a page header and footer.
+
+A `view` can extend a `layout` using a simple html comment:
+
+```html
+<!-- extends "default" -->
+<h1>My Homeppage</h1>
+<p>foo bar baz</p>
+```
+
+In this example a `view` (e.g. your `home.phtml`) would be embedded into the `default.phtml` layout. This layout file
+would look something like this:
+
+```html
+...
+<head>    
+    <title>My website</title>
+</head>
+
+<body>
+    <div class="container">
+        <?php $this->out('content', false); ?>
+    </div>
+</body>
+...
+```
+
+The only required part is the php code displaying the content. This is the place where the `view` will be included
+into the `layout`.
+
 ##### Template variables
 
+In most web-applications you would want to pass some kind of data from your domains to your template files. This
+can be done using the `assign` method of the `HtmlResponder` or by using a the second argument of the show method:
+
+```php
+class HomeAction extends HtmlAction
+{
+    public function __invoke(array $arguments = []): Response
+    {
+        // using assign method:
+        $this->responder->assign(['firstname' => 'Homer']);
+        
+        // passing to show method:
+        return $this->responder->show('home', [
+            'lastname' => 'Simpson',
+        ]);
+    }
+}
+```
+
+This data you pass to the `HtmlResponder` to be displayed within you template are generally called `template variables`.
+
 ##### Displaying data
+
+Displaying template variables inside your templates is pretty easy. You can simply use a method called `out` which is
+available in every `view`or `layout`.
+
+```html
+<p>
+    Hello <?php $this->out('firstname'); ?>,<br>
+</p>
+```
+
+If you use the out method the corresponding variable is automatically sent through the `htmlentities` method of
+PHP to prevent XSS attacks.
+
+If you want to display unescaped data you do this like this:
+
+```html
+<p>
+    Hello <?php $this->out('lastname', false); ?>,<br>
+</p>
+```
 
 ### Domains
 
