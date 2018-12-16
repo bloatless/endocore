@@ -2,6 +2,14 @@
 
 declare(strict_types=1);
 
+/**
+ * ShinyCore framework
+ * by Simon Samtleben <simon@samtleben.me>
+ *
+ * @link https://shinycore-framework.com
+ * @license MIT
+ */
+
 namespace Nekudo\ShinyCore;
 
 use Nekudo\ShinyCore\Exception\Application\ShinyCoreException;

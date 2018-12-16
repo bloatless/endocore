@@ -10,7 +10,7 @@ provides you with a boilerplate application including all necessary files and fo
 You can install the ShinyCoreApp using composer:
 
 ```
-composer create-project nekudo/shiny_core_app myshinyproject
+php compose.phar create-project nekudo/shiny_core_app myshinyproject
 ``` 
 
 ## Documentation

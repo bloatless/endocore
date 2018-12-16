@@ -1,7 +1,16 @@
 {
     "name": "nekudo/shiny_core",
-    "description": "Micro-framework following the action-domain-responder pattern",
+    "description": "ShinyCore is a framework designed to quickly build web applications following the Action-Domain-Responder pattern.",
+    "keywords": [
+        "framework",
+        "adr",
+        "action domain responder",
+        "router",
+        "query builder",
+        "logger"
+    ],
     "license": "MIT",
+    "homepage": "https://shinycore-framework.com",
     "authors": [
         {
             "name": "Simon Samtleben",
@@ -14,7 +23,7 @@
         }
     },
     "require": {
-        "php": "^7.1",
+        "php": "^7.2",
         "ext-json": "*",
         "ext-pdo": "*",
         "nikic/fast-route": "^1.3"
