@@ -1,3 +1,7 @@
+<p align="center">
+    <img src="https://static.samtleben.me/github/shinycore_logo.svg" width="80" height="80">
+</p>
+
 # ShinyCore Framework
 
 ShinyCore is a framework designed to quickly build web applications following the Action-Domain-Responder pattern.
