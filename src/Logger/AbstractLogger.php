@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Logger;
+namespace Bloatless\Endocore\Logger;
 
 /**
  * This is a simple Logger implementation that other Loggers can inherit from.

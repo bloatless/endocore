@@ -1,8 +1,8 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit\Database\StatementBuilder;
+namespace Bloatless\Endocore\Tests\Unit\Database\StatementBuilder;
 
-use Nekudo\ShinyCore\Database\StatementBuilder\DeleteStatementBuilder;
+use Bloatless\Endocore\Database\StatementBuilder\DeleteStatementBuilder;
 use PHPUnit\Framework\TestCase;
 
 class DeleteStatementBuilderTest extends TestCase

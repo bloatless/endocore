@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Responder;
+namespace Bloatless\Endocore\Responder;
 
-use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Exception\Application\ShinyCoreException;
+use Bloatless\Endocore\Config;
+use Bloatless\Endocore\Exception\Application\EndocoreException;
 
 class PhtmlRenderer implements RendererInterface
 {
@@ -92,7 +92,7 @@ class PhtmlRenderer implements RendererInterface
 
      * @param string $view
      * @param array $variables
-     * @throws ShinyCoreException
+     * @throws EndocoreException
      * @return string
      */
     public function render(string $view = '', array $variables = []): string
@@ -111,14 +111,14 @@ class PhtmlRenderer implements RendererInterface
     /**
      * Renders a view file.
      *
-     * @throws ShinyCoreException
+     * @throws EndocoreException
      * @return string
      */
     protected function renderView(): string
     {
         $viewFile = $this->config->getPath('views') . '/' . $this->view . '.phtml';
         if (!file_exists($viewFile)) {
-            throw new ShinyCoreException(sprintf('View file not found. (%s)', $viewFile));
+            throw new EndocoreException(sprintf('View file not found. (%s)', $viewFile));
         }
         $viewContent = file_get_contents($viewFile);
         if (preg_match('/<!-- extends "(.+)" -->/Usi', $viewContent, $matches) === 1) {
@@ -132,7 +132,7 @@ class PhtmlRenderer implements RendererInterface
      * Renders a layout file.
      *
      * @param string $content
-     * @throws ShinyCoreException
+     * @throws EndocoreException
      * @return string
      */
     protected function renderLayout(string $content): string
@@ -147,12 +147,12 @@ class PhtmlRenderer implements RendererInterface
     /**
      * @param string $templateFile
      * @return string
-     * @throws ShinyCoreException
+     * @throws EndocoreException
      */
     protected function renderFile(string $templateFile): string
     {
         if (!file_exists($templateFile)) {
-            throw new ShinyCoreException(sprintf('Template file not found. (%s)', $templateFile));
+            throw new EndocoreException(sprintf('Template file not found. (%s)', $templateFile));
         }
         extract($this->templateVariables);
         ob_start();

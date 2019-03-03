@@ -1,12 +1,12 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit\Responder;
+namespace Bloatless\Endocore\Tests\Unit\Responder;
 
-use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Exception\Application\ShinyCoreException;
-use Nekudo\ShinyCore\Http\Response;
-use Nekudo\ShinyCore\Responder\HtmlResponder;
-use Nekudo\ShinyCore\Responder\PhtmlRenderer;
+use Bloatless\Endocore\Config;
+use Bloatless\Endocore\Exception\Application\EndocoreException;
+use Bloatless\Endocore\Http\Response;
+use Bloatless\Endocore\Responder\HtmlResponder;
+use Bloatless\Endocore\Responder\PhtmlRenderer;
 use PHPUnit\Framework\TestCase;
 
 class HtmlResponderTest extends TestCase
@@ -47,7 +47,7 @@ class HtmlResponderTest extends TestCase
 
     public function testInitWithInvalidRendererSetInConfig()
     {
-        $this->expectException(ShinyCoreException::class);
+        $this->expectException(EndocoreException::class);
         $configData = $this->configData;
         $configData['classes']['html_renderer'] = '\Nekudo\Invalid\Renderer';
         $config = (new Config)->fromArray($configData);

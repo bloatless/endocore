@@ -1,11 +1,11 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit\Database\QueryBuilder;
+namespace Bloatless\Endocore\Tests\Unit\Database\QueryBuilder;
 
-use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Database\Factory;
-use Nekudo\ShinyCore\Database\QueryBuilder\RawQueryBuilder;
-use Nekudo\ShinyCore\Tests\Unit\Database\DatabaseTest;
+use Bloatless\Endocore\Config;
+use Bloatless\Endocore\Database\Factory;
+use Bloatless\Endocore\Database\QueryBuilder\RawQueryBuilder;
+use Bloatless\Endocore\Tests\Unit\Database\DatabaseTest;
 
 class RawQueryBuilderTest extends DatabaseTest
 {

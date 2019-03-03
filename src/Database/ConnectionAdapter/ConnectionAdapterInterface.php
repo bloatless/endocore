@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Database\ConnectionAdapter;
+namespace Bloatless\Endocore\Database\ConnectionAdapter;
 
 interface ConnectionAdapterInterface
 {

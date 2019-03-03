@@ -1,10 +1,10 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit\Action;
+namespace Bloatless\Endocore\Tests\Unit\Action;
 
-use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Domain\DatabaseDomain;
-use Nekudo\ShinyCore\Logger\NullLogger;
+use Bloatless\Endocore\Config;
+use Bloatless\Endocore\Domain\DatabaseDomain;
+use Bloatless\Endocore\Logger\NullLogger;
 use PHPUnit\Framework\TestCase;
 
 class DatabaseDomainTest extends TestCase

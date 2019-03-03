@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Action;
+namespace Bloatless\Endocore\Action;
 
-use Nekudo\ShinyCore\Http\Response;
+use Bloatless\Endocore\Http\Response;
 
 interface ActionInterface
 {

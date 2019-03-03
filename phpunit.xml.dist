@@ -6,7 +6,7 @@
 		 bootstrap="./tests/bootstrap.php"
 >
 	<testsuites>
-		<testsuite name="ShinyCore Test Suite">
+		<testsuite name="Endocore Test Suite">
 			<directory>./tests/</directory>
 		</testsuite>
 	</testsuites>
@@ -18,9 +18,9 @@
 	</filter>
 
 	<php>
-		<var name="DB_DSN" value="mysql:dbname=shinycore_test;host=localhost" />
-		<var name="DB_USER" value="shinycore" />
+		<var name="DB_DSN" value="mysql:dbname=endocore_test;host=localhost" />
+		<var name="DB_USER" value="endocore" />
 		<var name="DB_PASSWD" value="" />
-		<var name="DB_DBNAME" value="shinycore_test" />
+		<var name="DB_DBNAME" value="endocore_test" />
 	</php>
 </phpunit>

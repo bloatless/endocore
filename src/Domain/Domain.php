@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Domain;
+namespace Bloatless\Endocore\Domain;
 
-use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Logger\LoggerInterface;
+use Bloatless\Endocore\Config;
+use Bloatless\Endocore\Logger\LoggerInterface;
 
 abstract class Domain
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit\Logger;
+namespace Bloatless\Endocore\Tests\Unit\Logger;
 
-use Nekudo\ShinyCore\Logger\LogLevel;
-use Nekudo\ShinyCore\Logger\NullLogger;
+use Bloatless\Endocore\Logger\LogLevel;
+use Bloatless\Endocore\Logger\NullLogger;
 use PHPUnit\Framework\TestCase;
 
 class NullLoggerTest extends TestCase

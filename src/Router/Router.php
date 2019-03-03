@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Router;
+namespace Bloatless\Endocore\Router;
 
 use FastRoute;
 use FastRoute\RouteCollector;

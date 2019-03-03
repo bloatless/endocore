@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Database;
+namespace Bloatless\Endocore\Database;
 
-use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Database\ConnectionAdapter\PdoMysql;
-use Nekudo\ShinyCore\Database\QueryBuilder\DeleteQueryBuilder;
-use Nekudo\ShinyCore\Database\QueryBuilder\InsertQueryBuilder;
-use Nekudo\ShinyCore\Database\QueryBuilder\RawQueryBuilder;
-use Nekudo\ShinyCore\Database\QueryBuilder\SelectQueryBuilder;
-use Nekudo\ShinyCore\Database\QueryBuilder\UpdateQueryBuilder;
-use Nekudo\ShinyCore\Database\StatementBuilder\DeleteStatementBuilder;
-use Nekudo\ShinyCore\Database\StatementBuilder\InsertStatementBuilder;
-use Nekudo\ShinyCore\Database\StatementBuilder\RawStatementBuider;
-use Nekudo\ShinyCore\Database\StatementBuilder\SelectStatementBuilder;
-use Nekudo\ShinyCore\Database\StatementBuilder\UpdateStatementBuilder;
-use Nekudo\ShinyCore\Exception\Application\DatabaseException;
+use Bloatless\Endocore\Config;
+use Bloatless\Endocore\Database\ConnectionAdapter\PdoMysql;
+use Bloatless\Endocore\Database\QueryBuilder\DeleteQueryBuilder;
+use Bloatless\Endocore\Database\QueryBuilder\InsertQueryBuilder;
+use Bloatless\Endocore\Database\QueryBuilder\RawQueryBuilder;
+use Bloatless\Endocore\Database\QueryBuilder\SelectQueryBuilder;
+use Bloatless\Endocore\Database\QueryBuilder\UpdateQueryBuilder;
+use Bloatless\Endocore\Database\StatementBuilder\DeleteStatementBuilder;
+use Bloatless\Endocore\Database\StatementBuilder\InsertStatementBuilder;
+use Bloatless\Endocore\Database\StatementBuilder\RawStatementBuider;
+use Bloatless\Endocore\Database\StatementBuilder\SelectStatementBuilder;
+use Bloatless\Endocore\Database\StatementBuilder\UpdateStatementBuilder;
+use Bloatless\Endocore\Exception\Application\DatabaseException;
 
 class Factory
 {

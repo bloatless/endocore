@@ -1,9 +1,9 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit;
+namespace Bloatless\Endocore\Tests\Unit;
 
-use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Exception\Application\ShinyCoreException;
+use Bloatless\Endocore\Config;
+use Bloatless\Endocore\Exception\Application\EndocoreException;
 use PHPUnit\Framework\TestCase;
 
 class ConfigTest extends TestCase
@@ -23,7 +23,7 @@ class ConfigTest extends TestCase
         $this->assertNotEmpty($config->getPath('logs'));
         $this->assertNotEmpty($config->getDefaultDbConfig());
 
-        $this->expectException(ShinyCoreException::class);
+        $this->expectException(EndocoreException::class);
         $config = (new Config)->fromFile('/invalid/path');
     }
 
@@ -81,7 +81,7 @@ class ConfigTest extends TestCase
         $this->assertArrayHasKey('host', $config->getDefaultDbConfig());
 
         $config = new Config;
-        $this->expectException(ShinyCoreException::class);
+        $this->expectException(EndocoreException::class);
         $config->getDefaultDbConfig();
     }
 

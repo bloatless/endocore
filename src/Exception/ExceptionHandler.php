@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Exception;
+namespace Bloatless\Endocore\Exception;
 
-use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Exception\Http\BadRequestException;
-use Nekudo\ShinyCore\Exception\Http\MethodNotAllowedException;
-use Nekudo\ShinyCore\Exception\Http\NotFoundException;
-use Nekudo\ShinyCore\Http\Response;
-use Nekudo\ShinyCore\Logger\LoggerInterface;
-use Nekudo\ShinyCore\Http\Request;
-use Nekudo\ShinyCore\Responder\HtmlResponder;
-use Nekudo\ShinyCore\Responder\JsonResponder;
-use Nekudo\ShinyCore\Responder\ResponderInterface;
+use Bloatless\Endocore\Config;
+use Bloatless\Endocore\Exception\Http\BadRequestException;
+use Bloatless\Endocore\Exception\Http\MethodNotAllowedException;
+use Bloatless\Endocore\Exception\Http\NotFoundException;
+use Bloatless\Endocore\Http\Response;
+use Bloatless\Endocore\Logger\LoggerInterface;
+use Bloatless\Endocore\Http\Request;
+use Bloatless\Endocore\Responder\HtmlResponder;
+use Bloatless\Endocore\Responder\JsonResponder;
+use Bloatless\Endocore\Responder\ResponderInterface;
 
 class ExceptionHandler implements ExceptionHandlerInterface
 {

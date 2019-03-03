@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Database\QueryBuilder;
+namespace Bloatless\Endocore\Database\QueryBuilder;
 
 abstract class WhereQueryBuilder extends QueryBuilder
 {

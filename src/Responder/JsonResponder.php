@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Responder;
+namespace Bloatless\Endocore\Responder;
 
-use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Http\Response;
+use Bloatless\Endocore\Config;
+use Bloatless\Endocore\Http\Response;
 
 class JsonResponder extends Responder
 {

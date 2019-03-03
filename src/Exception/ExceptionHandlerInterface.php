@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Exception;
+namespace Bloatless\Endocore\Exception;
 
-use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Http\Response;
-use Nekudo\ShinyCore\Logger\LoggerInterface;
-use Nekudo\ShinyCore\Http\Request;
+use Bloatless\Endocore\Config;
+use Bloatless\Endocore\Http\Response;
+use Bloatless\Endocore\Logger\LoggerInterface;
+use Bloatless\Endocore\Http\Request;
 
 interface ExceptionHandlerInterface
 {

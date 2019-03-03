@@ -1,10 +1,10 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Integration;
+namespace Bloatless\Endocore\Tests\Integration;
 
-use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Exception\Application\ShinyCoreException;
-use Nekudo\ShinyCore\Responder\PhtmlRenderer;
+use Bloatless\Endocore\Config;
+use Bloatless\Endocore\Exception\Application\EndocoreException;
+use Bloatless\Endocore\Responder\PhtmlRenderer;
 use PHPUnit\Framework\TestCase;
 
 class PhtmlRendererTest extends TestCase
@@ -28,7 +28,7 @@ class PhtmlRendererTest extends TestCase
     public function testRenderInvalidView()
     {
         $renderer = new PhtmlRenderer($this->config);
-        $this->expectException(ShinyCoreException::class);
+        $this->expectException(EndocoreException::class);
         $renderer->render('foobar');
     }
 
@@ -43,7 +43,7 @@ class PhtmlRendererTest extends TestCase
     public function testRenderViewWithInvalidLayout()
     {
         $renderer = new PhtmlRenderer($this->config);
-        $this->expectException(ShinyCoreException::class);
+        $this->expectException(EndocoreException::class);
         $renderer->render('invalid_layout_view', ['mock' => 'foo']);
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit\Database\QueryBuilder;
+namespace Bloatless\Endocore\Tests\Unit\Database\QueryBuilder;
 
-use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Database\Factory;
-use Nekudo\ShinyCore\Database\QueryBuilder\DeleteQueryBuilder;
-use Nekudo\ShinyCore\Tests\Unit\Database\DatabaseTest;
+use Bloatless\Endocore\Config;
+use Bloatless\Endocore\Database\Factory;
+use Bloatless\Endocore\Database\QueryBuilder\DeleteQueryBuilder;
+use Bloatless\Endocore\Tests\Unit\Database\DatabaseTest;
 
 class DeleteQueryBuilderTest extends DatabaseTest
 {

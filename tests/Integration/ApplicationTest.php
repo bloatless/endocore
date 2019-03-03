@@ -1,13 +1,13 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Integration;
+namespace Bloatless\Endocore\Tests\Integration;
 
-use Nekudo\ShinyCore\Application;
-use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Exception\ExceptionHandler;
-use Nekudo\ShinyCore\Logger\NullLogger;
-use Nekudo\ShinyCore\Http\Request;
-use Nekudo\ShinyCore\Router\Router;
+use Bloatless\Endocore\Application;
+use Bloatless\Endocore\Config;
+use Bloatless\Endocore\Exception\ExceptionHandler;
+use Bloatless\Endocore\Logger\NullLogger;
+use Bloatless\Endocore\Http\Request;
+use Bloatless\Endocore\Router\Router;
 use PHPUnit\Framework\TestCase;
 
 class ApplicationTest extends TestCase
@@ -44,11 +44,11 @@ class ApplicationTest extends TestCase
             $this->logger,
             $this->exceptionHandler
         );
-        $this->assertInstanceOf('Nekudo\ShinyCore\Application', $app);
-        $this->assertInstanceOf('Nekudo\ShinyCore\Http\Request', $app->request);
-        $this->assertInstanceOf('Nekudo\ShinyCore\Router\RouterInterface', $app->router);
-        $this->assertInstanceOf('Nekudo\ShinyCore\Logger\LoggerInterface', $app->logger);
-        $this->assertInstanceOf('Nekudo\ShinyCore\Exception\ExceptionHandler', $app->exceptionHandler);
+        $this->assertInstanceOf('Bloatless\Endocore\Application', $app);
+        $this->assertInstanceOf('Bloatless\Endocore\Http\Request', $app->request);
+        $this->assertInstanceOf('Bloatless\Endocore\Router\RouterInterface', $app->router);
+        $this->assertInstanceOf('Bloatless\Endocore\Logger\LoggerInterface', $app->logger);
+        $this->assertInstanceOf('Bloatless\Endocore\Exception\ExceptionHandler', $app->exceptionHandler);
     }
 
     /**

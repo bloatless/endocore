@@ -1,8 +1,8 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit\Database\StatementBuilder;
+namespace Bloatless\Endocore\Tests\Unit\Database\StatementBuilder;
 
-use Nekudo\ShinyCore\Database\StatementBuilder\RawStatementBuider;
+use Bloatless\Endocore\Database\StatementBuilder\RawStatementBuider;
 use PHPUnit\Framework\TestCase;
 
 class RawStatementBuilderTest extends TestCase

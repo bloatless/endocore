@@ -1,15 +1,15 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit\Database\QueryBuilder;
+namespace Bloatless\Endocore\Tests\Unit\Database\QueryBuilder;
 
-use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Database\ConnectionAdapter\PdoMysql;
-use Nekudo\ShinyCore\Database\Factory;
-use Nekudo\ShinyCore\Database\StatementBuilder\SelectStatementBuilder;
-use Nekudo\ShinyCore\Exception\Application\DatabaseException;
-use Nekudo\ShinyCore\Tests\Fixtures\QueryBuilderMock;
-use Nekudo\ShinyCore\Tests\Fixtures\StatementBuilderMock;
-use Nekudo\ShinyCore\Tests\Unit\Database\DatabaseTest;
+use Bloatless\Endocore\Config;
+use Bloatless\Endocore\Database\ConnectionAdapter\PdoMysql;
+use Bloatless\Endocore\Database\Factory;
+use Bloatless\Endocore\Database\StatementBuilder\SelectStatementBuilder;
+use Bloatless\Endocore\Exception\Application\DatabaseException;
+use Bloatless\Endocore\Tests\Fixtures\QueryBuilderMock;
+use Bloatless\Endocore\Tests\Fixtures\StatementBuilderMock;
+use Bloatless\Endocore\Tests\Unit\Database\DatabaseTest;
 
 class QueryBuilderTest extends DatabaseTest
 {

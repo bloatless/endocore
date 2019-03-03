@@ -1,10 +1,10 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit\Responder;
+namespace Bloatless\Endocore\Tests\Unit\Responder;
 
-use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Http\Response;
-use Nekudo\ShinyCore\Responder\JsonResponder;
+use Bloatless\Endocore\Config;
+use Bloatless\Endocore\Http\Response;
+use Bloatless\Endocore\Responder\JsonResponder;
 use PHPUnit\Framework\TestCase;
 
 class JsonResponderTest extends TestCase

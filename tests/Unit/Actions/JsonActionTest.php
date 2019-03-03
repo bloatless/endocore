@@ -1,12 +1,12 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit\Action;
+namespace Bloatless\Endocore\Tests\Unit\Action;
 
-use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Logger\NullLogger;
-use Nekudo\ShinyCore\Responder\JsonResponder;
-use Nekudo\ShinyCore\Http\Request;
-use Nekudo\ShinyCore\Tests\Fixtures\HelloWorldJsonAction;
+use Bloatless\Endocore\Config;
+use Bloatless\Endocore\Logger\NullLogger;
+use Bloatless\Endocore\Responder\JsonResponder;
+use Bloatless\Endocore\Http\Request;
+use Bloatless\Endocore\Tests\Fixtures\HelloWorldJsonAction;
 use PHPUnit\Framework\TestCase;
 
 class JsonActionTest extends TestCase

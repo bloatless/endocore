@@ -1,6 +1,6 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit\Database;
+namespace Bloatless\Endocore\Tests\Unit\Database;
 
 use PHPUnit\Framework\TestCase;
 

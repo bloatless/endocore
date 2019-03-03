@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Database\StatementBuilder;
+namespace Bloatless\Endocore\Database\StatementBuilder;
 
-use Nekudo\ShinyCore\Exception\Application\DatabaseException;
+use Bloatless\Endocore\Exception\Application\DatabaseException;
 
 class InsertStatementBuilder extends StatementBuilder
 {

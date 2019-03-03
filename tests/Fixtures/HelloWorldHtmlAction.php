@@ -1,9 +1,9 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Fixtures;
+namespace Bloatless\Endocore\Tests\Fixtures;
 
-use Nekudo\ShinyCore\Action\HtmlAction;
-use Nekudo\ShinyCore\Http\Response;
+use Bloatless\Endocore\Action\HtmlAction;
+use Bloatless\Endocore\Http\Response;
 
 class HelloWorldHtmlAction extends HtmlAction
 {

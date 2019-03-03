@@ -1,15 +1,15 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit\Exception;
+namespace Bloatless\Endocore\Tests\Unit\Exception;
 
-use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Exception\Application\ShinyCoreException;
-use Nekudo\ShinyCore\Exception\ExceptionHandler;
-use Nekudo\ShinyCore\Exception\Http\BadRequestException;
-use Nekudo\ShinyCore\Exception\Http\MethodNotAllowedException;
-use Nekudo\ShinyCore\Exception\Http\NotFoundException;
-use Nekudo\ShinyCore\Logger\NullLogger;
-use Nekudo\ShinyCore\Http\Request;
+use Bloatless\Endocore\Config;
+use Bloatless\Endocore\Exception\Application\EndocoreException;
+use Bloatless\Endocore\Exception\ExceptionHandler;
+use Bloatless\Endocore\Exception\Http\BadRequestException;
+use Bloatless\Endocore\Exception\Http\MethodNotAllowedException;
+use Bloatless\Endocore\Exception\Http\NotFoundException;
+use Bloatless\Endocore\Logger\NullLogger;
+use Bloatless\Endocore\Http\Request;
 use PHPUnit\Framework\TestCase;
 
 class ExceptionHandlerTest extends TestCase
@@ -71,7 +71,7 @@ class ExceptionHandlerTest extends TestCase
 
     public function testHandlesGeneralException()
     {
-        $error = new ShinyCoreException('foobar error');
+        $error = new EndocoreException('foobar error');
         $response = $this->handler->handleException($error);
         $this->assertEquals(500, $response->getStatus());
         $this->assertContains('<title>Error 500</title>', $response->getBody());
@@ -81,7 +81,7 @@ class ExceptionHandlerTest extends TestCase
     {
         $request = new Request([], [], ['HTTP_ACCEPT' => 'application/json']);
         $handler = new ExceptionHandler($this->config, $this->logger, $request);
-        $error = new ShinyCoreException('json error');
+        $error = new EndocoreException('json error');
         $response = $handler->handleException($error);
         $this->assertContains('json error', $response->getBody());
         $bodyDecoded = json_decode($response->getBody(), true);

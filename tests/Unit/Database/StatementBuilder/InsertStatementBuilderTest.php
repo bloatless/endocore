@@ -1,9 +1,9 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit\Database\StatementBuilder;
+namespace Bloatless\Endocore\Tests\Unit\Database\StatementBuilder;
 
-use Nekudo\ShinyCore\Database\StatementBuilder\InsertStatementBuilder;
-use Nekudo\ShinyCore\Exception\Application\DatabaseException;
+use Bloatless\Endocore\Database\StatementBuilder\InsertStatementBuilder;
+use Bloatless\Endocore\Exception\Application\DatabaseException;
 use PHPUnit\Framework\TestCase;
 
 class InsertStatementBuilderTest extends TestCase

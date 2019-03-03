@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Database\QueryBuilder;
+namespace Bloatless\Endocore\Database\QueryBuilder;
 
 /**
- * @property \Nekudo\ShinyCore\Database\StatementBuilder\DeleteStatementBuilder $statementBuilder
+ * @property \Bloatless\Endocore\Database\StatementBuilder\DeleteStatementBuilder $statementBuilder
  */
 class DeleteQueryBuilder extends WhereQueryBuilder
 {
@@ -29,7 +29,7 @@ class DeleteQueryBuilder extends WhereQueryBuilder
     /**
      * Executes delete statement and returns affected rows.
      *
-     * @throws \Nekudo\ShinyCore\Exception\Application\DatabaseException
+     * @throws \Bloatless\Endocore\Exception\Application\DatabaseException
      * @return int
      */
     public function delete(): int

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Logger;
+namespace Bloatless\Endocore\Logger;
 
-use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Exception\Application\ShinyCoreException;
+use Bloatless\Endocore\Config;
+use Bloatless\Endocore\Exception\Application\EndocoreException;
 
 class FileLogger extends AbstractLogger
 {
@@ -16,7 +16,7 @@ class FileLogger extends AbstractLogger
 
     /**
      * @param Config $config
-     * @throws ShinyCoreException
+     * @throws EndocoreException
      */
     public function __construct(Config $config)
     {
@@ -28,12 +28,12 @@ class FileLogger extends AbstractLogger
      * Sets path to directory containing log files.
      *
      * @param string $logsDir
-     * @throws ShinyCoreException
+     * @throws EndocoreException
      */
     public function setLogsDir(string $logsDir): void
     {
         if (!file_exists($logsDir) || !is_writable($logsDir)) {
-            throw new ShinyCoreException('Logs path does not exist or is not writable.');
+            throw new EndocoreException('Logs path does not exist or is not writable.');
         }
         $this->logsDir = rtrim($logsDir, '/') . '/';
     }
@@ -88,6 +88,6 @@ class FileLogger extends AbstractLogger
      */
     private function getLogfileName(): string
     {
-        return date('Y-m-d') . '_shinycore.log';
+        return date('Y-m-d') . '_endocore.log';
     }
 }

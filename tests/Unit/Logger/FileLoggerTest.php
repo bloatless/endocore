@@ -1,11 +1,11 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit\Logger;
+namespace Bloatless\Endocore\Tests\Unit\Logger;
 
-use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Exception\Application\ShinyCoreException;
-use Nekudo\ShinyCore\Logger\FileLogger;
-use Nekudo\ShinyCore\Logger\LogLevel;
+use Bloatless\Endocore\Config;
+use Bloatless\Endocore\Exception\Application\EndocoreException;
+use Bloatless\Endocore\Logger\FileLogger;
+use Bloatless\Endocore\Logger\LogLevel;
 use PHPUnit\Framework\TestCase;
 
 class FileLoggerTest extends TestCase
@@ -30,7 +30,7 @@ class FileLoggerTest extends TestCase
         $configData = include SC_TESTS . '/Fixtures/config.php';
         $config = (new Config)->fromArray($configData);
         $config->setPath('logs', 'foo');
-        $this->expectException(ShinyCoreException::class);
+        $this->expectException(EndocoreException::class);
         $logger = new FileLogger($config);
     }
 
@@ -151,7 +151,7 @@ class FileLoggerTest extends TestCase
     {
         $pathToLogfile = $this->config->getPath('logs');
         $pathToLogfile = rtrim($pathToLogfile, '/') . '/';
-        $pathToLogfile .= date('Y-m-d') . '_shinycore.log';
+        $pathToLogfile .= date('Y-m-d') . '_endocore.log';
         return $pathToLogfile;
     }
 }

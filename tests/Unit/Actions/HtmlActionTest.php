@@ -1,12 +1,12 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit\Action;
+namespace Bloatless\Endocore\Tests\Unit\Action;
 
-use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Logger\NullLogger;
-use Nekudo\ShinyCore\Responder\HtmlResponder;
-use Nekudo\ShinyCore\Http\Request;
-use Nekudo\ShinyCore\Tests\Fixtures\HelloWorldHtmlAction;
+use Bloatless\Endocore\Config;
+use Bloatless\Endocore\Logger\NullLogger;
+use Bloatless\Endocore\Responder\HtmlResponder;
+use Bloatless\Endocore\Http\Request;
+use Bloatless\Endocore\Tests\Fixtures\HelloWorldHtmlAction;
 use PHPUnit\Framework\TestCase;
 
 class HtmlActionTest extends TestCase

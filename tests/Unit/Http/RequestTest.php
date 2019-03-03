@@ -1,8 +1,8 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit\Http;
+namespace Bloatless\Endocore\Tests\Unit\Http;
 
-use Nekudo\ShinyCore\Http\Request;
+use Bloatless\Endocore\Http\Request;
 use PHPUnit\Framework\TestCase;
 
 class RequestTest extends TestCase

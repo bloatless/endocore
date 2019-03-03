@@ -3,25 +3,25 @@
 declare(strict_types=1);
 
 /**
- * ShinyCore framework
+ * Endocore framework
  * by Simon Samtleben <simon@samtleben.me>
  *
- * @link https://shinycore-framework.com
+ * @link https://endocore-framework.com
  * @license MIT
  */
 
-namespace Nekudo\ShinyCore;
+namespace Bloatless\Endocore;
 
-use Nekudo\ShinyCore\Exception\Application\ShinyCoreException;
-use Nekudo\ShinyCore\Exception\ExceptionHandlerInterface;
-use Nekudo\ShinyCore\Exception\Http\BadRequestException;
-use Nekudo\ShinyCore\Exception\Http\MethodNotAllowedException;
-use Nekudo\ShinyCore\Exception\Http\NotFoundException;
-use Nekudo\ShinyCore\Http\Request;
-use Nekudo\ShinyCore\Http\Response;
-use Nekudo\ShinyCore\Logger\LoggerInterface;
-use Nekudo\ShinyCore\Router\RouterInterface;
-use Nekudo\ShinyCore\Router\Router;
+use Bloatless\Endocore\Exception\Application\EndocoreException;
+use Bloatless\Endocore\Exception\ExceptionHandlerInterface;
+use Bloatless\Endocore\Exception\Http\BadRequestException;
+use Bloatless\Endocore\Exception\Http\MethodNotAllowedException;
+use Bloatless\Endocore\Exception\Http\NotFoundException;
+use Bloatless\Endocore\Http\Request;
+use Bloatless\Endocore\Http\Response;
+use Bloatless\Endocore\Logger\LoggerInterface;
+use Bloatless\Endocore\Router\RouterInterface;
+use Bloatless\Endocore\Router\Router;
 
 class Application
 {
@@ -92,7 +92,7 @@ class Application
      * @throws BadRequestException
      * @throws MethodNotAllowedException
      * @throws NotFoundException
-     * @throws ShinyCoreException
+     * @throws EndocoreException
      * @return Response
      */
     protected function dispatch(): Response
@@ -122,16 +122,16 @@ class Application
      *
      * @param string $handler
      * @param array $arguments
-     * @throws ShinyCoreException
+     * @throws EndocoreException
      * @return Response
      */
     public function callAction(string $handler, array $arguments = []): Response
     {
         if (!class_exists($handler)) {
-            throw new ShinyCoreException('Action class not found.');
+            throw new EndocoreException('Action class not found.');
         }
 
-        /** @var \Nekudo\ShinyCore\Action\ActionInterface $action */
+        /** @var \Bloatless\Endocore\Action\ActionInterface $action */
         $action = new $handler($this->config, $this->logger, $this->request);
         return $action->__invoke($arguments);
     }

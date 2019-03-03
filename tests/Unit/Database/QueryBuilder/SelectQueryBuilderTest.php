@@ -1,12 +1,12 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit\Database\QueryBuilder;
+namespace Bloatless\Endocore\Tests\Unit\Database\QueryBuilder;
 
-use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Database\Factory;
-use Nekudo\ShinyCore\Database\QueryBuilder\SelectQueryBuilder;
-use Nekudo\ShinyCore\Exception\Application\DatabaseException;
-use Nekudo\ShinyCore\Tests\Unit\Database\DatabaseTest;
+use Bloatless\Endocore\Config;
+use Bloatless\Endocore\Database\Factory;
+use Bloatless\Endocore\Database\QueryBuilder\SelectQueryBuilder;
+use Bloatless\Endocore\Exception\Application\DatabaseException;
+use Bloatless\Endocore\Tests\Unit\Database\DatabaseTest;
 
 class SelectQueryBuilderTest extends DatabaseTest
 {

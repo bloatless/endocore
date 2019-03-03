@@ -1,9 +1,9 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit\Responder;
+namespace Bloatless\Endocore\Tests\Unit\Responder;
 
-use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Responder\PhtmlRenderer;
+use Bloatless\Endocore\Config;
+use Bloatless\Endocore\Responder\PhtmlRenderer;
 use PHPUnit\Framework\TestCase;
 
 class PhtmlRendererTest extends TestCase

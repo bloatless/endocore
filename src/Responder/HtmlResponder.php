@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Responder;
+namespace Bloatless\Endocore\Responder;
 
-use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Exception\Application\ShinyCoreException;
-use Nekudo\ShinyCore\Http\Response;
+use Bloatless\Endocore\Config;
+use Bloatless\Endocore\Exception\Application\EndocoreException;
+use Bloatless\Endocore\Http\Response;
 
 /**
  * @property string $view
@@ -29,14 +29,14 @@ class HtmlResponder extends Responder
     /**
      * Initiates the HTTP renderer defined in config (or default if no renderer is defined).
      *
-     * @throws ShinyCoreException
+     * @throws EndocoreException
      * @return void
      */
     protected function initRenderer(): void
     {
-        $rendererClass = $this->config->getClass('html_renderer', '\Nekudo\ShinyCore\Responder\PhtmlRenderer');
+        $rendererClass = $this->config->getClass('html_renderer', '\Bloatless\Endocore\Responder\PhtmlRenderer');
         if (!class_exists($rendererClass)) {
-            throw new ShinyCoreException('Renderer class not found.');
+            throw new EndocoreException('Renderer class not found.');
         }
         $this->renderer = new $rendererClass($this->config);
     }

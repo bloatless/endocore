@@ -1,16 +1,16 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit\Database;
+namespace Bloatless\Endocore\Tests\Unit\Database;
 
-use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Database\ConnectionAdapter\PdoMysql;
-use Nekudo\ShinyCore\Database\Factory;
-use Nekudo\ShinyCore\Database\QueryBuilder\DeleteQueryBuilder;
-use Nekudo\ShinyCore\Database\QueryBuilder\InsertQueryBuilder;
-use Nekudo\ShinyCore\Database\QueryBuilder\RawQueryBuilder;
-use Nekudo\ShinyCore\Database\QueryBuilder\SelectQueryBuilder;
-use Nekudo\ShinyCore\Database\QueryBuilder\UpdateQueryBuilder;
-use Nekudo\ShinyCore\Exception\Application\DatabaseException;
+use Bloatless\Endocore\Config;
+use Bloatless\Endocore\Database\ConnectionAdapter\PdoMysql;
+use Bloatless\Endocore\Database\Factory;
+use Bloatless\Endocore\Database\QueryBuilder\DeleteQueryBuilder;
+use Bloatless\Endocore\Database\QueryBuilder\InsertQueryBuilder;
+use Bloatless\Endocore\Database\QueryBuilder\RawQueryBuilder;
+use Bloatless\Endocore\Database\QueryBuilder\SelectQueryBuilder;
+use Bloatless\Endocore\Database\QueryBuilder\UpdateQueryBuilder;
+use Bloatless\Endocore\Exception\Application\DatabaseException;
 
 class FactoryTest extends DatabaseTest
 {

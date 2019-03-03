@@ -1,10 +1,10 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit\Database\ConnectionAdapter;
+namespace Bloatless\Endocore\Tests\Unit\Database\ConnectionAdapter;
 
-use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Database\ConnectionAdapter\PdoMysql;
-use Nekudo\ShinyCore\Exception\Application\DatabaseException;
+use Bloatless\Endocore\Config;
+use Bloatless\Endocore\Database\ConnectionAdapter\PdoMysql;
+use Bloatless\Endocore\Exception\Application\DatabaseException;
 use PHPUnit\Framework\TestCase;
 
 class PdoMysqlTest extends TestCase

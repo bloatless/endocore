@@ -8,7 +8,7 @@ return [
     ],
 
     'classes' => [
-        'html_renderer' => '\Nekudo\ShinyCore\Responder\PhtmlRenderer',
+        'html_renderer' => '\Bloatless\Endocore\Responder\PhtmlRenderer',
     ],
 
     'db' => [
@@ -16,8 +16,8 @@ return [
             'db1' => [
                 'driver' => 'mysql',
                 'host' => 'localhost',
-                'database' => 'shinycore_test',
-                'username' => 'shinycore',
+                'database' => 'endocore_test',
+                'username' => 'endocore',
                 'password' => '',
                 'charset' => 'utf8', // Optional
                 'timezone' => 'Europe/Berlin', // Optional

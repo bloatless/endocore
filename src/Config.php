@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore;
+namespace Bloatless\Endocore;
 
-use Nekudo\ShinyCore\Exception\Application\ShinyCoreException;
+use Bloatless\Endocore\Exception\Application\EndocoreException;
 
 class Config
 {
@@ -38,12 +38,12 @@ class Config
      *
      * @param string $pathToConfigFile
      * @return Config
-     * @throws ShinyCoreException
+     * @throws EndocoreException
      */
     public function fromFile(string $pathToConfigFile): Config
     {
         if (!file_exists($pathToConfigFile)) {
-            throw new ShinyCoreException(sprintf('Config file not found. (%s)', $pathToConfigFile));
+            throw new EndocoreException(sprintf('Config file not found. (%s)', $pathToConfigFile));
         }
         $configData = include $pathToConfigFile;
         return $this->fromArray($configData);
@@ -53,7 +53,7 @@ class Config
      * Loads configuration from given array.
      *
      * @param array $config
-     * @throws ShinyCoreException
+     * @throws EndocoreException
      * @return Config
      */
     public function fromArray(array $config): Config
@@ -85,16 +85,16 @@ class Config
      * Initialized database configuration.
      *
      * @param array $dbConfig
-     * @throws ShinyCoreException
+     * @throws EndocoreException
      * @return void
      */
     private function intiDbConfig(array $dbConfig): void
     {
         if (empty($dbConfig['connections'])) {
-            throw new ShinyCoreException('There needs to be at least one database connection. Check config.');
+            throw new EndocoreException('There needs to be at least one database connection. Check config.');
         }
         if (empty($dbConfig['default_connection'])) {
-            throw new ShinyCoreException('Default database connection not set. Check config.');
+            throw new EndocoreException('Default database connection not set. Check config.');
         }
         foreach ($dbConfig['connections'] as $connectionName => $credentials) {
             $this->addDbConfig($connectionName, $credentials);
@@ -178,12 +178,12 @@ class Config
      * Retrieves default database configuration.
      *
      * @return array
-     * @throws ShinyCoreException
+     * @throws EndocoreException
      */
     public function getDefaultDbConfig(): array
     {
         if (empty($this->defaultDb)) {
-            throw new ShinyCoreException('Default database is not set.');
+            throw new EndocoreException('Default database is not set.');
         }
         return $this->dbConfigs[$this->defaultDb];
     }

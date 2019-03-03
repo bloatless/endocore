@@ -1,25 +1,25 @@
 <p align="center">
-    <img src="https://static.samtleben.me/github/shinycore_logo.svg" width="80" height="80">
+    <img src="https://static.samtleben.me/github/endocore_logo.svg" width="80" height="80">
 </p>
 
-# ShinyCore Framework
+# Endocore Framework
 
-ShinyCore is a framework designed to quickly build web applications following the Action-Domain-Responder pattern.
+Endocore is a framework designed to quickly build web applications following the Action-Domain-Responder pattern.
 
 ## Installation
 
-The easiest and recommended way to start a new ShinyCore based application is to use the [ShinyCoreApp](https://github.com/nekudo/shiny_core_app). This repository
+The easiest and recommended way to start a new Endocore based application is to use the [EndocoreApp](https://github.com/nekudo/endocore_app). This repository
 provides you with a boilerplate application including all necessary files and folders to start your project.
 
-You can install the ShinyCoreApp using composer:
+You can install the EndocoreApp using composer:
 
 ```
-php composer.phar create-project nekudo/shiny_core_app myshinyproject
+php composer.phar create-project nekudo/endocore_app myshinyproject
 ``` 
 
 ## Documentation
 
-Additionally to this documentation you should also have a look into the ShinyCoreApp sourcecode. It contains some
+Additionally to this documentation you should also have a look into the EndocoreApp sourcecode. It contains some
 well documented examples.
 
 
@@ -99,12 +99,12 @@ logs/           Contains log files
 public/         Contains the entry script and public files of your application
 resources/      Contains applications resouceres like views, templates, ...
 routes/         Contains the routes file(s) of your application
-vendor/         Contains the ShinyCore framework and other libraries
+vendor/         Contains the Endocore framework and other libraries
 ```
 
 ### Configuration
 
-After installing the ShinyCoreApp you should check and adjust the `config.php` file the `config` folder. Most of the
+After installing the EndocoreApp you should check and adjust the `config.php` file the `config` folder. Most of the
 settings should be fine with their default values but if your application needs to use a MySQL database e.g. you need
 to adjust some values.
 
@@ -121,7 +121,7 @@ return [
     'home' => [
         'method' => 'GET',
         'pattern' => '/about',
-        'handler' => 'Nekudo\ShinyCoreApp\Actions\AboutAction',
+        'handler' => 'Bloatless\EndocoreApp\Actions\AboutAction',
     ],
 ];
 ```
@@ -135,7 +135,7 @@ return [
     'home' => [
         'method' => 'POST',
         'pattern' => '/customers',
-        'handler' => 'Nekudo\ShinyCoreApp\Actions\AddCustomerAction',
+        'handler' => 'Bloatless\EndocoreApp\Actions\AddCustomerAction',
     ],
 ];
 ```
@@ -156,7 +156,7 @@ return [
     'customer' => [
         'method' => 'GET',
         'pattern' => '/customers/{id}',
-        'handler' => 'Nekudo\ShinyCoreApp\Actions\CustomerAction',
+        'handler' => 'Bloatless\EndocoreApp\Actions\CustomerAction',
     ],
 ];
 ```
@@ -177,7 +177,7 @@ return [
     'customer' => [
         'method' => 'GET',
         'pattern' => '/customers/{id:[0-9]+}',
-        'handler' => 'Nekudo\ShinyCoreApp\Actions\CustomerAction',
+        'handler' => 'Bloatless\EndocoreApp\Actions\CustomerAction',
     ],
 ];
 ```
@@ -195,7 +195,7 @@ this request. Typically by requesting data from a domain using input data from t
 is than passed to a responder which builds the HTTP response. This response is than returned back into the application
 by the action.
 
-ShinyCore provides responders for HTML as well as JSON content. You can use this responders by extending the appropriate
+Endocore provides responders for HTML as well as JSON content. You can use this responders by extending the appropriate
 actions. 
 
 #### Actions with JSON response
@@ -357,7 +357,7 @@ Domains handle the logic of your application. Domains can be a simple class or a
 #### Database Domain
 
 If your application needs to interact with a database you can inherit from the `DatabaseDomain` and make use of the
-ShinyCore query builder.
+Endocore query builder.
 
 ```php
 class MyDatabaseDomain extends DatabaseDomain
@@ -377,7 +377,7 @@ class MyDatabaseDomain extends DatabaseDomain
 ### Query Builder
 
 As mentioned earlier Database-Domains provide a powerful Query Builder. This section explains the complete usage API
-of the ShinyCore Query Builder.
+of the Endocore Query Builder.
 
 #### Connections
 
@@ -770,7 +770,7 @@ min. log level:
 ];
 ```
 
-The log files will be stored per day with a filename like `2018-12-12_shinycore.log`.
+The log files will be stored per day with a filename like `2018-12-12_endocore.log`.
 
 ##### Log levels
 
@@ -846,12 +846,12 @@ class MyDomain
 {
     public function myMethod(): string
     {
-        throw new ShinyCoreException('Something went wrong...');
+        throw new EndocoreException('Something went wrong...');
     }
 }
 ```
 
-Throwing a `ShinyCoreException` will force the application to respond with an error 500 code. Also the error will be
+Throwing a `EndocoreException` will force the application to respond with an error 500 code. Also the error will be
 logged to your logfile.
 
 ##### HTTP Exceptions

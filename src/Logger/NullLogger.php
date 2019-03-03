@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Logger;
+namespace Bloatless\Endocore\Logger;
 
 class NullLogger extends AbstractLogger
 {

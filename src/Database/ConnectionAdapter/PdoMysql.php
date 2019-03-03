@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Database\ConnectionAdapter;
+namespace Bloatless\Endocore\Database\ConnectionAdapter;
 
-use Nekudo\ShinyCore\Exception\Application\DatabaseException;
+use Bloatless\Endocore\Exception\Application\DatabaseException;
 
 class PdoMysql implements ConnectionAdapterInterface
 {

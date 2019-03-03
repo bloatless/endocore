@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Database\QueryBuilder;
+namespace Bloatless\Endocore\Database\QueryBuilder;
 
 /**
- * @property \Nekudo\ShinyCore\Database\StatementBuilder\RawStatementBuider $statementBuilder
+ * @property \Bloatless\Endocore\Database\StatementBuilder\RawStatementBuider $statementBuilder
  */
 class RawQueryBuilder extends QueryBuilder
 {
@@ -38,7 +38,7 @@ class RawQueryBuilder extends QueryBuilder
     * Executes raw statement and returns all matching rows as array of objects.
     *
     * @return array
-    * @throws \Nekudo\ShinyCore\Exception\Application\DatabaseException
+    * @throws \Bloatless\Endocore\Exception\Application\DatabaseException
     */
     public function get(): array
     {
@@ -50,7 +50,7 @@ class RawQueryBuilder extends QueryBuilder
     /**
      * Executes a raw statement.
      *
-     * @throws \Nekudo\ShinyCore\Exception\Application\DatabaseException
+     * @throws \Bloatless\Endocore\Exception\Application\DatabaseException
      */
     public function run(): void
     {

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Database\QueryBuilder;
+namespace Bloatless\Endocore\Database\QueryBuilder;
 
 /**
- * @property \Nekudo\ShinyCore\Database\StatementBuilder\InsertStatementBuilder $statementBuilder
+ * @property \Bloatless\Endocore\Database\StatementBuilder\InsertStatementBuilder $statementBuilder
  */
 class InsertQueryBuilder extends QueryBuilder
 {
@@ -52,7 +52,7 @@ class InsertQueryBuilder extends QueryBuilder
      *
      * @param array $data
      * @return int
-     * @throws \Nekudo\ShinyCore\Exception\Application\DatabaseException
+     * @throws \Bloatless\Endocore\Exception\Application\DatabaseException
      */
     public function row(array $data): int
     {
@@ -66,7 +66,7 @@ class InsertQueryBuilder extends QueryBuilder
      * Inserts multiple rows into database.
      *
      * @param array $data
-     * @throws \Nekudo\ShinyCore\Exception\Application\DatabaseException
+     * @throws \Bloatless\Endocore\Exception\Application\DatabaseException
      */
     public function rows(array $data): void
     {
@@ -98,7 +98,7 @@ class InsertQueryBuilder extends QueryBuilder
     /**
      * Builds the SQL statement from all attributes previously set.
      *
-     * @throws \Nekudo\ShinyCore\Exception\Application\DatabaseException
+     * @throws \Bloatless\Endocore\Exception\Application\DatabaseException
      * @return string
      */
     protected function buildStatement(): string

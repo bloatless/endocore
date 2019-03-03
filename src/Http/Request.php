@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Http;
+namespace Bloatless\Endocore\Http;
 
 class Request
 {

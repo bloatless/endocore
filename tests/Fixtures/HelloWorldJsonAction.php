@@ -1,9 +1,9 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Fixtures;
+namespace Bloatless\Endocore\Tests\Fixtures;
 
-use Nekudo\ShinyCore\Action\JsonAction;
-use Nekudo\ShinyCore\Http\Response;
+use Bloatless\Endocore\Action\JsonAction;
+use Bloatless\Endocore\Http\Response;
 
 class HelloWorldJsonAction extends JsonAction
 {

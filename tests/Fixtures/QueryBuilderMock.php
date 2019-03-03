@@ -1,8 +1,8 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Fixtures;
+namespace Bloatless\Endocore\Tests\Fixtures;
 
-use Nekudo\ShinyCore\Database\QueryBuilder\QueryBuilder;
+use Bloatless\Endocore\Database\QueryBuilder\QueryBuilder;
 
 class QueryBuilderMock extends QueryBuilder
 {

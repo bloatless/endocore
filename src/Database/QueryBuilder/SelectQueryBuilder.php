@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Database\QueryBuilder;
+namespace Bloatless\Endocore\Database\QueryBuilder;
 
-use Nekudo\ShinyCore\Exception\Application\DatabaseException;
+use Bloatless\Endocore\Exception\Application\DatabaseException;
 
 /**
- * @property \Nekudo\ShinyCore\Database\StatementBuilder\SelectStatementBuilder $statementBuilder
+ * @property \Bloatless\Endocore\Database\StatementBuilder\SelectStatementBuilder $statementBuilder
  */
 class SelectQueryBuilder extends WhereQueryBuilder
 {
@@ -263,7 +263,7 @@ class SelectQueryBuilder extends WhereQueryBuilder
      * Executes select query and returns all matching rows as array of objects.
      *
      * @return array
-     * @throws \Nekudo\ShinyCore\Exception\Application\DatabaseException
+     * @throws \Bloatless\Endocore\Exception\Application\DatabaseException
      */
     public function get(): array
     {

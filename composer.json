@@ -1,6 +1,6 @@
 {
-    "name": "nekudo/shiny_core",
-    "description": "ShinyCore is a framework designed to quickly build web applications following the Action-Domain-Responder pattern.",
+    "name": "bloatless/endocore",
+    "description": "Bloatless endocore is a framework designed to quickly build web applications following the Action-Domain-Responder pattern.",
     "keywords": [
         "framework",
         "adr",
@@ -10,16 +10,16 @@
         "logger"
     ],
     "license": "MIT",
-    "homepage": "https://shinycore-framework.com",
+    "homepage": "https://bloatless.org",
     "authors": [
         {
             "name": "Simon Samtleben",
-            "email": "simon@samtleben.me"
+            "email": "foo@bloatless.org"
         }
     ],
     "autoload": {
         "psr-4": {
-            "Nekudo\\ShinyCore\\": "src/"
+            "Bloatless\\Endocore\\": "src/"
         }
     },
     "require": {

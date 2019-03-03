@@ -1,8 +1,8 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit\Database\StatementBuilder;
+namespace Bloatless\Endocore\Tests\Unit\Database\StatementBuilder;
 
-use Nekudo\ShinyCore\Tests\Fixtures\StatementBuilderMock;
+use Bloatless\Endocore\Tests\Fixtures\StatementBuilderMock;
 use PHPUnit\Framework\TestCase;
 
 class StatementBuilderTest extends TestCase

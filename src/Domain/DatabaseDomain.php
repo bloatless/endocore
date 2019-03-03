@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Domain;
+namespace Bloatless\Endocore\Domain;
 
-use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Database\Factory as DatabaseFactory;
-use Nekudo\ShinyCore\Logger\LoggerInterface;
+use Bloatless\Endocore\Config;
+use Bloatless\Endocore\Database\Factory as DatabaseFactory;
+use Bloatless\Endocore\Logger\LoggerInterface;
 
 class DatabaseDomain extends Domain
 {

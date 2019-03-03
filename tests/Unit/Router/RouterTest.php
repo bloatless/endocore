@@ -1,8 +1,8 @@
 <?php
 
-namespace Nekudo\ShinyCore\Tests\Unit\Router;
+namespace Bloatless\Endocore\Tests\Unit\Router;
 
-use Nekudo\ShinyCore\Router\Router;
+use Bloatless\Endocore\Router\Router;
 use PHPUnit\Framework\TestCase;
 
 class RouterTest extends TestCase

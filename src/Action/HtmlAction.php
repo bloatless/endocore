@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Action;
+namespace Bloatless\Endocore\Action;
 
-use Nekudo\ShinyCore\Config;
-use Nekudo\ShinyCore\Http\Request;
-use Nekudo\ShinyCore\Logger\LoggerInterface;
-use Nekudo\ShinyCore\Responder\HtmlResponder;
+use Bloatless\Endocore\Config;
+use Bloatless\Endocore\Http\Request;
+use Bloatless\Endocore\Logger\LoggerInterface;
+use Bloatless\Endocore\Responder\HtmlResponder;
 
 /**
  * @property HtmlResponder $responder

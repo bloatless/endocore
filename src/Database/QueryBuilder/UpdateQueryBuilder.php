@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Database\QueryBuilder;
+namespace Bloatless\Endocore\Database\QueryBuilder;
 
 /**
- * @property \Nekudo\ShinyCore\Database\StatementBuilder\UpdateStatementBuilder $statementBuilder
+ * @property \Bloatless\Endocore\Database\StatementBuilder\UpdateStatementBuilder $statementBuilder
  */
 class UpdateQueryBuilder extends WhereQueryBuilder
 {
@@ -35,7 +35,7 @@ class UpdateQueryBuilder extends WhereQueryBuilder
      * Sets columns/values to update and executes statement. Returns number of affected rows.
      *
      * @param array $cols
-     * @throws \Nekudo\ShinyCore\Exception\Application\DatabaseException
+     * @throws \Bloatless\Endocore\Exception\Application\DatabaseException
      * @return int
      */
     public function update(array $cols): int

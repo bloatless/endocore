@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Nekudo\ShinyCore\Database\QueryBuilder;
+namespace Bloatless\Endocore\Database\QueryBuilder;
 
-use Nekudo\ShinyCore\Database\StatementBuilder\StatementBuilder;
-use Nekudo\ShinyCore\Exception\Application\DatabaseException;
+use Bloatless\Endocore\Database\StatementBuilder\StatementBuilder;
+use Bloatless\Endocore\Exception\Application\DatabaseException;
 
 abstract class QueryBuilder
 {
