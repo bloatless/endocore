@@ -23,7 +23,7 @@ class ApplicationTest extends TestCase
 
     public $exceptionHandler;
 
-    public function setUp()
+    public function setUp(): void
     {
         $config = include SC_TESTS . '/Fixtures/config.php';
         $this->config = (new Config)->fromArray($config);

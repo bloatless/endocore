@@ -10,7 +10,7 @@ class ResponseTest extends TestCase
     /** @var Response $response */
     protected $response;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->response = new Response();
     }

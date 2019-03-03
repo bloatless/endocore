@@ -15,7 +15,7 @@ class HtmlActionTest extends TestCase
 
     public $logger;
 
-    public function setUp()
+    public function setUp(): void
     {
         $config = include SC_TESTS . '/Fixtures/config.php';
         $this->config = (new Config)->fromArray($config);

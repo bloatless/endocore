@@ -10,7 +10,7 @@ class PhtmlRendererTest extends TestCase
 {
     public $config;
 
-    public function setUp()
+    public function setUp(): void
     {
         $configData = include SC_TESTS . '/Fixtures/config.php';
         $this->config = (new Config)->fromArray($configData);

@@ -10,7 +10,7 @@ class ConfigTest extends TestCase
 {
     private $pathToConfigfile;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->pathToConfigfile = SC_TESTS . '/Fixtures/config.php';
     }

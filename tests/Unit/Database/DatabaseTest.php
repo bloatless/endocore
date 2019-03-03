@@ -25,13 +25,13 @@ abstract class DatabaseTest extends TestCase
         return self::$pdo;
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->initDatabase();
         $this->seedDatabase();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->tearDownDatabase();
     }

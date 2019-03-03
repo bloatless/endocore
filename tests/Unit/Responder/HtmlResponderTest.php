@@ -15,7 +15,7 @@ class HtmlResponderTest extends TestCase
 
     public $config;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->configData = include SC_TESTS . '/Fixtures/config.php';
         $this->config = (new Config)->fromArray($this->configData);
@@ -119,6 +119,6 @@ class HtmlResponderTest extends TestCase
         $responder = new HtmlResponder($this->config);
         $response = $responder->error(['foo' => 'testing error']);
         $this->assertEquals(500, $response->getStatus());
-        $this->assertContains('testing error', $response->getBody());
+        $this->assertStringContainsString('testing error', $response->getBody());
     }
 }

@@ -23,7 +23,7 @@ class ExceptionHandlerTest extends TestCase
     /** @var ExceptionHandler $handler */
     public $handler;
 
-    public function setUp()
+    public function setUp(): void
     {
         $configData = include SC_TESTS . '/Fixtures/config.php';
         $this->config = (new Config)->fromArray($configData);
@@ -42,7 +42,7 @@ class ExceptionHandlerTest extends TestCase
         $error = new \Error('Test', 42);
         $response = $this->handler->handleError($error);
         $this->assertEquals(500, $response->getStatus());
-        $this->assertContains('ExceptionHandlerTest.php', $response->getBody());
+        $this->assertStringContainsString('ExceptionHandlerTest.php', $response->getBody());
     }
 
     public function testHandlesBadRequestException()
@@ -50,7 +50,7 @@ class ExceptionHandlerTest extends TestCase
         $error = new BadRequestException('bad request');
         $response = $this->handler->handleException($error);
         $this->assertEquals(400, $response->getStatus());
-        $this->assertContains('<title>400 Bad Request</title>', $response->getBody());
+        $this->assertStringContainsString('<title>400 Bad Request</title>', $response->getBody());
     }
 
     public function testHandlesNotFoundException()
@@ -58,7 +58,7 @@ class ExceptionHandlerTest extends TestCase
         $error = new NotFoundException('not found');
         $response = $this->handler->handleException($error);
         $this->assertEquals(404, $response->getStatus());
-        $this->assertContains('<title>404 Not found</title>', $response->getBody());
+        $this->assertStringContainsString('<title>404 Not found</title>', $response->getBody());
     }
 
     public function testHandlesMethodNotAllowedException()
@@ -66,7 +66,7 @@ class ExceptionHandlerTest extends TestCase
         $error = new MethodNotAllowedException('method not allowed');
         $response = $this->handler->handleException($error);
         $this->assertEquals(405, $response->getStatus());
-        $this->assertContains('<title>405 Method not allowed</title>', $response->getBody());
+        $this->assertStringContainsString('<title>405 Method not allowed</title>', $response->getBody());
     }
 
     public function testHandlesGeneralException()
@@ -74,7 +74,7 @@ class ExceptionHandlerTest extends TestCase
         $error = new EndocoreException('foobar error');
         $response = $this->handler->handleException($error);
         $this->assertEquals(500, $response->getStatus());
-        $this->assertContains('<title>Error 500</title>', $response->getBody());
+        $this->assertStringContainsString('<title>Error 500</title>', $response->getBody());
     }
 
     public function testRespondsWithJson()
@@ -83,7 +83,7 @@ class ExceptionHandlerTest extends TestCase
         $handler = new ExceptionHandler($this->config, $this->logger, $request);
         $error = new EndocoreException('json error');
         $response = $handler->handleException($error);
-        $this->assertContains('json error', $response->getBody());
+        $this->assertStringContainsString('json error', $response->getBody());
         $bodyDecoded = json_decode($response->getBody(), true);
         $this->assertArrayHasKey('errors', $bodyDecoded);
     }

@@ -5,3 +5,4 @@
 /vendor/
 /composer.lock
 /config/config.php
+/phpunit-8.phar
