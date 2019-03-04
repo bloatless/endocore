@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Bloatless\Endocore\Exception;
 
-use Bloatless\Endocore\Config;
 use Bloatless\Endocore\Exception\Http\BadRequestException;
 use Bloatless\Endocore\Exception\Http\MethodNotAllowedException;
 use Bloatless\Endocore\Exception\Http\NotFoundException;
 use Bloatless\Endocore\Http\Response;
-use Bloatless\Endocore\Logger\LoggerInterface;
+use Bloatless\Endocore\Components\Logger\LoggerInterface;
 use Bloatless\Endocore\Http\Request;
 use Bloatless\Endocore\Responder\HtmlResponder;
 use Bloatless\Endocore\Responder\JsonResponder;
@@ -18,7 +17,7 @@ use Bloatless\Endocore\Responder\ResponderInterface;
 class ExceptionHandler implements ExceptionHandlerInterface
 {
     /**
-     * @var Config $config
+     * @var array $config
      */
     protected $config;
 
@@ -32,7 +31,7 @@ class ExceptionHandler implements ExceptionHandlerInterface
      */
     protected $request;
 
-    public function __construct(Config $config, LoggerInterface $logger, Request $request)
+    public function __construct(array $config, LoggerInterface $logger, Request $request)
     {
         $this->config = $config;
         $this->logger = $logger;

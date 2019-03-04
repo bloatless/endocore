@@ -2,7 +2,7 @@
 
 namespace Bloatless\Endocore\Tests\Fixtures;
 
-use Bloatless\Endocore\Database\StatementBuilder\StatementBuilder;
+use Bloatless\Endocore\Components\Database\StatementBuilder\StatementBuilder;
 
 class StatementBuilderMock extends StatementBuilder
 {

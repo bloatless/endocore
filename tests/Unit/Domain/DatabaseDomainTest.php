@@ -2,9 +2,8 @@
 
 namespace Bloatless\Endocore\Tests\Unit\Action;
 
-use Bloatless\Endocore\Config;
 use Bloatless\Endocore\Domain\DatabaseDomain;
-use Bloatless\Endocore\Logger\NullLogger;
+use Bloatless\Endocore\Components\Logger\NullLogger;
 use PHPUnit\Framework\TestCase;
 
 class DatabaseDomainTest extends TestCase
@@ -15,8 +14,7 @@ class DatabaseDomainTest extends TestCase
 
     public function setUp(): void
     {
-        $config = include SC_TESTS . '/Fixtures/config.php';
-        $this->config = (new Config)->fromArray($config);
+        $this->config = include SC_TESTS . '/Fixtures/config.php';
         $this->logger = new NullLogger;
     }
 

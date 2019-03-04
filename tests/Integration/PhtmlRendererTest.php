@@ -2,9 +2,8 @@
 
 namespace Bloatless\Endocore\Tests\Integration;
 
-use Bloatless\Endocore\Config;
-use Bloatless\Endocore\Exception\Application\EndocoreException;
-use Bloatless\Endocore\Responder\PhtmlRenderer;
+use Bloatless\Endocore\Components\Templating\PhtmlRenderer;
+use Bloatless\Endocore\Components\Templating\TemplatingException;
 use PHPUnit\Framework\TestCase;
 
 class PhtmlRendererTest extends TestCase
@@ -14,7 +13,7 @@ class PhtmlRendererTest extends TestCase
     public function setUp(): void
     {
         $configData = include SC_TESTS . '/Fixtures/config.php';
-        $this->config = (new Config)->fromArray($configData);
+        $this->config = $configData['templating'];
     }
 
     public function testRenderView()
@@ -28,7 +27,7 @@ class PhtmlRendererTest extends TestCase
     public function testRenderInvalidView()
     {
         $renderer = new PhtmlRenderer($this->config);
-        $this->expectException(EndocoreException::class);
+        $this->expectException(TemplatingException::class);
         $renderer->render('foobar');
     }
 
@@ -43,7 +42,7 @@ class PhtmlRendererTest extends TestCase
     public function testRenderViewWithInvalidLayout()
     {
         $renderer = new PhtmlRenderer($this->config);
-        $this->expectException(EndocoreException::class);
+        $this->expectException(TemplatingException::class);
         $renderer->render('invalid_layout_view', ['mock' => 'foo']);
     }
 }

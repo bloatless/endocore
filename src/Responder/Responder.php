@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Bloatless\Endocore\Responder;
 
-use Bloatless\Endocore\Config;
 use Bloatless\Endocore\Http\Response;
 
 abstract class Responder implements ResponderInterface
 {
     /**
-     * @var Config $config
+     * @var array $config
      */
     protected $config;
 
@@ -19,7 +18,7 @@ abstract class Responder implements ResponderInterface
      */
     protected $response;
 
-    public function __construct(Config $config)
+    public function __construct(array $config)
     {
         $this->config = $config;
         $this->setResponse(new Response);

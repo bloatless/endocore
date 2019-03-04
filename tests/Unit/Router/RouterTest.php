@@ -2,7 +2,7 @@
 
 namespace Bloatless\Endocore\Tests\Unit\Router;
 
-use Bloatless\Endocore\Router\Router;
+use Bloatless\Endocore\Components\Router\Router;
 use PHPUnit\Framework\TestCase;
 
 class RouterTest extends TestCase

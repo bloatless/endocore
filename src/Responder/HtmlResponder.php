@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Bloatless\Endocore\Responder;
 
-use Bloatless\Endocore\Config;
-use Bloatless\Endocore\Exception\Application\EndocoreException;
+use Bloatless\Endocore\Components\Templating\PhtmlRenderer;
+use Bloatless\Endocore\Components\Templating\RendererInterface;
 use Bloatless\Endocore\Http\Response;
 
 /**
@@ -19,26 +19,13 @@ class HtmlResponder extends Responder
      */
     protected $renderer;
 
-    public function __construct(Config $config)
+    public function __construct(array $config)
     {
         parent::__construct($config);
+        $rendererConfig = $this->config['templating'] ?? [];
+        $renderer = new PhtmlRenderer($rendererConfig);
+        $this->setRenderer($renderer);
         $this->response->addHeader('Content-Type', 'text/html; charset=utf-8');
-        $this->initRenderer();
-    }
-
-    /**
-     * Initiates the HTTP renderer defined in config (or default if no renderer is defined).
-     *
-     * @throws EndocoreException
-     * @return void
-     */
-    protected function initRenderer(): void
-    {
-        $rendererClass = $this->config->getClass('html_renderer', '\Bloatless\Endocore\Responder\PhtmlRenderer');
-        if (!class_exists($rendererClass)) {
-            throw new EndocoreException('Renderer class not found.');
-        }
-        $this->renderer = new $rendererClass($this->config);
     }
 
     /**

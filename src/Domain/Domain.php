@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Bloatless\Endocore\Domain;
 
-use Bloatless\Endocore\Config;
-use Bloatless\Endocore\Logger\LoggerInterface;
+use Bloatless\Endocore\Components\Logger\LoggerInterface;
 
 abstract class Domain
 {
     /**
-     * @var Config $config
+     * @var array $config
      */
     protected $config;
 
@@ -19,7 +18,7 @@ abstract class Domain
      */
     protected $logger;
 
-    public function __construct(Config $config, LoggerInterface $logger)
+    public function __construct(array $config, LoggerInterface $logger)
     {
         $this->config = $config;
         $this->logger = $logger;

@@ -2,7 +2,7 @@
 
 namespace Bloatless\Endocore\Tests\Unit\Database\StatementBuilder;
 
-use Bloatless\Endocore\Database\StatementBuilder\DeleteStatementBuilder;
+use Bloatless\Endocore\Components\Database\StatementBuilder\DeleteStatementBuilder;
 use PHPUnit\Framework\TestCase;
 
 class DeleteStatementBuilderTest extends TestCase

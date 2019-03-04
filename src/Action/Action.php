@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace Bloatless\Endocore\Action;
 
-use Bloatless\Endocore\Config;
 use Bloatless\Endocore\Http\Request;
-use Bloatless\Endocore\Logger\LoggerInterface;
+use Bloatless\Endocore\Components\Logger\LoggerInterface;
 use Bloatless\Endocore\Responder\ResponderInterface;
 
 abstract class Action implements ActionInterface
 {
     /**
-     * @var Config $config
+     * @var array $config
      */
     protected $config;
 
@@ -31,7 +30,7 @@ abstract class Action implements ActionInterface
      */
     protected $responder;
 
-    public function __construct(Config $config, LoggerInterface $logger, Request $request)
+    public function __construct(array $config, LoggerInterface $logger, Request $request)
     {
         $this->config = $config;
         $this->logger = $logger;

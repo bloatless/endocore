@@ -2,11 +2,9 @@
 
 namespace Bloatless\Endocore\Tests\Unit\Responder;
 
-use Bloatless\Endocore\Config;
-use Bloatless\Endocore\Exception\Application\EndocoreException;
+use Bloatless\Endocore\Components\Templating\PhtmlRenderer;
 use Bloatless\Endocore\Http\Response;
 use Bloatless\Endocore\Responder\HtmlResponder;
-use Bloatless\Endocore\Responder\PhtmlRenderer;
 use PHPUnit\Framework\TestCase;
 
 class HtmlResponderTest extends TestCase
@@ -17,8 +15,7 @@ class HtmlResponderTest extends TestCase
 
     public function setUp(): void
     {
-        $this->configData = include SC_TESTS . '/Fixtures/config.php';
-        $this->config = (new Config)->fromArray($this->configData);
+        $this->config = include SC_TESTS . '/Fixtures/config.php';
     }
 
     public function testGetSetResponder()
@@ -28,36 +25,10 @@ class HtmlResponderTest extends TestCase
         $this->assertInstanceOf(Response::class, $responder->getResponse());
     }
 
-    public function testInitWithDefaultRenderer()
-    {
-        $configData = $this->configData;
-        unset($configData['renderer']);
-        $config = (new Config)->fromArray($configData);
-        $responder = new HtmlResponder($config);
-        $renderer = $responder->getRenderer();
-        $this->assertInstanceOf(PhtmlRenderer::class, $renderer);
-    }
-
-    public function testInitWithRendererSetInConfig()
-    {
-        $responder = new HtmlResponder($this->config);
-        $renderer = $responder->getRenderer();
-        $this->assertInstanceOf(PhtmlRenderer::class, $renderer);
-    }
-
-    public function testInitWithInvalidRendererSetInConfig()
-    {
-        $this->expectException(EndocoreException::class);
-        $configData = $this->configData;
-        $configData['classes']['html_renderer'] = '\Nekudo\Invalid\Renderer';
-        $config = (new Config)->fromArray($configData);
-        $responder = new HtmlResponder($config);
-    }
-
     public function testGetSetRenderer()
     {
         $responder = new HtmlResponder($this->config);
-        $responder->setRenderer(new PhtmlRenderer($this->config));
+        $responder->setRenderer(new PhtmlRenderer($this->config['templating']));
         $this->assertInstanceOf(PhtmlRenderer::class, $responder->getRenderer());
     }
 

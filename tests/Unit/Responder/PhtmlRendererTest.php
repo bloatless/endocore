@@ -2,8 +2,7 @@
 
 namespace Bloatless\Endocore\Tests\Unit\Responder;
 
-use Bloatless\Endocore\Config;
-use Bloatless\Endocore\Responder\PhtmlRenderer;
+use Bloatless\Endocore\Components\Templating\PhtmlRenderer;
 use PHPUnit\Framework\TestCase;
 
 class PhtmlRendererTest extends TestCase
@@ -13,7 +12,7 @@ class PhtmlRendererTest extends TestCase
     public function setUp(): void
     {
         $configData = include SC_TESTS . '/Fixtures/config.php';
-        $this->config = (new Config)->fromArray($configData);
+        $this->config = $configData['templating'];
     }
 
     public function testGetSetLayout()

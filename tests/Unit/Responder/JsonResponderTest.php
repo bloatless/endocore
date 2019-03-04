@@ -2,7 +2,6 @@
 
 namespace Bloatless\Endocore\Tests\Unit\Responder;
 
-use Bloatless\Endocore\Config;
 use Bloatless\Endocore\Http\Response;
 use Bloatless\Endocore\Responder\JsonResponder;
 use PHPUnit\Framework\TestCase;
@@ -13,8 +12,7 @@ class JsonResponderTest extends TestCase
 
     public function setUp(): void
     {
-        $configData = include SC_TESTS . '/Fixtures/config.php';
-        $this->config = (new Config)->fromArray($configData);
+        $this->config = include SC_TESTS . '/Fixtures/config.php';
     }
 
     public function testGetSetResponder()

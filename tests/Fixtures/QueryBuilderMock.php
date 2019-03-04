@@ -2,7 +2,7 @@
 
 namespace Bloatless\Endocore\Tests\Fixtures;
 
-use Bloatless\Endocore\Database\QueryBuilder\QueryBuilder;
+use Bloatless\Endocore\Components\Database\QueryBuilder\QueryBuilder;
 
 class QueryBuilderMock extends QueryBuilder
 {

@@ -2,15 +2,14 @@
 
 namespace Bloatless\Endocore\Tests\Unit\Database\QueryBuilder;
 
-use Bloatless\Endocore\Config;
-use Bloatless\Endocore\Database\Factory;
-use Bloatless\Endocore\Database\QueryBuilder\DeleteQueryBuilder;
+use Bloatless\Endocore\Components\Database\Factory;
+use Bloatless\Endocore\Components\Database\QueryBuilder\DeleteQueryBuilder;
 use Bloatless\Endocore\Tests\Unit\Database\DatabaseTest;
 
 class DeleteQueryBuilderTest extends DatabaseTest
 {
     /**
-     * @var Config $config
+     * @var array $config
      */
     public $config;
 
@@ -23,7 +22,7 @@ class DeleteQueryBuilderTest extends DatabaseTest
     {
         parent::setUp();
         $config = include SC_TESTS . '/Fixtures/config.php';
-        $this->config = (new Config)->fromArray($config);
+        $this->config = $config['db'];
         $this->factory = new Factory($this->config);
     }
 

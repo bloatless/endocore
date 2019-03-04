@@ -2,21 +2,20 @@
 
 namespace Bloatless\Endocore\Tests\Unit\Logger;
 
-use Bloatless\Endocore\Config;
-use Bloatless\Endocore\Exception\Application\EndocoreException;
-use Bloatless\Endocore\Logger\FileLogger;
-use Bloatless\Endocore\Logger\LogLevel;
+use Bloatless\Endocore\Components\Logger\LoggerException;
+use Bloatless\Endocore\Components\Logger\FileLogger;
+use Bloatless\Endocore\Components\Logger\LogLevel;
 use PHPUnit\Framework\TestCase;
 
 class FileLoggerTest extends TestCase
 {
-    /** @var Config $config */
+    /** @var array $config */
     public $config;
 
     public function setUp(): void
     {
         $configData = include SC_TESTS . '/Fixtures/config.php';
-        $this->config = (new Config)->fromArray($configData);
+        $this->config = $configData['logger'];
     }
 
     public function testInitWithValidLogPath()
@@ -28,9 +27,9 @@ class FileLoggerTest extends TestCase
     public function testInitWithInvalidLogPath()
     {
         $configData = include SC_TESTS . '/Fixtures/config.php';
-        $config = (new Config)->fromArray($configData);
-        $config->setPath('logs', 'foo');
-        $this->expectException(EndocoreException::class);
+        $config = $configData['logger'];
+        $config['path_logs'] = 'foo';
+        $this->expectException(LoggerException::class);
         $logger = new FileLogger($config);
     }
 
@@ -149,7 +148,7 @@ class FileLoggerTest extends TestCase
 
     private function providePathToLogfile(): string
     {
-        $pathToLogfile = $this->config->getPath('logs');
+        $pathToLogfile = $this->config['path_logs'];
         $pathToLogfile = rtrim($pathToLogfile, '/') . '/';
         $pathToLogfile .= date('Y-m-d') . '_endocore.log';
         return $pathToLogfile;

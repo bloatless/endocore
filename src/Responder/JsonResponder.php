@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Bloatless\Endocore\Responder;
 
-use Bloatless\Endocore\Config;
 use Bloatless\Endocore\Http\Response;
 
 class JsonResponder extends Responder
 {
-    public function __construct(Config $config)
+    public function __construct(array $config)
     {
         parent::__construct($config);
         $this->response->addHeader('Content-Type', 'application/json');

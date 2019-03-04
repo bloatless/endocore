@@ -2,24 +2,27 @@
 
 namespace Bloatless\Endocore\Tests\Unit\Database\ConnectionAdapter;
 
-use Bloatless\Endocore\Config;
-use Bloatless\Endocore\Database\ConnectionAdapter\PdoMysql;
-use Bloatless\Endocore\Exception\Application\DatabaseException;
+use Bloatless\Endocore\Components\Database\ConnectionAdapter\PdoMysql;
+use Bloatless\Endocore\Components\Database\Exception\DatabaseException;
 use PHPUnit\Framework\TestCase;
 
 class PdoMysqlTest extends TestCase
 {
     public $config;
 
+    public $defaultCredentials;
+
     public function setUp(): void
     {
         $configData = include SC_TESTS . '/Fixtures/config.php';
-        $this->config = (new Config)->fromArray($configData);
+        $this->config = $configData['db'];
+        $defaultConnection = $this->config['default_connection'];
+        $this->defaultCredentials = $this->config['connections'][$defaultConnection];
     }
 
     public function testConnectWithValidCredentails()
     {
-        $credentials = $this->config->getDefaultDbConfig();
+        $credentials = $this->defaultCredentials;
         $credentials['port'] = 3306;
         $adapter = new PdoMysql;
         $connection = $adapter->connect($credentials);
@@ -36,10 +39,9 @@ class PdoMysqlTest extends TestCase
     public function testConnectWithInvalidTimezone()
     {
         $adapter = new PdoMysql;
-        $credentials = $this->config->getDefaultDbConfig();
+        $credentials = $this->defaultCredentials;
         $credentials['timezone'] = 'Springfield';
         $this->expectException(\Exception::class);
         $connection = $adapter->connect($credentials);
-
     }
 }

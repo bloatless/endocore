@@ -2,35 +2,32 @@
 
 namespace Bloatless\Endocore\Tests\Unit\Database\QueryBuilder;
 
-use Bloatless\Endocore\Config;
-use Bloatless\Endocore\Database\ConnectionAdapter\PdoMysql;
-use Bloatless\Endocore\Database\Factory;
+use Bloatless\Endocore\Components\Database\ConnectionAdapter\PdoMysql;
+use Bloatless\Endocore\Components\Database\Factory;
 use Bloatless\Endocore\Tests\Fixtures\StatementBuilderMock;
 use Bloatless\Endocore\Tests\Fixtures\WhereQueryBuilderMock;
 use Bloatless\Endocore\Tests\Unit\Database\DatabaseTest;
 
 class WhereQueryBuilderTest extends DatabaseTest
 {
-    /**
-     * @var Config $config
-     */
     public $config;
 
-    /**
-     * @var Factory $factory
-     */
+    public $defaultCredentials;
+
     public $factory;
 
     public function setUp(): void
     {
         parent::setUp();
-        $config = include SC_TESTS . '/Fixtures/config.php';
-        $this->config = (new Config)->fromArray($config);
+        $configData = include SC_TESTS . '/Fixtures/config.php';
+        $this->config = $configData['db'];
+        $defaultConnection = $this->config['default_connection'];
+        $this->defaultCredentials = $this->config['connections'][$defaultConnection];
     }
 
     public function testSetter()
     {
-        $connection = (new PdoMysql)->connect($this->config->getDefaultDbConfig());
+        $connection = (new PdoMysql)->connect($this->defaultCredentials);
         $statementBuilder = new StatementBuilderMock;
         $builder = new WhereQueryBuilderMock($connection, $statementBuilder);
         $builder = $builder->where('customer_id', '=', 1)

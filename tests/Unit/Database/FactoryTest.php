@@ -3,19 +3,19 @@
 namespace Bloatless\Endocore\Tests\Unit\Database;
 
 use Bloatless\Endocore\Config;
-use Bloatless\Endocore\Database\ConnectionAdapter\PdoMysql;
-use Bloatless\Endocore\Database\Factory;
-use Bloatless\Endocore\Database\QueryBuilder\DeleteQueryBuilder;
-use Bloatless\Endocore\Database\QueryBuilder\InsertQueryBuilder;
-use Bloatless\Endocore\Database\QueryBuilder\RawQueryBuilder;
-use Bloatless\Endocore\Database\QueryBuilder\SelectQueryBuilder;
-use Bloatless\Endocore\Database\QueryBuilder\UpdateQueryBuilder;
-use Bloatless\Endocore\Exception\Application\DatabaseException;
+use Bloatless\Endocore\Components\Database\ConnectionAdapter\PdoMysql;
+use Bloatless\Endocore\Components\Database\Factory;
+use Bloatless\Endocore\Components\Database\QueryBuilder\DeleteQueryBuilder;
+use Bloatless\Endocore\Components\Database\QueryBuilder\InsertQueryBuilder;
+use Bloatless\Endocore\Components\Database\QueryBuilder\RawQueryBuilder;
+use Bloatless\Endocore\Components\Database\QueryBuilder\SelectQueryBuilder;
+use Bloatless\Endocore\Components\Database\QueryBuilder\UpdateQueryBuilder;
+use Bloatless\Endocore\Components\Database\Exception\DatabaseException;
 
 class FactoryTest extends DatabaseTest
 {
     /**
-     * @var Config $config
+     * @var array $config
      */
     public $config;
 
@@ -28,8 +28,8 @@ class FactoryTest extends DatabaseTest
     {
         parent::setUp();
         $config = include SC_TESTS . '/Fixtures/config.php';
-        $this->config = (new Config)->fromArray($config);
-        $this->factory = new Factory($this->config);
+        $this->config = $config['db'];
+        $this->factory = new Factory($config['db']);
     }
 
     public function testMakeInsert()
@@ -74,8 +74,7 @@ class FactoryTest extends DatabaseTest
         // invalid driver:
         $configData = include SC_TESTS . '/Fixtures/config.php';
         $configData['db']['connections']['db1']['driver'] = 'foo';
-        $config = (new Config)->fromArray($configData);
-        $factory = new Factory($config);
+        $factory = new Factory($configData['db']);
         $this->expectException(DatabaseException::class);
         $factory->provideConnection();
         unset($config, $factory);
@@ -83,8 +82,7 @@ class FactoryTest extends DatabaseTest
         // invalid credentials:
         $configData['db']['connections']['db1']['driver'] = 'mysql';
         $configData['db']['connections']['db1']['username'] = 'foo';
-        $config = (new Config)->fromArray($configData);
-        $factory = new Factory($config);
+        $factory = new Factory($configData['db']);
         $this->expectException(DatabaseException::class);
         $factory->provideConnection();
     }
@@ -95,7 +93,7 @@ class FactoryTest extends DatabaseTest
         $this->assertFalse($factory->hasConnection('db1'));
 
         $adapter = new PdoMysql;
-        $connection = $adapter->connect($this->config->getDbConfig('db1'));
+        $connection = $adapter->connect($this->config['connections']['db1']);
         $factory->addConnection('foo', $connection);
         $this->assertTrue($factory->hasConnection('foo'));
         $this->assertInstanceOf(\PDO::class, $factory->getConnection('foo'));

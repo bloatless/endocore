@@ -2,8 +2,7 @@
 
 namespace Bloatless\Endocore\Tests\Unit\Action;
 
-use Bloatless\Endocore\Config;
-use Bloatless\Endocore\Logger\NullLogger;
+use Bloatless\Endocore\Components\Logger\NullLogger;
 use Bloatless\Endocore\Responder\JsonResponder;
 use Bloatless\Endocore\Http\Request;
 use Bloatless\Endocore\Tests\Fixtures\HelloWorldJsonAction;
@@ -17,8 +16,7 @@ class JsonActionTest extends TestCase
 
     public function setUp(): void
     {
-        $config = include SC_TESTS . '/Fixtures/config.php';
-        $this->config = (new Config)->fromArray($config);
+        $this->config = include SC_TESTS . '/Fixtures/config.php';
         $this->logger = new NullLogger;
     }
 

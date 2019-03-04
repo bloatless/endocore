@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 /**
  * Endocore framework
- * by Simon Samtleben <simon@samtleben.me>
+ * by Simon Samtleben <foo@bloatless.org>
  *
- * @link https://endocore-framework.com
+ * @link https://bloatless.org
  * @license MIT
  */
 
@@ -19,14 +19,14 @@ use Bloatless\Endocore\Exception\Http\MethodNotAllowedException;
 use Bloatless\Endocore\Exception\Http\NotFoundException;
 use Bloatless\Endocore\Http\Request;
 use Bloatless\Endocore\Http\Response;
-use Bloatless\Endocore\Logger\LoggerInterface;
-use Bloatless\Endocore\Router\RouterInterface;
-use Bloatless\Endocore\Router\Router;
+use Bloatless\Endocore\Components\Logger\LoggerInterface;
+use Bloatless\Endocore\Components\Router\RouterInterface;
+use Bloatless\Endocore\Components\Router\Router;
 
 class Application
 {
     /**
-     * @var Config $config
+     * @var array $config
      */
     public $config;
 
@@ -51,7 +51,7 @@ class Application
     public $exceptionHandler;
 
     public function __construct(
-        Config $config,
+        array $config,
         Request $request,
         RouterInterface $router,
         LoggerInterface $logger,
