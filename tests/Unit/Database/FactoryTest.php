@@ -29,7 +29,15 @@ class FactoryTest extends DatabaseTest
         parent::setUp();
         $config = include SC_TESTS . '/Fixtures/config.php';
         $this->config = $config['db'];
-        $this->factory = new Factory($config['db']);
+        $this->factory = new Factory($this->config);
+    }
+
+    public function testInitWithoutConnections()
+    {
+        $config = $this->config;
+        unset($config['connections']);
+        $this->expectException(DatabaseException::class);
+        $factory = new Factory($config);
     }
 
     public function testMakeInsert()

@@ -3,6 +3,7 @@
 namespace Bloatless\Endocore\Tests\Unit\Responder;
 
 use Bloatless\Endocore\Components\Templating\PhtmlRenderer;
+use Bloatless\Endocore\Components\Templating\TemplatingException;
 use PHPUnit\Framework\TestCase;
 
 class PhtmlRendererTest extends TestCase
@@ -13,6 +14,23 @@ class PhtmlRendererTest extends TestCase
     {
         $configData = include SC_TESTS . '/Fixtures/config.php';
         $this->config = $configData['templating'];
+    }
+
+    public function testInitWithoutViewPath()
+    {
+        $config = $this->config;
+        unset($config['path_views']);
+        $this->expectException(TemplatingException::class);
+        $renderer = new PhtmlRenderer($config);
+
+    }
+
+    public function testInitWithoutLayoutPath()
+    {
+        $config = $this->config;
+        unset($config['path_layouts']);
+        $this->expectException(TemplatingException::class);
+        $renderer = new PhtmlRenderer($config);
     }
 
     public function testGetSetLayout()

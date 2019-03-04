@@ -24,6 +24,15 @@ class FileLoggerTest extends TestCase
         $this->assertInstanceOf(FileLogger::class, $logger);
     }
 
+    public function testWithoutLogPath()
+    {
+        $configData = include SC_TESTS . '/Fixtures/config.php';
+        $config = $configData['logger'];
+        unset($config['path_logs']);
+        $this->expectException(LoggerException::class);
+        $logger = new FileLogger($config);
+    }
+
     public function testInitWithInvalidLogPath()
     {
         $configData = include SC_TESTS . '/Fixtures/config.php';
