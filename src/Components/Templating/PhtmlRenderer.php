@@ -175,18 +175,19 @@ class PhtmlRenderer implements RendererInterface
     }
 
     /**
-     * (Safely) outputs a template variable.
+     * (Safely) outputs a variable.
 
-     * @param string $name
+     * @param mixed $value
      * @param bool $secure
      * @return void
      */
-    protected function out(string $name, $secure = true): void
+    protected function out($value, $secure = true): void
     {
         if ($secure === true) {
-            echo htmlentities($this->templateVariables[$name]);
+            $value = (string) $value;
+            echo htmlentities($value);
         } else {
-            echo $this->templateVariables[$name];
+            echo $value;
         }
     }
 }
