@@ -1,25 +1,28 @@
 <p align="center">
-    <img src="https://static.samtleben.me/github/endocore_logo.svg" width="80" height="80">
+    <img src="https://bloatless.org/img/logo.svg" width="60px" height="80px">
 </p>
 
-# Endocore Framework
+<h1 align="center">Bloatless Endocore</h1>
 
-Endocore is a framework designed to quickly build web applications following the Action-Domain-Responder pattern.
+<p align="center">
+    Endocore is a framework designed to quickly build web applications following the Action-Domain-Responder pattern.
+</p>
 
 ## Installation
 
-The easiest and recommended way to start a new Endocore based application is to use the [EndocoreApp](https://github.com/nekudo/endocore_app). This repository
-provides you with a boilerplate application including all necessary files and folders to start your project.
+The easiest and recommended way to start a new Endocore based application is to use the
+[Endocore Sample App](https://github.com/bloatless/endocore_app). This repository provides you with a boilerplate 
+application including all necessary files and folders to start your project.
 
-You can install the EndocoreApp using composer:
+You can install the Endocore App using composer:
 
 ```
-php composer.phar create-project nekudo/endocore_app myshinyproject
+php composer.phar create-project bloatless/endocore_app my_sample_project
 ``` 
 
 ## Documentation
 
-Additionally to this documentation you should also have a look into the EndocoreApp sourcecode. It contains some
+Additionally to this documentation you should also have a look into the Endocore App sourcecode. It contains some
 well documented examples.
 
 
@@ -104,7 +107,7 @@ vendor/         Contains the Endocore framework and other libraries
 
 ### Configuration
 
-After installing the EndocoreApp you should check and adjust the `config.php` file the `config` folder. Most of the
+After installing the Endocore App you should check and adjust the `config.php` file the `config` folder. Most of the
 settings should be fine with their default values but if your application needs to use a MySQL database e.g. you need
 to adjust some values.
 
@@ -296,7 +299,7 @@ would look something like this:
 
 <body>
     <div class="container">
-        <?php $this->out('content', false); ?>
+        <?php $this->out($content, false); ?>
     </div>
 </body>
 ...
@@ -335,7 +338,7 @@ available in every `view`or `layout`.
 
 ```html
 <p>
-    Hello <?php $this->out('firstname'); ?>,<br>
+    Hello <?php $this->out($firstname); ?>,<br>
 </p>
 ```
 
@@ -346,7 +349,7 @@ If you want to display unescaped data you do this like this:
 
 ```html
 <p>
-    Hello <?php $this->out('lastname', false); ?>,<br>
+    Hello <?php $this->out($lastname, false); ?>,<br>
 </p>
 ```
 
@@ -738,7 +741,7 @@ names or when using aliases. Nevertheless you should always filter your inputs p
 
 ### Error Handling and Logging
 
-The shiny core framework provides some basic tools to handle errors and logging.
+The Endocore framework provides some basic tools to handle errors and logging.
 
 #### Using the file logger
 
@@ -759,15 +762,10 @@ Using you configuration file `config/config.php` you can define the target folde
 min. log level:
 
 ```php
-[
-    'paths' => [
-        'logs' => __DIR__ . '/../logs',
-    ],
-
-    'logger' => [
-        'min_level' => 'warning',
-    ],
-];
+'logger' => [
+    'path_logs' => __DIR__ . '/../logs',
+    'min_level' => 'warning',
+],
 ```
 
 The log files will be stored per day with a filename like `2018-12-12_endocore.log`.

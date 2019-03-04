@@ -1,13 +1,14 @@
 {
     "name": "bloatless/endocore",
-    "description": "Bloatless endocore is a framework designed to quickly build web applications following the Action-Domain-Responder pattern.",
+    "description": "Bloatless Endocore is a framework designed to quickly build web applications following the Action-Domain-Responder pattern.",
     "keywords": [
         "framework",
         "adr",
         "action domain responder",
         "router",
         "query builder",
-        "logger"
+        "logger",
+        "bloatless"
     ],
     "license": "MIT",
     "homepage": "https://bloatless.org",
