@@ -25,41 +25,11 @@ class HtmlResponderTest extends TestCase
         $this->assertInstanceOf(Response::class, $responder->getResponse());
     }
 
-    public function testGetSetRenderer()
-    {
-        $responder = new HtmlResponder($this->config);
-        $responder->setRenderer(new PhtmlRenderer($this->config['templating']));
-        $this->assertInstanceOf(PhtmlRenderer::class, $responder->getRenderer());
-    }
-
-    public function testAssign()
-    {
-        $responder = new HtmlResponder($this->config);
-        $responder->assign(['mock' => 'foobar']);
-        $renderer = $responder->getRenderer();
-        $output = $renderer->render('simple_view');
-        $this->assertEquals('foobar', $output);
-    }
-
-    public function testRender()
-    {
-        $responder = new HtmlResponder($this->config);
-        $this->assertEquals('foobar', $responder->render('simple_view', ['mock' => 'foobar']));
-    }
-
-    public function testShow()
-    {
-        $responder = new HtmlResponder($this->config);
-        $response = $responder->show('simple_view', ['mock' => 'foobar']);
-        $this->assertEquals('foobar', $response->getBody());
-    }
-
     public function testFound()
     {
         $responder = new HtmlResponder($this->config);
         $response = $responder->found([
-            'view' => 'simple_view',
-            'vars' => ['mock' => 'bar'],
+            'body' => 'bar',
         ]);
         $this->assertEquals('bar', $response->getBody());
     }

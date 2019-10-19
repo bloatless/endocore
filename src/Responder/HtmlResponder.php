@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Bloatless\Endocore\Responder;
 
-use Bloatless\Endocore\Components\Templating\PhtmlRenderer;
-use Bloatless\Endocore\Components\Templating\RendererInterface;
 use Bloatless\Endocore\Http\Response;
 
 /**
@@ -14,77 +12,10 @@ use Bloatless\Endocore\Http\Response;
 
 class HtmlResponder extends Responder
 {
-    /**
-     * @var RendererInterface $renderer
-     */
-    protected $renderer;
-
     public function __construct(array $config)
     {
         parent::__construct($config);
-        $rendererConfig = $this->config['templating'] ?? [];
-        $renderer = new PhtmlRenderer($rendererConfig);
-        $this->setRenderer($renderer);
         $this->response->addHeader('Content-Type', 'text/html; charset=utf-8');
-    }
-
-    /**
-     * Returns the HTML renderer.
-     *
-     * @return RendererInterface
-     */
-    public function getRenderer(): RendererInterface
-    {
-        return $this->renderer;
-    }
-
-    /**
-     * Sets the HTML renderer.
-     *
-     * @param RendererInterface $renderer
-     * @return void
-     */
-    public function setRenderer(RendererInterface $renderer): void
-    {
-        $this->renderer = $renderer;
-    }
-
-    /**
-     * Assigns a template variable.
-     *
-     * @param array $pairs
-     * @return void
-     */
-    public function assign(array $pairs): void
-    {
-        $this->renderer->assign($pairs);
-    }
-
-    /**
-     * Renders given view and returns HTML code.
-     *
-     * @param string $view
-     * @param array $templateVars
-     * @return string
-     */
-    public function render(string $view, array $templateVars = []): string
-    {
-        return $this->renderer->render($view, $templateVars);
-    }
-
-    /**
-     * Renders given view and passes it to http-responder.
-     *
-     * @param string $view
-     * @param array $templateVars
-     * @return Response
-     */
-    public function show(string $view, array $templateVars = []): Response
-    {
-        return $this->found([
-            'view' => $view,
-            'vars' => $templateVars
-        ]);
     }
 
     /**
@@ -95,11 +26,7 @@ class HtmlResponder extends Responder
      */
     public function found(array $data): Response
     {
-        $view = $data['view'] ?? '';
-        $templateVars = $data['vars'] ?? [];
-        $this->response->setBody(
-            $this->renderer->render($view, $templateVars)
-        );
+        $this->response->setBody($data['body'] ?? '');
         return $this->response;
     }
 
