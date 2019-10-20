@@ -5,9 +5,6 @@
         "framework",
         "adr",
         "action domain responder",
-        "router",
-        "query builder",
-        "logger",
         "bloatless"
     ],
     "license": "MIT",
@@ -26,7 +23,6 @@
     "require": {
         "php": "^7.2",
         "ext-json": "*",
-        "ext-pdo": "*",
         "nikic/fast-route": "^1.3"
     }
 }
