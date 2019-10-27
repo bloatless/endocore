@@ -98,4 +98,18 @@ class Request
         }
         return $default;
     }
+
+    /**
+     * Returns the raw request body.
+     *
+     * @return string
+     */
+    public function getRawBody(): string
+    {
+        $body = file_get_contents('php://input');
+        if ($body === false) {
+            return '';
+        }
+        return $body;
+    }
 }

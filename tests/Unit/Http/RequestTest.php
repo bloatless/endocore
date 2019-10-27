@@ -64,4 +64,9 @@ class RequestTest extends TestCase
         $this->assertEquals(null, $this->request->getParam('not_existing'));
         $this->assertEquals('test', $this->request->getParam('not_existing', 'test'));
     }
+
+    public function testGetRawBody()
+    {
+        $this->assertEquals('', $this->request->getRawBody());
+    }
 }
