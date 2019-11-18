@@ -1,8 +1,10 @@
 # PhpStorm
 .idea/
 
-# Project
+# Composer
 /vendor/
 /composer.lock
 /config/config.php
-/phpunit-8.phar
+
+# PhpUnit
+/.phpunit.result.cache

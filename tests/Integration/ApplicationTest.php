@@ -3,8 +3,8 @@
 namespace Bloatless\Endocore\Tests\Integration;
 
 use Bloatless\Endocore\Application;
+use Bloatless\Endocore\Components\Logger\Factory as LoggerFactory;
 use Bloatless\Endocore\Exception\ExceptionHandler;
-use Bloatless\Endocore\Components\Logger\NullLogger;
 use Bloatless\Endocore\Http\Request;
 use Bloatless\Endocore\Components\Router\Router;
 use PHPUnit\Framework\TestCase;
@@ -23,7 +23,8 @@ class ApplicationTest extends TestCase
     {
         $this->config = include SC_TESTS . '/Fixtures/config.php';
         $this->routes = include SC_TESTS . '/Fixtures/routes.php';
-        $this->logger = new NullLogger;
+        $loggerFactory = new LoggerFactory($this->config);
+        $this->logger = $loggerFactory->makeNullLogger();
         $request = new Request;
         $this->exceptionHandler = new ExceptionHandler($this->config, $this->logger, $request);
     }
