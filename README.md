@@ -11,13 +11,13 @@
 ## Installation
 
 The easiest and recommended way to start a new Endocore based application is to use the
-[Endocore Sample App](https://github.com/bloatless/endocore_app). This repository provides you with a boilerplate 
+[Endocore Sample App](https://github.com/bloatless/endocore-app). This repository provides you with a boilerplate 
 application including all necessary files and folders to start your project.
 
 You can install the Endocore App using composer:
 
 ```
-php composer.phar create-project bloatless/endocore_app my_sample_project
+php composer.phar create-project bloatless/endocore-app my_sample_project
 ``` 
 
 ## Documentation
