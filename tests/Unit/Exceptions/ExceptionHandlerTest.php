@@ -3,7 +3,7 @@
 namespace Bloatless\Endocore\Tests\Unit\Exception;
 
 use Bloatless\Endocore\Exception\Application\EndocoreException;
-use Bloatless\Endocore\Exception\ExceptionHandler;
+use Bloatless\Endocore\Exception\ErrorHandler;
 use Bloatless\Endocore\Exception\Http\BadRequestException;
 use Bloatless\Endocore\Exception\Http\MethodNotAllowedException;
 use Bloatless\Endocore\Exception\Http\NotFoundException;
@@ -19,7 +19,7 @@ class ExceptionHandlerTest extends TestCase
     /** @var NullLogger $logger */
     public $logger;
 
-    /** @var ExceptionHandler $handler */
+    /** @var ErrorHandler $handler */
     public $handler;
 
     public function setUp(): void
@@ -27,12 +27,12 @@ class ExceptionHandlerTest extends TestCase
         $this->config = include SC_TESTS . '/Fixtures/config.php';
         $this->logger = new NullLogger;
         $request = new Request;
-        $this->handler = new ExceptionHandler($this->config, $this->logger, $request);
+        $this->handler = new ErrorHandler($this->config, $this->logger, $request);
     }
 
     public function testCanBeInitialized()
     {
-        $this->assertInstanceOf(ExceptionHandler::class, $this->handler);
+        $this->assertInstanceOf(ErrorHandler::class, $this->handler);
     }
 
     public function testHandlesInternalError()
@@ -78,7 +78,7 @@ class ExceptionHandlerTest extends TestCase
     public function testRespondsWithJson()
     {
         $request = new Request([], [], ['HTTP_ACCEPT' => 'application/json']);
-        $handler = new ExceptionHandler($this->config, $this->logger, $request);
+        $handler = new ErrorHandler($this->config, $this->logger, $request);
         $error = new EndocoreException('json error');
         $response = $handler->handleException($error);
         $this->assertStringContainsString('json error', $response->getBody());

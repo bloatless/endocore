@@ -4,79 +4,59 @@ declare(strict_types=1);
 
 namespace Bloatless\Endocore\Responder;
 
+use Bloatless\Endocore\Domain\Payload;
+use Bloatless\Endocore\Http\Request;
 use Bloatless\Endocore\Http\Response;
-
-/**
- * @property string $view
- */
 
 class HtmlResponder extends Responder
 {
-    public function __construct(array $config)
+    public function __construct()
     {
-        parent::__construct($config);
+        parent::__construct();
         $this->response->addHeader('Content-Type', 'text/html; charset=utf-8');
     }
 
-    /**
-     * Renders view defined in data array and passes it to http-responder.
-     *
-     * @param array $data
-     * @return Response
-     */
-    public function found(array $data): Response
+    public function __invoke(Request $request, Payload $payload): Response
     {
-        $this->response->setBody($data['body'] ?? '');
-        return $this->response;
+        switch ($payload->getStatus()) {
+            case Payload::STATUS_ERROR:
+                return $this->error($payload);
+            default:
+                return $this->provideResponse($payload);
+        }
     }
 
     /**
      * Respond with an error message.
      *
+     * @param Payload $payload
      * @return Response
      */
-    public function badRequest(): Response
+    public function error(Payload $payload): Response
     {
-        $this->response->setStatus(400);
-        $this->response->setBody('<html><title>400 Bad Request</title>400 Bad Request</html>');
-        return $this->response;
-    }
-
-    /**
-     * Respond with an not found message.
-     *
-     * @return Response
-     */
-    public function notFound(): Response
-    {
-        $this->response->setStatus(404);
-        $this->response->setBody('<html><title>404 Not found</title>404 Not found</html>');
-        return $this->response;
-    }
-
-    /**
-     * Respond with an error message.
-     *
-     * @return Response
-     */
-    public function methodNotAllowed(): Response
-    {
-        $this->response->setStatus(405);
-        $this->response->setBody('<html><title>405 Method not allowed</title>405 Method not allowed</html>');
-        return $this->response;
-    }
-
-    /**
-     * Respond with an error message.
-     *
-     * @param array $errors
-     * @return Response
-     */
-    public function error(array $errors): Response
-    {
-        $this->response->setStatus(500);
+        $this->response->setStatus($payload->getStatus());
         $bodyTemplate = '<html><title>Error 500</title><h1>Server Error</h1><pre>%s</pre></html>';
-        $this->response->setBody(sprintf($bodyTemplate, print_r($errors, true)));
+        $this->response->setBody(sprintf($bodyTemplate, print_r($payload->asArray(), true)));
+
+        return $this->response;
+    }
+
+    /**
+     * Provides a generic html response.
+     *
+     * @param Payload $payload
+     * @return Response
+     */
+    public function provideResponse(Payload $payload): Response
+    {
+        $this->response->setStatus($payload->getStatus());
+        $body = $payload['body'] ?? '';
+        if (empty($body)) {
+            $content = $payload->getStatus() . ' ' . $this->response->getStatusMessage();
+            $body = sprintf('<html><title>%s</title>%s</html>', $content, $content);
+        }
+        $this->response->setBody($body);
+
         return $this->response;
     }
 }

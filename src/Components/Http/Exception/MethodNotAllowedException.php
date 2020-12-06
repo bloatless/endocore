@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Bloatless\Endocore\Exception\Http;
+namespace Bloatless\Endocore\Components\Http\Exception;
 
 /**
  * Class MethodNotAllowedException

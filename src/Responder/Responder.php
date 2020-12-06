@@ -5,23 +5,20 @@ declare(strict_types=1);
 namespace Bloatless\Endocore\Responder;
 
 use Bloatless\Endocore\Http\Response;
+use Bloatless\Endocore\Contracts\Responder\Responder as ResponderContract;
 
-abstract class Responder implements ResponderInterface
+abstract class Responder implements ResponderContract
 {
-    /**
-     * @var array $config
-     */
-    protected $config;
-
     /**
      * @var Response $response
      */
-    protected $response;
+    protected Response $response;
 
-    public function __construct(array $config)
+    public function __construct()
     {
-        $this->config = $config;
-        $this->setResponse(new Response);
+        $this->setResponse(
+            new Response()
+        );
     }
 
     /**

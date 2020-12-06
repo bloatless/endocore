@@ -12,56 +12,69 @@ declare(strict_types=1);
 
 namespace Bloatless\Endocore;
 
+use Bloatless\Endocore\Components\Http\Exception\BadRequestException;
+use Bloatless\Endocore\Components\Http\Exception\MethodNotAllowedException;
+use Bloatless\Endocore\Components\Http\Exception\NotFoundException;
+use Bloatless\Endocore\Contracts\ErrorHandler\ErrorHandler as ErrorHandlerContract;
+use Bloatless\Endocore\Contracts\Router\Router as RouterContract;
+use Bloatless\Endocore\Contracts\Router\Route as RouteContract;
 use Bloatless\Endocore\Exception\Application\EndocoreException;
-use Bloatless\Endocore\Exception\ExceptionHandlerInterface;
-use Bloatless\Endocore\Exception\Http\BadRequestException;
-use Bloatless\Endocore\Exception\Http\MethodNotAllowedException;
-use Bloatless\Endocore\Exception\Http\NotFoundException;
 use Bloatless\Endocore\Http\Request;
 use Bloatless\Endocore\Http\Response;
-use Bloatless\Endocore\Components\Logger\LoggerInterface;
-use Bloatless\Endocore\Components\Router\RouterInterface;
-use Bloatless\Endocore\Components\Router\Router;
+use League\Container\Container;
+use League\Container\Definition\DefinitionInterface;
+use League\Container\ReflectionContainer;
 
 class Application
 {
-    /**
-     * @var array $config
-     */
-    public $config;
+    /* @var array $config */
+    public array $config;
 
-    /**
-     * @var Request $request
-     */
-    public $request;
+    /* @var Request $request */
+    public Request $request;
 
-    /**
-     * @var RouterInterface $router
-     */
-    public $router;
+    /* @var RouterContract $router */
+    public RouterContract $router;
 
-    /**
-     * @var LoggerInterface $logger
-     */
-    public $logger;
+    /* @var ErrorHandlerContract $errorHandler */
+    public ErrorHandlerContract $errorHandler;
 
-    /**
-     * @var ExceptionHandlerInterface $exceptionHandler
-     */
-    public $exceptionHandler;
+
+    /** @var Container $container */
+    public Container $container;
 
     public function __construct(
         array $config,
-        Request $request,
-        RouterInterface $router,
-        LoggerInterface $logger,
-        ExceptionHandlerInterface $exceptionHandler
+        RouterContract $router,
+        ErrorHandlerContract $errorHandler
     ) {
         $this->config = $config;
         $this->router = $router;
-        $this->request = $request;
-        $this->logger = $logger;
-        $this->exceptionHandler = $exceptionHandler;
+        $this->errorHandler = $errorHandler;
+
+        $this->container = new Container();
+        $this->container->delegate(new ReflectionContainer());
+
+        $this->setErrorHandlers();
+    }
+
+    /**
+     * Adds/Registers a new item to the container.
+     *
+     * @param string $id
+     * @param null $concrete
+     * @param bool $shared
+     * @return DefinitionInterface
+     */
+    public function register(string $id, $concrete = null, bool $shared = false): DefinitionInterface
+    {
+        return $this->container->add($id, $concrete, $shared);
+    }
+
+    protected function setErrorHandlers(): void
+    {
+        set_error_handler([$this->errorHandler, 'handleError']);
+        set_exception_handler([$this->errorHandler, 'handleException']);
     }
 
     /**
@@ -69,18 +82,12 @@ class Application
      *
      * @return Response
      */
-    public function run(): Response
+    public function handle(Request $request): Response
     {
-        try {
-            $response = $this->dispatch();
-            $this->send($response);
-        } catch (\Error $e) {
-            $response = $this->exceptionHandler->handleError($e);
-            $this->send($response);
-        } catch (\Exception $e) {
-            $response = $this->exceptionHandler->handleException($e);
-            $this->send($response);
-        }
+        $this->errorHandler->setRequest($request);
+        $this->container->add(Request::class, $request);
+        $response = $this->dispatch($request);
+        $this->send($response);
 
         return $response;
     }
@@ -89,29 +96,31 @@ class Application
      * Analyzes the request using the router and calls corresponding action.
      * Throws HTTP exceptions in case request could not be assigned to an action.
 
+     * @param Request $request
      * @throws BadRequestException
      * @throws MethodNotAllowedException
      * @throws NotFoundException
      * @throws EndocoreException
      * @return Response
      */
-    protected function dispatch(): Response
+    protected function dispatch(Request $request): Response
     {
-        $httpMethod = $this->request->getRequestMethod();
-        $uri = $this->request->getRequestUri();
-        $routeInfo = $this->router->dispatch($httpMethod, $uri);
-        if (!isset($routeInfo[0])) {
-            throw new BadRequestException('Unable to parse request.');
-        }
-        switch ($routeInfo[0]) {
-            case Router::NOT_FOUND:
+        $route = $this->router->dispatch(
+            $request->getRequestMethod(),
+            $request->getRequestUri()
+        );
+
+        switch ($route->getState()) {
+            case RouteContract::NOT_FOUND:
                 throw new NotFoundException('Page not found.');
-            case Router::METHOD_NOT_ALLOWED:
+            case RouteContract::METHOD_NOT_ALLOWED:
                 throw new MethodNotAllowedException('Method not allowed');
-            case Router::FOUND:
-                $action = $routeInfo[1];
-                $arguments = $routeInfo[2];
-                return $this->callAction($action, $arguments);
+            case RouteContract::FOUND:
+                return $this->callAction(
+                    $request,
+                    $route->getHandler(),
+                    $route->getArguments()
+                );
             default:
                 throw new BadRequestException('Unable to parse request.');
         }
@@ -120,20 +129,22 @@ class Application
     /**
      * Calls an action.
      *
+     * @param Request $request
      * @param string $handler
      * @param array $arguments
      * @throws EndocoreException
      * @return Response
      */
-    public function callAction(string $handler, array $arguments = []): Response
+    protected function callAction(Request $request, string $handler, array $arguments = []): Response
     {
         if (!class_exists($handler)) {
             throw new EndocoreException('Action class not found.');
         }
 
-        /** @var \Bloatless\Endocore\Action\ActionInterface $action */
-        $action = new $handler($this->config, $this->logger, $this->request);
-        return $action->__invoke($arguments);
+        /** @var \Bloatless\Endocore\Contracts\Action\Action $action */
+        $action = $this->container->get($handler);
+
+        return $action->__invoke($request, $arguments);
     }
 
     /**
