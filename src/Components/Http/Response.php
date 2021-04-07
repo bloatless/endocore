@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Bloatless\Endocore\Http;
+namespace Bloatless\Endocore\Components\Http;
 
 class Response
 {
