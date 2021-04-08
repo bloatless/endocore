@@ -28,9 +28,7 @@
     },
     "require": {
         "php": "^8.0",
-        "ext-json": "*",
-        "bloatless/endocore-query-builder": "dev-master",
-        "bloatless/endocore-phtml-renderer": "dev-master",
+        "ext-pdo": "*",
         "league/container": "^3.3",
         "nikic/fast-route": "^1.3"
     },

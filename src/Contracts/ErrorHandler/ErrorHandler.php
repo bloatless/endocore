@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Bloatless\Endocore\Contracts\ErrorHandler;
 
-use Bloatless\Endocore\Http\Request;
+use Bloatless\Endocore\Components\Http\Request;
 
 interface ErrorHandler
 {

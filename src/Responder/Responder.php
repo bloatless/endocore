@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Bloatless\Endocore\Responder;
 
-use Bloatless\Endocore\Http\Response;
+use Bloatless\Endocore\Components\Http\Response;
 use Bloatless\Endocore\Contracts\Responder\Responder as ResponderContract;
 
 abstract class Responder implements ResponderContract

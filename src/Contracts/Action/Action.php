@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Bloatless\Endocore\Contracts\Action;
 
-use Bloatless\Endocore\Http\Request;
-use Bloatless\Endocore\Http\Response;
+use Bloatless\Endocore\Components\Http\Request;
+use Bloatless\Endocore\Components\Http\Response;
 
 interface Action
 {

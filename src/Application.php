@@ -19,8 +19,8 @@ use Bloatless\Endocore\Contracts\ErrorHandler\ErrorHandler as ErrorHandlerContra
 use Bloatless\Endocore\Contracts\Router\Router as RouterContract;
 use Bloatless\Endocore\Contracts\Router\Route as RouteContract;
 use Bloatless\Endocore\Exception\Application\EndocoreException;
-use Bloatless\Endocore\Http\Request;
-use Bloatless\Endocore\Http\Response;
+use Bloatless\Endocore\Components\Http\Request;
+use Bloatless\Endocore\Components\Http\Response;
 use League\Container\Container;
 use League\Container\Definition\DefinitionInterface;
 use League\Container\ReflectionContainer;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Bloatless\Endocore\Components\BasicAuth\Tests\Unit\AuthBackend;
+namespace Bloatless\Endocore\Tests\Unit\Components\BasicAuth\AuthBackend;
 
 use Bloatless\Endocore\Components\BasicAuth\AuthBackend\MysqlAuthBackend;
 use Bloatless\Endocore\Components\BasicAuth\Tests\Unit\DatabaseTest;
