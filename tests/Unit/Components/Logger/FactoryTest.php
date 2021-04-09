@@ -20,7 +20,7 @@ class FactoryTest extends TestCase
 
     public function testGetFileLogger()
     {
-        $factory = new Factory($this->config);
+        $factory = new Factory($this->config['logger']);
         $logger = $factory->makeFileLogger();
         $this->assertInstanceOf(FileLogger::class, $logger);
     }
@@ -34,7 +34,7 @@ class FactoryTest extends TestCase
 
     public function testGetNullLogger()
     {
-        $factory = new Factory($this->config);
+        $factory = new Factory($this->config['logger']);
         $logger = $factory->makeNullLogger();
         $this->assertInstanceOf(NullLogger::class, $logger);
     }

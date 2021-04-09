@@ -1,6 +1,6 @@
 <?php
 
-namespace Bloatless\Endocore\Tests\Integration;
+namespace Bloatless\Endocore\Tests\Unit\Components\PhtmlRenderer;
 
 use Bloatless\Endocore\Components\PhtmlRenderer\Factory;
 use Bloatless\Endocore\Components\PhtmlRenderer\PhtmlRenderer;
@@ -9,64 +9,12 @@ use PHPUnit\Framework\TestCase;
 
 class PhtmlRendererTest extends TestCase
 {
-    public $config;
-
     public $factory;
 
     public function setUp(): void
     {
-        $this->config = [
-            'path_views' => TESTS_ROOT . '/Fixtures/resources/views',
-        ];
-        $this->factory = new Factory($this->config);
-    }
-
-    public function testGetSetPathViews()
-    {
-        $renderer = new PhtmlRenderer;
-        // test without tailing slash
-        $renderer->setPathViews($this->config['path_views']);
-        $this->assertEquals($this->config['path_views'], $renderer->getPathViews());
-
-        // test with tailing slash
-        $renderer->setPathViews($this->config['path_views'] . '/');
-        $this->assertEquals($this->config['path_views'], $renderer->getPathViews());
-    }
-
-    public function testGetPathView()
-    {
-        $renderer = new PhtmlRenderer;
-        $renderer->setPathViews($this->config['path_views']);
-        $pathView = $renderer->getPathView('simple_view');
-        $this->assertEquals($this->config['path_views'] . '/simple_view.phtml', $pathView);
-    }
-
-    public function testGetSetLayout()
-    {
-        $renderer = new PhtmlRenderer;
-        $renderer->setLayout('default');
-        $this->assertEquals('default', $renderer->getLayout());
-    }
-
-    public function testGetSetView()
-    {
-        $renderer = new PhtmlRenderer;
-        $renderer->setView('simple_view');
-        $this->assertEquals('simple_view', $renderer->getView());
-    }
-
-    public function testAssign()
-    {
-        $renderer = new PhtmlRenderer;
-        $renderer->assign(['foo' => 'bar']);
-        $this->assertEquals(['foo' => 'bar'], $renderer->getTemplateVariables());
-
-        $renderer->assign(['a' => 'b']);
-        $this->assertEquals(['foo' => 'bar', 'a' => 'b'], $renderer->getTemplateVariables());
-
-        $renderer->assign(['foo' => 'baz']);
-        $templateVars = $renderer->getTemplateVariables();
-        $this->assertEquals('baz', $templateVars['foo']);
+        $config = include TESTS_ROOT . '/Fixtures/config.php';
+        $this->factory = new Factory($config['renderer']);
     }
 
     public function testRenderSimpleView()
@@ -87,6 +35,7 @@ class PhtmlRendererTest extends TestCase
     {
         $renderer = $this->factory->makeRenderer();
         $out = $renderer->render('layout_view', ['mock' => 'Hallo Layout!']);
+        $out = trim($out);
         $this->assertEquals('Hallo Layout!', $out);
     }
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace Bloatless\Endocore\Components\BasicAuth\Tests\Unit;
+namespace Bloatless\Endocore\Tests\Unit\Components\BasicAuth;
 
 use Bloatless\Endocore\Components\BasicAuth\AuthBackend\ArrayAuthBackend;
 use Bloatless\Endocore\Components\BasicAuth\BasicAuth;
-use Bloatless\Endocore\Http\Request;
-use Bloatless\Endocore\Http\Response;
+use Bloatless\Endocore\Components\Http\Request;
+use Bloatless\Endocore\Components\Http\Response;
 
 class BasicAuthTest extends DatabaseTest
 {

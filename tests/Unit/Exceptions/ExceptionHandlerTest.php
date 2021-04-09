@@ -3,12 +3,12 @@
 namespace Bloatless\Endocore\Tests\Unit\Exception;
 
 use Bloatless\Endocore\Exception\Application\EndocoreException;
-use Bloatless\Endocore\Exception\ErrorHandler;
+use Bloatless\Endocore\Components\ErrorHandler\ErrorHandler;
 use Bloatless\Endocore\Exception\Http\BadRequestException;
 use Bloatless\Endocore\Exception\Http\MethodNotAllowedException;
 use Bloatless\Endocore\Exception\Http\NotFoundException;
 use Bloatless\Endocore\Components\Logger\NullLogger;
-use Bloatless\Endocore\Http\Request;
+use Bloatless\Endocore\Components\Http\Request;
 use PHPUnit\Framework\TestCase;
 
 class ExceptionHandlerTest extends TestCase
@@ -24,7 +24,7 @@ class ExceptionHandlerTest extends TestCase
 
     public function setUp(): void
     {
-        $this->config = include SC_TESTS . '/Fixtures/config.php';
+        $this->config = include TESTS_ROOT . '/Fixtures/config.php';
         $this->logger = new NullLogger;
         $request = new Request;
         $this->handler = new ErrorHandler($this->config, $this->logger, $request);

@@ -1,6 +1,6 @@
 <?php
 
-namespace Bloatless\Endocore\Components\QueryBuilder\Tests\Unit;
+namespace Bloatless\Endocore\Tests\Unit\Components\QueryBuilder;
 
 use Bloatless\Endocore\Components\QueryBuilder\ConnectionAdapter\PdoMysql;
 use Bloatless\Endocore\Components\QueryBuilder\Factory;

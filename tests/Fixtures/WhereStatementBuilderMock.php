@@ -1,6 +1,6 @@
 <?php
 
-namespace Bloatless\Endocore\Components\QueryBuilder\Tests\Fixtures;
+namespace Bloatless\Endocore\Tests\Fixtures;
 
 use Bloatless\Endocore\Components\QueryBuilder\StatementBuilder\WhereStatementBuilder;
 

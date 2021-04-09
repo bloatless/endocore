@@ -1,6 +1,6 @@
 <?php
 
-namespace Bloatless\Endocore\Components\BasicAuth\Tests\Unit;
+namespace Bloatless\Endocore\Tests\Unit\Components\BasicAuth;
 
 use PHPUnit\Framework\TestCase;
 

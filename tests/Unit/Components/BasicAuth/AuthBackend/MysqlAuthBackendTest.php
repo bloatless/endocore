@@ -3,8 +3,8 @@
 namespace Bloatless\Endocore\Tests\Unit\Components\BasicAuth\AuthBackend;
 
 use Bloatless\Endocore\Components\BasicAuth\AuthBackend\MysqlAuthBackend;
-use Bloatless\Endocore\Components\BasicAuth\Tests\Unit\DatabaseTest;
 use Bloatless\Endocore\Components\QueryBuilder\Factory as QueryBuilderFactory;
+use Bloatless\Endocore\Tests\Unit\Components\BasicAuth\DatabaseTest;
 
 class MysqlAuthBackendTest extends DatabaseTest
 {

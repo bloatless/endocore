@@ -6,9 +6,10 @@ return [
         'min_level' => 'debug',
     ],
 
-    'templating' => [
+    'renderer' => [
         'path_views' => __DIR__ . '/resources/views',
-        'path_layouts' => __DIR__ . '/resources/layouts',
+        'compile_path' => __DIR__ . '/cache/compile',
+        'view_components' => [],
     ],
 
     'db' => [

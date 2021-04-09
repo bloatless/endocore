@@ -1,6 +1,6 @@
 <?php
 
-namespace Bloatless\Endocore\Components\BasicAuth\Tests\Unit;
+namespace Bloatless\Endocore\Tests\Unit\Components\BasicAuth;
 
 use Bloatless\Endocore\Components\BasicAuth\BasicAuth;
 use Bloatless\Endocore\Components\BasicAuth\BasicAuthException;

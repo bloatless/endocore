@@ -4,8 +4,8 @@ namespace Bloatless\Endocore\Tests\Integration;
 
 use Bloatless\Endocore\Application;
 use Bloatless\Endocore\Components\Logger\Factory as LoggerFactory;
-use Bloatless\Endocore\Exception\ErrorHandler;
-use Bloatless\Endocore\Http\Request;
+use Bloatless\Endocore\Components\ErrorHandler\ErrorHandler;
+use Bloatless\Endocore\Components\Http\Request;
 use Bloatless\Endocore\Components\Router\Router;
 use PHPUnit\Framework\TestCase;
 
@@ -21,8 +21,8 @@ class ApplicationTest extends TestCase
 
     public function setUp(): void
     {
-        $this->config = include SC_TESTS . '/Fixtures/config.php';
-        $this->routes = include SC_TESTS . '/Fixtures/routes.php';
+        $this->config = include TESTS_ROOT . '/Fixtures/config.php';
+        $this->routes = include TESTS_ROOT . '/Fixtures/routes.php';
         $loggerFactory = new LoggerFactory($this->config);
         $this->logger = $loggerFactory->makeNullLogger();
         $request = new Request;
@@ -41,10 +41,10 @@ class ApplicationTest extends TestCase
             $this->exceptionHandler
         );
         $this->assertInstanceOf('Bloatless\Endocore\Application', $app);
-        $this->assertInstanceOf('Bloatless\Endocore\Http\Request', $app->request);
+        $this->assertInstanceOf('Bloatless\Endocore\Components\Http\Request', $app->request);
         $this->assertInstanceOf('Bloatless\Endocore\Components\Router\Router', $app->router);
         $this->assertInstanceOf('Bloatless\Endocore\Components\Logger\LoggerInterface', $app->logger);
-        $this->assertInstanceOf('Bloatless\Endocore\Exception\ErrorHandler', $app->exceptionHandler);
+        $this->assertInstanceOf('Bloatless\Endocore\Components\ErrorHandler\ErrorHandler', $app->exceptionHandler);
     }
 
     /**

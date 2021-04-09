@@ -1,6 +1,6 @@
 <?php
 
-namespace Bloatless\Endocore\Components\PhtmlRenderer\Tests\Unit;
+namespace Bloatless\Endocore\Tests\Unit\Components\PhtmlRenderer;
 
 use Bloatless\Endocore\Components\PhtmlRenderer\Factory;
 use Bloatless\Endocore\Components\PhtmlRenderer\PhtmlRenderer;
@@ -12,13 +12,10 @@ class FactoryTest extends TestCase
     public function testWithValidConfig()
     {
         $pathViews = TESTS_ROOT . '/Fixtures/resources/views';
-        $config = [
-            'path_views' => $pathViews,
-        ];
-        $factory = new Factory($config);
+        $config = include TESTS_ROOT . '/Fixtures/config.php';
+        $factory = new Factory($config['renderer']);
         $renderer = $factory->makeRenderer();
         $this->assertInstanceOf(PhtmlRenderer::class, $renderer);
-        $this->assertEquals($pathViews, $renderer->getPathViews());
     }
 
     public function testWithInvalidConfig()

@@ -3,7 +3,7 @@
 namespace Bloatless\Endocore\Tests\Unit\Responder;
 
 use Bloatless\Endocore\Components\Templating\PhtmlRenderer;
-use Bloatless\Endocore\Http\Response;
+use Bloatless\Endocore\Components\Http\Response;
 use Bloatless\Endocore\Responder\HtmlResponder;
 use PHPUnit\Framework\TestCase;
 
@@ -15,7 +15,7 @@ class HtmlResponderTest extends TestCase
 
     public function setUp(): void
     {
-        $this->config = include SC_TESTS . '/Fixtures/config.php';
+        $this->config = include TESTS_ROOT . '/Fixtures/config.php';
     }
 
     public function testGetSetResponder()
