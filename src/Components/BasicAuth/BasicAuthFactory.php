@@ -6,7 +6,7 @@ namespace Bloatless\Endocore\Components\BasicAuth;
 
 use Bloatless\Endocore\Components\BasicAuth\AuthBackend\ArrayAuthBackend;
 use Bloatless\Endocore\Components\BasicAuth\AuthBackend\MysqlAuthBackend;
-use Bloatless\Endocore\Components\Database\Factory as QueryBuilderFactory;
+use Bloatless\Endocore\Components\Database\DatabaseFactory;
 use Bloatless\Endocore\Contracts\Components\FactoryContract;
 
 class BasicAuthFactory implements FactoryContract
@@ -72,9 +72,10 @@ class BasicAuthFactory implements FactoryContract
             throw new BasicAuthException('Database configuration missing. Can not provide auth object.');
         }
 
+        $databaseFactory = new DatabaseFactory($this->config);
+        $database = $databaseFactory->make();
         $connectionName = $this->config['auth']['backends']['mysql']['db_connection'] ?? '';
-        $queryBuilderFactory = new QueryBuilderFactory($this->config['db']);
 
-        return new MysqlAuthBackend($queryBuilderFactory, $connectionName);
+        return new MysqlAuthBackend($database, $connectionName);
     }
 }

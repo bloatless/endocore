@@ -4,23 +4,17 @@ declare(strict_types=1);
 
 namespace Bloatless\Endocore\Components\BasicAuth\AuthBackend;
 
-use Bloatless\Endocore\Components\Database\Factory as QueryBuilderFactory;
+use Bloatless\Endocore\Components\Database\Database;
 
 class MysqlAuthBackend extends AuthBackend
 {
-    /**
-     * @var QueryBuilderFactory $queryBuilderFactory
-     */
-    protected $queryBuilderFactory;
+    private Database $database;
 
-    /**
-     * @var string $connectionName
-     */
-    protected $connectionName = '';
+    private string $connectionName;
 
-    public function __construct(QueryBuilderFactory $queryBuilderFactory, string $connectionName = '')
+    public function __construct(Database $database, string $connectionName = '')
     {
-        $this->queryBuilderFactory = $queryBuilderFactory;
+        $this->database = $database;
         $this->connectionName = $connectionName;
     }
 
@@ -34,7 +28,7 @@ class MysqlAuthBackend extends AuthBackend
      */
     public function validateCredentials(string $username, string $password): bool
     {
-        $queryBuilder = $this->queryBuilderFactory->makeSelect($this->connectionName);
+        $queryBuilder = $this->database->makeSelect($this->connectionName);
         $row = $queryBuilder->cols(['password'])
             ->from('users')
             ->whereEquals('username', $username)
