@@ -2,8 +2,8 @@
 
 namespace Bloatless\Endocore\Tests\Unit\Components\QueryBuilder\StatementBuilder;
 
-use Bloatless\Endocore\Components\QueryBuilder\StatementBuilder\InsertStatementBuilder;
-use Bloatless\Endocore\Components\QueryBuilder\Exception\DatabaseException;
+use Bloatless\Endocore\Components\Database\StatementBuilder\InsertStatementBuilder;
+use Bloatless\Endocore\Components\Database\Exception\DatabaseException;
 use PHPUnit\Framework\TestCase;
 
 class InsertStatementBuilderTest extends TestCase

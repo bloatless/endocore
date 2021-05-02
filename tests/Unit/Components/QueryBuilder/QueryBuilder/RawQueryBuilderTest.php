@@ -2,8 +2,8 @@
 
 namespace Bloatless\Endocore\Tests\Unit\Components\QueryBuilder\QueryBuilder;
 
-use Bloatless\Endocore\Components\QueryBuilder\Factory;
-use Bloatless\Endocore\Components\QueryBuilder\QueryBuilder\RawQueryBuilder;
+use Bloatless\Endocore\Components\Database\Factory;
+use Bloatless\Endocore\Components\Database\QueryBuilder\RawQueryBuilder;
 use Bloatless\Endocore\Tests\Unit\Components\QueryBuilder\DatabaseTest;
 
 class RawQueryBuilderTest extends DatabaseTest

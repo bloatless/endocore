@@ -3,12 +3,12 @@
 namespace Bloatless\Endocore\Tests\Unit\Exception;
 
 use Bloatless\Endocore\Exception\Application\EndocoreException;
-use Bloatless\Endocore\Components\ErrorHandler\ErrorHandler;
+use Bloatless\Endocore\Components\ErrorHandler\ErrorHandlerContract;
 use Bloatless\Endocore\Exception\Http\BadRequestException;
 use Bloatless\Endocore\Exception\Http\MethodNotAllowedException;
 use Bloatless\Endocore\Exception\Http\NotFoundException;
-use Bloatless\Endocore\Components\Logger\NullLogger;
-use Bloatless\Endocore\Components\Http\Request;
+use Bloatless\Endocore\Components\Core\Logger\NullLogger;
+use Bloatless\Endocore\Components\Core\Http\Request;
 use PHPUnit\Framework\TestCase;
 
 class ExceptionHandlerTest extends TestCase
@@ -19,7 +19,7 @@ class ExceptionHandlerTest extends TestCase
     /** @var NullLogger $logger */
     public $logger;
 
-    /** @var ErrorHandler $handler */
+    /** @var ErrorHandlerContract $handler */
     public $handler;
 
     public function setUp(): void
@@ -27,12 +27,12 @@ class ExceptionHandlerTest extends TestCase
         $this->config = include TESTS_ROOT . '/Fixtures/config.php';
         $this->logger = new NullLogger;
         $request = new Request;
-        $this->handler = new ErrorHandler($this->config, $this->logger, $request);
+        $this->handler = new ErrorHandlerContract($this->config, $this->logger, $request);
     }
 
     public function testCanBeInitialized()
     {
-        $this->assertInstanceOf(ErrorHandler::class, $this->handler);
+        $this->assertInstanceOf(ErrorHandlerContract::class, $this->handler);
     }
 
     public function testHandlesInternalError()
@@ -78,7 +78,7 @@ class ExceptionHandlerTest extends TestCase
     public function testRespondsWithJson()
     {
         $request = new Request([], [], ['HTTP_ACCEPT' => 'application/json']);
-        $handler = new ErrorHandler($this->config, $this->logger, $request);
+        $handler = new ErrorHandlerContract($this->config, $this->logger, $request);
         $error = new EndocoreException('json error');
         $response = $handler->handleException($error);
         $this->assertStringContainsString('json error', $response->getBody());

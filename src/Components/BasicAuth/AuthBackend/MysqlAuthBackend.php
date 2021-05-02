@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Bloatless\Endocore\Components\BasicAuth\AuthBackend;
 
-use Bloatless\Endocore\Components\QueryBuilder\Factory as QueryBuilderFactory;
+use Bloatless\Endocore\Components\Database\Factory as QueryBuilderFactory;
 
 class MysqlAuthBackend extends AuthBackend
 {
@@ -30,7 +30,7 @@ class MysqlAuthBackend extends AuthBackend
      * @param string $username
      * @param string $password
      * @return bool
-     * @throws \Bloatless\Endocore\Components\QueryBuilder\Exception\DatabaseException
+     * @throws \Bloatless\Endocore\Components\Database\Exception\DatabaseException
      */
     public function validateCredentials(string $username, string $password): bool
     {

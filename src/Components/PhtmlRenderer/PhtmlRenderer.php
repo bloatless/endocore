@@ -11,7 +11,7 @@ use Bloatless\Endocore\Components\PhtmlRenderer\PreCompiler\PreCompilerInterface
  *
  * @package Bloatless\Endocore\Components\PhtmlRenderer
  */
-class PhtmlRenderer implements RendererInterface
+class PhtmlRenderer
 {
     /**
      * Path to directory containing the view/phtml files.

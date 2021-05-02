@@ -2,9 +2,9 @@
 
 namespace Bloatless\Endocore\Tests\Unit\Components\QueryBuilder\QueryBuilder;
 
-use Bloatless\Endocore\Components\QueryBuilder\Factory;
-use Bloatless\Endocore\Components\QueryBuilder\QueryBuilder\SelectQueryBuilder;
-use Bloatless\Endocore\Components\QueryBuilder\Exception\DatabaseException;
+use Bloatless\Endocore\Components\Database\Factory;
+use Bloatless\Endocore\Components\Database\QueryBuilder\SelectQueryBuilder;
+use Bloatless\Endocore\Components\Database\Exception\DatabaseException;
 use Bloatless\Endocore\Tests\Unit\Components\QueryBuilder\DatabaseTest;
 
 class SelectQueryBuilderTest extends DatabaseTest

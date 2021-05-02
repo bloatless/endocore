@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Bloatless\Endocore\Components\BasicAuth;
 
 use Bloatless\Endocore\Components\BasicAuth\AuthBackend\AuthBackendInterface;
-use Bloatless\Endocore\Components\Http\Request;
-use Bloatless\Endocore\Components\Http\Response;
+use Bloatless\Endocore\Core\Http\Request;
+use Bloatless\Endocore\Core\Http\Response;
 
 class BasicAuth
 {

@@ -2,10 +2,9 @@
 
 namespace Bloatless\Endocore\Tests\Unit\Components\QueryBuilder\QueryBuilder;
 
-use Bloatless\Endocore\Components\QueryBuilder\ConnectionAdapter\PdoMysql;
-use Bloatless\Endocore\Components\QueryBuilder\Factory;
-use Bloatless\Endocore\Components\QueryBuilder\Tests\Fixtures\StatementBuilderMock;
-use Bloatless\Endocore\Components\QueryBuilder\Tests\Fixtures\WhereQueryBuilderMock;
+use Bloatless\Endocore\Components\Database\ConnectionAdapter\PdoMysql;
+use Bloatless\Endocore\Tests\Fixtures\Components\QueryBuilder\StatementBuilderMock;
+use Bloatless\Endocore\Tests\Fixtures\Components\QueryBuilder\WhereQueryBuilderMock;
 use Bloatless\Endocore\Tests\Unit\Components\QueryBuilder\DatabaseTest;
 
 class WhereQueryBuilderTest extends DatabaseTest

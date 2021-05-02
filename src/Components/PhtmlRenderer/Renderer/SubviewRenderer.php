@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Bloatless\Endocore\Components\PhtmlRenderer\Renderer;
 
-use Bloatless\Endocore\Components\PhtmlRenderer\Factory as PhtmlRendererFactory;
+use Bloatless\Endocore\Components\PhtmlRenderer\PhtmlRendererFactory;
 
 /**
  * Renders subviews within a view.
@@ -38,7 +38,7 @@ class SubviewRenderer implements RendererInterface
     {
         // includes have their own scope so we override template variables
         $templateVariables = $arguments['subviewArguments'] ?? [];
-        $phtmlRenderer = $this->phtmlRendererFactory->makeRenderer();
+        $phtmlRenderer = $this->phtmlRendererFactory->make();
         $viewName = $arguments['viewName'];
 
         return $phtmlRenderer->render($viewName, $templateVariables);

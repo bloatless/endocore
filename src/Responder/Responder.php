@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Bloatless\Endocore\Responder;
 
-use Bloatless\Endocore\Components\Http\Response;
-use Bloatless\Endocore\Contracts\Responder\Responder as ResponderContract;
+use Bloatless\Endocore\Core\Http\Response;
 
-abstract class Responder implements ResponderContract
+abstract class Responder
 {
     /**
      * @var Response $response

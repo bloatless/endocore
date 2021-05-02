@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Bloatless\Endocore\Responder;
 
+use Bloatless\Endocore\Contracts\Responder\ResponderContract;
 use Bloatless\Endocore\Domain\Payload;
-use Bloatless\Endocore\Components\Http\Request;
-use Bloatless\Endocore\Components\Http\Response;
+use Bloatless\Endocore\Core\Http\Request;
+use Bloatless\Endocore\Core\Http\Response;
 
-class HtmlResponder extends Responder
+class HtmlResponder extends Responder implements ResponderContract
 {
     public function __construct()
     {

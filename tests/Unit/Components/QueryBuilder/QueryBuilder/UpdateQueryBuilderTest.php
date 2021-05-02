@@ -2,8 +2,8 @@
 
 namespace Bloatless\Endocore\Tests\Unit\Components\QueryBuilder\QueryBuilder;
 
-use Bloatless\Endocore\Components\QueryBuilder\Factory;
-use Bloatless\Endocore\Components\QueryBuilder\QueryBuilder\UpdateQueryBuilder;
+use Bloatless\Endocore\Components\Database\Factory;
+use Bloatless\Endocore\Components\Database\QueryBuilder\UpdateQueryBuilder;
 use Bloatless\Endocore\Tests\Unit\Components\QueryBuilder\DatabaseTest;
 
 class UpdateQueryBuilderTest extends DatabaseTest

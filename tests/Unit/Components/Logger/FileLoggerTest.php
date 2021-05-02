@@ -2,10 +2,10 @@
 
 namespace Bloatless\Endocore\Tests\Unit\Logger;
 
-use Bloatless\Endocore\Components\Logger\Factory;
-use Bloatless\Endocore\Components\Logger\LoggerException;
-use Bloatless\Endocore\Components\Logger\FileLogger;
-use Bloatless\Endocore\Components\Logger\LogLevel;
+use Bloatless\Endocore\Components\Core\Logger\LoggerFactory;
+use Bloatless\Endocore\Components\Core\Logger\LoggerException;
+use Bloatless\Endocore\Components\Core\Logger\FileLogger;
+use Bloatless\Endocore\Components\Core\Logger\LogLevel;
 use PHPUnit\Framework\TestCase;
 
 class FileLoggerTest extends TestCase
@@ -18,7 +18,7 @@ class FileLoggerTest extends TestCase
     public function setUp(): void
     {
         $this->config = include TESTS_ROOT . '/Fixtures/config.php';
-        $this->factory = new Factory($this->config);
+        $this->factory = new LoggerFactory($this->config['logger']);
     }
 
     public function testInitWithValidLogPath()
@@ -31,7 +31,7 @@ class FileLoggerTest extends TestCase
     {
         $config = include TESTS_ROOT . '/Fixtures/config.php';
         unset($config['logger']['path_logs']);
-        $factory = new Factory($config);
+        $factory = new LoggerFactory($config);
         $this->expectException(LoggerException::class);
         $logger = $factory->makeFileLogger();
     }
@@ -40,7 +40,7 @@ class FileLoggerTest extends TestCase
     {
         $config = include TESTS_ROOT . '/Fixtures/config.php';
         $config['logger']['path_logs'] = 'foo';
-        $factory = new Factory($config);
+        $factory = new LoggerFactory($config);
         $this->expectException(LoggerException::class);
         $logger = $factory->makeFileLogger();
     }

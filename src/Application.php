@@ -2,31 +2,29 @@
 
 declare(strict_types=1);
 
-/**
- * Endocore framework
- * by Simon Samtleben <foo@bloatless.org>
- *
- * @link https://bloatless.org
- * @license MIT
- */
-
 namespace Bloatless\Endocore;
 
-use Bloatless\Endocore\Components\Http\Exception\BadRequestException;
-use Bloatless\Endocore\Components\Http\Exception\MethodNotAllowedException;
-use Bloatless\Endocore\Components\Http\Exception\NotFoundException;
-use Bloatless\Endocore\Contracts\ErrorHandler\ErrorHandler as ErrorHandlerContract;
-use Bloatless\Endocore\Contracts\Router\Router as RouterContract;
-use Bloatless\Endocore\Contracts\Router\Route as RouteContract;
+use Bloatless\Endocore\Core\ErrorHandler\ErrorHandler;
+use Bloatless\Endocore\Core\Http\Exception\BadRequestException;
+use Bloatless\Endocore\Core\Http\Exception\MethodNotAllowedException;
+use Bloatless\Endocore\Core\Http\Exception\NotFoundException;
+use Bloatless\Endocore\Core\Http\Request;
+use Bloatless\Endocore\Core\Http\Response;
+use Bloatless\Endocore\Core\Router\Router;
+use Bloatless\Endocore\Core\Logger\LoggerFactory;
+use Bloatless\Endocore\Contracts\ErrorHandler\ErrorHandlerContract;
+use Bloatless\Endocore\Contracts\Router\RouterContract;
+use Bloatless\Endocore\Contracts\Router\RouteContract;
 use Bloatless\Endocore\Exception\Application\EndocoreException;
-use Bloatless\Endocore\Components\Http\Request;
-use Bloatless\Endocore\Components\Http\Response;
 use League\Container\Container;
 use League\Container\Definition\DefinitionInterface;
 use League\Container\ReflectionContainer;
 
 class Application
 {
+    /** @var string $basePath */
+    protected string $basePath;
+
     /* @var array $config */
     public array $config;
 
@@ -36,26 +34,93 @@ class Application
     /* @var RouterContract $router */
     public RouterContract $router;
 
-    /* @var ErrorHandlerContract $errorHandler */
-    public ErrorHandlerContract $errorHandler;
-
+    /* @var ErrorHandler $errorHandler */
+    public ErrorHandler $errorHandler;
 
     /** @var Container $container */
     public Container $container;
 
-    public function __construct(
-        array $config,
-        RouterContract $router,
-        ErrorHandlerContract $errorHandler
-    ) {
-        $this->config = $config;
-        $this->router = $router;
-        $this->errorHandler = $errorHandler;
+    public function __construct(string $basePath)
+    {
+        $this->setBasePath($basePath);
+        $this->initConfig();
+        $this->initContainer();
+        $this->initErrorHandler();
+        $this->initRouter();
+    }
 
+    public function setBasePath(string $basePath): void
+    {
+        $ds = DIRECTORY_SEPARATOR;
+        $this->basePath = rtrim($basePath, $ds) . $ds;
+    }
+
+    public function setConfig(array $config): void
+    {
+        $this->config = $config;
+    }
+
+    public function setErrorHandler(ErrorHandlerContract $errorHandler): void
+    {
+        $this->errorHandler = $errorHandler;
+        set_error_handler([$this->errorHandler, 'handleError']);
+        set_exception_handler([$this->errorHandler, 'handleException']);
+    }
+
+    public function setRouter(RouterContract $router): void
+    {
+        $this->router = $router;
+    }
+
+    protected function initConfig(): void
+    {
+        $config = require $this->basePath() . 'config/config.php';
+        $this->setConfig($config);
+    }
+
+    protected function initContainer(): void
+    {
         $this->container = new Container();
         $this->container->delegate(new ReflectionContainer());
+    }
 
-        $this->setErrorHandlers();
+    protected function initErrorHandler(): void
+    {
+        $loggerFactory = new LoggerFactory($this->config);
+        $errorHandler = new ErrorHandler(
+            $loggerFactory->make()
+        );
+        $this->setErrorHandler($errorHandler);
+    }
+
+    protected function initRouter(): void
+    {
+        $pathRoutes = $this->basePath() . 'routes/default.php';
+        if (!file_exists($pathRoutes)) {
+            throw new EndocoreException(sprintf('Routes file not found at %s', $pathRoutes));
+        }
+        $routes = require_once $pathRoutes;
+        $router = new Router($routes);
+        $this->setRouter($router);
+    }
+
+    protected function basePath(): string
+    {
+        return $this->basePath;
+    }
+
+    /**
+     * Registers a component.
+     *
+     * @param string $id
+     * @param string $factory
+     */
+    public function addComponent(string $id, string $factory): void
+    {
+        $this->register($id, function () use ($factory) {
+            $componentFactory = new $factory($this->config);
+            return $componentFactory->make();
+        });
     }
 
     /**
@@ -69,12 +134,6 @@ class Application
     public function register(string $id, $concrete = null, bool $shared = false): DefinitionInterface
     {
         return $this->container->add($id, $concrete, $shared);
-    }
-
-    protected function setErrorHandlers(): void
-    {
-        set_error_handler([$this->errorHandler, 'handleError']);
-        set_exception_handler([$this->errorHandler, 'handleException']);
     }
 
     /**

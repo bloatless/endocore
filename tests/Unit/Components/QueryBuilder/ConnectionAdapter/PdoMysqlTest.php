@@ -2,8 +2,8 @@
 
 namespace Bloatless\Endocore\Tests\Unit\Components\QueryBuilder\ConnectionAdapter;
 
-use Bloatless\Endocore\Components\QueryBuilder\ConnectionAdapter\PdoMysql;
-use Bloatless\Endocore\Components\QueryBuilder\Exception\DatabaseException;
+use Bloatless\Endocore\Components\Database\ConnectionAdapter\PdoMysql;
+use Bloatless\Endocore\Components\Database\Exception\DatabaseException;
 use PHPUnit\Framework\TestCase;
 
 class PdoMysqlTest extends TestCase

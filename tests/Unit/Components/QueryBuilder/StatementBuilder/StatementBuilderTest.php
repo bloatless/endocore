@@ -2,7 +2,7 @@
 
 namespace Bloatless\Endocore\Tests\Unit\Components\QueryBuilder\StatementBuilder;
 
-use Bloatless\Endocore\Tests\Fixtures\StatementBuilderMock;
+use Bloatless\Endocore\Tests\Fixtures\Components\QueryBuilder\StatementBuilderMock;
 use PHPUnit\Framework\TestCase;
 
 class StatementBuilderTest extends TestCase

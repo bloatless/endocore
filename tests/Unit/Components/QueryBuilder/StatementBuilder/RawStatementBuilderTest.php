@@ -2,7 +2,7 @@
 
 namespace Bloatless\Endocore\Tests\Unit\Components\QueryBuilder\StatementBuilder;
 
-use Bloatless\Endocore\Components\QueryBuilder\StatementBuilder\RawStatementBuider;
+use Bloatless\Endocore\Components\Database\StatementBuilder\RawStatementBuider;
 use PHPUnit\Framework\TestCase;
 
 class RawStatementBuilderTest extends TestCase

@@ -4,7 +4,7 @@ namespace Bloatless\Endocore\Tests\Unit\Components\BasicAuth;
 
 use Bloatless\Endocore\Components\BasicAuth\BasicAuth;
 use Bloatless\Endocore\Components\BasicAuth\BasicAuthException;
-use Bloatless\Endocore\Components\BasicAuth\Factory;
+use Bloatless\Endocore\Components\BasicAuth\BasicAuthFactory;
 use PHPUnit\Framework\TestCase;
 
 class FactoryTest extends TestCase
@@ -24,7 +24,7 @@ class FactoryTest extends TestCase
     {
         // test with missing config
         $this->expectException(BasicAuthException::class);
-        $factory = new Factory([]);
+        $factory = new BasicAuthFactory([]);
         $basicAuth = $factory->makeAuth();
     }
 
@@ -34,7 +34,7 @@ class FactoryTest extends TestCase
         // test with array-backend
         $config = $this->config;
         $config['auth']['backend'] = 'array';
-        $factory = new Factory($config);
+        $factory = new BasicAuthFactory($config);
         $basicAuth = $factory->makeAuth();
         $this->assertInstanceOf(BasicAuth::class, $basicAuth);
     }
@@ -44,14 +44,14 @@ class FactoryTest extends TestCase
 
         // test with mysql backend
         $config = $this->config;
-        $factory = new Factory($config);
+        $factory = new BasicAuthFactory($config);
         $basicAuth = $factory->makeAuth();
         $this->assertInstanceOf(BasicAuth::class, $basicAuth);
 
         // test with missing db config
         $config = $this->config;
         unset($config['db']);
-        $factory = new Factory($config);
+        $factory = new BasicAuthFactory($config);
         $this->expectException(BasicAuthException::class);
         $factory->makeAuth();
     }
@@ -61,7 +61,7 @@ class FactoryTest extends TestCase
         // test with invalid backend
         $config = $this->config;
         $config['auth']['backend'] = 'foo';
-        $factory = new Factory($config);
+        $factory = new BasicAuthFactory($config);
         $this->expectException(BasicAuthException::class);
         $basicAuth = $factory->makeAuth();
     }

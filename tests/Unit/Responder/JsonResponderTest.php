@@ -2,7 +2,7 @@
 
 namespace Bloatless\Endocore\Tests\Unit\Responder;
 
-use Bloatless\Endocore\Components\Http\Response;
+use Bloatless\Endocore\Components\Core\Http\Response;
 use Bloatless\Endocore\Responder\JsonResponder;
 use PHPUnit\Framework\TestCase;
 

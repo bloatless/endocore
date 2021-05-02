@@ -2,10 +2,10 @@
 
 namespace Bloatless\Endocore\Tests\Unit\Logger;
 
-use Bloatless\Endocore\Components\Logger\Factory;
-use Bloatless\Endocore\Components\Logger\FileLogger;
-use Bloatless\Endocore\Components\Logger\LoggerException;
-use Bloatless\Endocore\Components\Logger\NullLogger;
+use Bloatless\Endocore\Components\Core\Logger\LoggerFactory;
+use Bloatless\Endocore\Components\Core\Logger\FileLogger;
+use Bloatless\Endocore\Components\Core\Logger\LoggerException;
+use Bloatless\Endocore\Components\Core\Logger\NullLogger;
 use PHPUnit\Framework\TestCase;
 
 class FactoryTest extends TestCase
@@ -20,21 +20,21 @@ class FactoryTest extends TestCase
 
     public function testGetFileLogger()
     {
-        $factory = new Factory($this->config['logger']);
+        $factory = new LoggerFactory($this->config['logger']);
         $logger = $factory->makeFileLogger();
         $this->assertInstanceOf(FileLogger::class, $logger);
     }
 
     public function testGetFileLoggerWithInvalidConfig()
     {
-        $factory = new Factory([]);
+        $factory = new LoggerFactory([]);
         $this->expectException(LoggerException::class);
         $factory->makeFileLogger();
     }
 
     public function testGetNullLogger()
     {
-        $factory = new Factory($this->config['logger']);
+        $factory = new LoggerFactory($this->config['logger']);
         $logger = $factory->makeNullLogger();
         $this->assertInstanceOf(NullLogger::class, $logger);
     }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Bloatless\Endocore\Components\PhtmlRenderer\Renderer;
 
-use Bloatless\Endocore\Components\PhtmlRenderer\Factory as PhtmlRendererFactory;
+use Bloatless\Endocore\Components\PhtmlRenderer\PhtmlRendererFactory;
 use Bloatless\Endocore\Components\PhtmlRenderer\TemplatingException;
 
 /**
@@ -103,7 +103,7 @@ class ViewComponentRenderer implements RendererInterface
         }
 
         $componentClass = $this->viewComponentClasses[$componentType];
-        $phtmlRenderer = $this->phtmlRendererFactory->makeRenderer();
+        $phtmlRenderer = $this->phtmlRendererFactory->make();
         $this->viewComponents[$componentHash] = new $componentClass($phtmlRenderer);
     }
 
