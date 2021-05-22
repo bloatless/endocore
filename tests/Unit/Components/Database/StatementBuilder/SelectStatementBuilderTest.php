@@ -1,6 +1,6 @@
 <?php
 
-namespace Bloatless\Endocore\Tests\Unit\Components\QueryBuilder\StatementBuilder;
+namespace Bloatless\Endocore\Tests\Unit\Components\Database\StatementBuilder;
 
 use Bloatless\Endocore\Components\Database\StatementBuilder\SelectStatementBuilder;
 use PHPUnit\Framework\TestCase;

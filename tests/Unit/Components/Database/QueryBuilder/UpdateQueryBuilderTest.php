@@ -1,40 +1,33 @@
 <?php
 
-namespace Bloatless\Endocore\Tests\Unit\Components\QueryBuilder\QueryBuilder;
+namespace Bloatless\Endocore\Tests\Unit\Components\Database\QueryBuilder;
 
-use Bloatless\Endocore\Components\Database\Factory;
+use Bloatless\Endocore\Components\Database\Database;
+use Bloatless\Endocore\Components\Database\DatabaseFactory;
 use Bloatless\Endocore\Components\Database\QueryBuilder\UpdateQueryBuilder;
-use Bloatless\Endocore\Tests\Unit\Components\QueryBuilder\DatabaseTest;
+use Bloatless\Endocore\Tests\Unit\Components\Database\AbstractDatabaseTest;
 
-class UpdateQueryBuilderTest extends DatabaseTest
+class UpdateQueryBuilderTest extends AbstractDatabaseTest
 {
-    /**
-     * @var array $config
-     */
-    public $config;
-
-    /**
-     * @var Factory $factory
-     */
-    public $factory;
+    private Database $db;
 
     public function setUp(): void
     {
         parent::setUp();
         $config = include TESTS_ROOT . '/Fixtures/config.php';
-        $this->config = $config['db'];
-        $this->factory = new Factory($this->config);
+        $factory = new DatabaseFactory($config);
+        $this->db = $factory->make();
     }
 
     public function testTable()
     {
-        $builder = $this->factory->makeUpdate();
+        $builder = $this->db->makeUpdate();
         $this->assertInstanceOf(UpdateQueryBuilder::class, $builder->table('customers'));
     }
 
     public function testUpdate()
     {
-        $builder = $this->factory->makeUpdate();
+        $builder = $this->db->makeUpdate();
         $rowsAffected = $builder->table('customers')
             ->whereEquals('firstname', 'Homer')
             ->update([
@@ -45,7 +38,7 @@ class UpdateQueryBuilderTest extends DatabaseTest
 
     public function testReset()
     {
-        $builder = $this->factory->makeUpdate()
+        $builder = $this->db->makeUpdate()
             ->table('foobar')
             ->whereEquals('customer_id', 1);
         $builder->reset();

@@ -1,6 +1,6 @@
 <?php
 
-namespace Bloatless\Endocore\Tests\Unit\Components\QueryBuilder\ConnectionAdapter;
+namespace Bloatless\Endocore\Tests\Unit\Components\Database\ConnectionAdapter;
 
 use Bloatless\Endocore\Components\Database\ConnectionAdapter\PdoMysql;
 use Bloatless\Endocore\Components\Database\Exception\DatabaseException;

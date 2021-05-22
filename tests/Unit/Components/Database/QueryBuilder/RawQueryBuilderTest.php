@@ -1,40 +1,33 @@
 <?php
 
-namespace Bloatless\Endocore\Tests\Unit\Components\QueryBuilder\QueryBuilder;
+namespace Bloatless\Endocore\Tests\Unit\Components\Database\QueryBuilder;
 
-use Bloatless\Endocore\Components\Database\Factory;
+use Bloatless\Endocore\Components\Database\Database;
+use Bloatless\Endocore\Components\Database\DatabaseFactory;
 use Bloatless\Endocore\Components\Database\QueryBuilder\RawQueryBuilder;
-use Bloatless\Endocore\Tests\Unit\Components\QueryBuilder\DatabaseTest;
+use Bloatless\Endocore\Tests\Unit\Components\Database\AbstractDatabaseTest;
 
-class RawQueryBuilderTest extends DatabaseTest
+class RawQueryBuilderTest extends AbstractDatabaseTest
 {
-    /**
-     * @var array $config
-     */
-    public $config;
-
-    /**
-     * @var Factory $factory
-     */
-    public $factory;
+    private Database $db;
 
     public function setUp(): void
     {
         parent::setUp();
         $config = include TESTS_ROOT . '/Fixtures/config.php';
-        $this->config = $config['db'];
-        $this->factory = new Factory($this->config);
+        $factory = new DatabaseFactory($config);
+        $this->db = $factory->make();
     }
 
     public function testPrepare()
     {
-        $builder = $this->factory->makeRaw();
+        $builder = $this->db->makeRaw();
         $this->assertInstanceOf(RawQueryBuilder::class, $builder->prepare('SELECT * FROM `customers`'));
     }
 
     public function testGet()
     {
-        $builder = $this->factory->makeRaw();
+        $builder = $this->db->makeRaw();
         $builder->prepare('SELECT `firstname` FROM `customers` WHERE `customer_id` = :id', ['id' => 1]);
         $result = $builder->get();
         $this->assertIsArray($result);
@@ -43,7 +36,7 @@ class RawQueryBuilderTest extends DatabaseTest
 
     public function testRun()
     {
-        $builder = $this->factory->makeRaw();
+        $builder = $this->db->makeRaw();
         $builder->prepare('INSERT INTO `customers` (`firstname`, `lastname`) VALUES (:fn, :ln)', [
            'fn' => 'Maggie',
            'ln' => 'Simpson',
@@ -53,7 +46,7 @@ class RawQueryBuilderTest extends DatabaseTest
 
     public function testReset()
     {
-        $builder = $this->factory->makeRaw();
+        $builder = $this->db->makeRaw();
         $builder->prepare('SELECT FROM `foo`', ['foo' => 'bar']);
         $builder->reset();
         $res = $builder->prepare('SELECT COUNT(*) AS cnt FROM `customers`')->get();

@@ -1,27 +1,16 @@
 <?php
 
-namespace Bloatless\Endocore\Tests\Unit\Components\QueryBuilder\QueryBuilder;
+namespace Bloatless\Endocore\Tests\Unit\Components\Database\QueryBuilder;
 
 use Bloatless\Endocore\Components\Database\ConnectionAdapter\PdoMysql;
-use Bloatless\Endocore\Components\Database\Factory;
 use Bloatless\Endocore\Components\Database\StatementBuilder\SelectStatementBuilder;
 use Bloatless\Endocore\Components\Database\Exception\DatabaseException;
-use Bloatless\Endocore\Tests\Fixtures\Components\QueryBuilder\QueryBuilderMock;
-use Bloatless\Endocore\Tests\Fixtures\Components\QueryBuilder\StatementBuilderMock;
-use Bloatless\Endocore\Tests\Unit\Components\QueryBuilder\DatabaseTest;
+use Bloatless\Endocore\Tests\Fixtures\Components\Database\QueryBuilderMock;
+use Bloatless\Endocore\Tests\Fixtures\Components\Database\StatementBuilderMock;
+use Bloatless\Endocore\Tests\Unit\Components\Database\AbstractDatabaseTest;
 
-class QueryBuilderTest extends DatabaseTest
+class QueryBuilderTest extends AbstractDatabaseTest
 {
-    /**
-     * @var array $config
-     */
-    public $config;
-
-    /**
-     * @var Factory $factory
-     */
-    public $factory;
-
     /**
      * @var \PDO $connection
      */
@@ -32,9 +21,7 @@ class QueryBuilderTest extends DatabaseTest
         parent::setUp();
         $config = include TESTS_ROOT . '/Fixtures/config.php';
         $defaultConnectionName = $config['db']['default_connection'];
-        $this->config = $config['db'];
-        $this->factory = new Factory($this->config);
-        $this->connection = (new PdoMysql)->connect($this->config['connections'][$defaultConnectionName]);
+        $this->connection = (new PdoMysql)->connect($config['db']['connections'][$defaultConnectionName]);
     }
 
     public function testCanBeInitialized()

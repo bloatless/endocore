@@ -1,15 +1,15 @@
 <?php
 
-namespace Bloatless\Endocore\Tests\Unit\Components\QueryBuilder;
+namespace Bloatless\Endocore\Tests\Unit\Components\Database;
 
 use PHPUnit\Framework\TestCase;
 
-abstract class DatabaseTest extends TestCase
+abstract class AbstractDatabaseTest extends TestCase
 {
     /**
      * @var \PDO $pdo
      */
-    static private $pdo = null;
+    private static $pdo = null;
 
     /**
      * Initializes database connection.

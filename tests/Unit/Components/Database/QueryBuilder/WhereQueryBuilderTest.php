@@ -1,27 +1,23 @@
 <?php
 
-namespace Bloatless\Endocore\Tests\Unit\Components\QueryBuilder\QueryBuilder;
+namespace Bloatless\Endocore\Tests\Unit\Components\Database\QueryBuilder;
 
 use Bloatless\Endocore\Components\Database\ConnectionAdapter\PdoMysql;
-use Bloatless\Endocore\Tests\Fixtures\Components\QueryBuilder\StatementBuilderMock;
-use Bloatless\Endocore\Tests\Fixtures\Components\QueryBuilder\WhereQueryBuilderMock;
-use Bloatless\Endocore\Tests\Unit\Components\QueryBuilder\DatabaseTest;
+use Bloatless\Endocore\Tests\Fixtures\Components\Database\StatementBuilderMock;
+use Bloatless\Endocore\Tests\Fixtures\Components\Database\WhereQueryBuilderMock;
+use Bloatless\Endocore\Tests\Unit\Components\Database\AbstractDatabaseTest;
 
-class WhereQueryBuilderTest extends DatabaseTest
+class WhereQueryBuilderTest extends AbstractDatabaseTest
 {
-    public $config;
-
     public $defaultCredentials;
-
-    public $factory;
 
     public function setUp(): void
     {
         parent::setUp();
         $configData = include TESTS_ROOT . '/Fixtures/config.php';
-        $this->config = $configData['db'];
-        $defaultConnection = $this->config['default_connection'];
-        $this->defaultCredentials = $this->config['connections'][$defaultConnection];
+        $config = $configData['db'];
+        $defaultConnection = $config['default_connection'];
+        $this->defaultCredentials = $config['connections'][$defaultConnection];
     }
 
     public function testSetter()
