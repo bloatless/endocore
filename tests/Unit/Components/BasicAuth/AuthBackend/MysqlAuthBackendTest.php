@@ -3,34 +3,31 @@
 namespace Bloatless\Endocore\Tests\Unit\Components\BasicAuth\AuthBackend;
 
 use Bloatless\Endocore\Components\BasicAuth\AuthBackend\MysqlAuthBackend;
-use Bloatless\Endocore\Components\Database\Factory as QueryBuilderFactory;
+use Bloatless\Endocore\Components\Database\Database;
+use Bloatless\Endocore\Components\Database\DatabaseFactory;
 use Bloatless\Endocore\Tests\Unit\Components\BasicAuth\DatabaseTest;
 
 class MysqlAuthBackendTest extends DatabaseTest
 {
-    /**
-     * @var array $config
-     */
-    public $config;
-
-    public $queryBuilderFactory;
+    private Database $db;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->config = include TESTS_ROOT . '/Fixtures/config.php';
-        $this->queryBuilderFactory = new QueryBuilderFactory($this->config['db']);
+        $config = include TESTS_ROOT . '/Fixtures/config.php';
+        $dbFactory = new DatabaseFactory($config);
+        $this->db = $dbFactory->make();
     }
 
     public function testCanBeInitialized()
     {
-        $authBackend = new MysqlAuthBackend($this->queryBuilderFactory);
+        $authBackend = new MysqlAuthBackend($this->db);
         $this->assertInstanceOf(MysqlAuthBackend::class, $authBackend);
     }
 
     public function testValidateCredentials()
     {
-        $authBackend = new MysqlAuthBackend($this->queryBuilderFactory);
+        $authBackend = new MysqlAuthBackend($this->db);
 
         // test with unknown user
         $res = $authBackend->validateCredentials('unknown', 'bar');

@@ -4,8 +4,8 @@ namespace Bloatless\Endocore\Tests\Unit\Components\BasicAuth;
 
 use Bloatless\Endocore\Components\BasicAuth\AuthBackend\ArrayAuthBackend;
 use Bloatless\Endocore\Components\BasicAuth\BasicAuth;
-use Bloatless\Endocore\Components\Core\Http\Request;
-use Bloatless\Endocore\Components\Core\Http\Response;
+use Bloatless\Endocore\Core\Http\Request;
+use Bloatless\Endocore\Core\Http\Response;
 
 class BasicAuthTest extends DatabaseTest
 {

@@ -25,7 +25,7 @@ class FactoryTest extends TestCase
         // test with missing config
         $this->expectException(BasicAuthException::class);
         $factory = new BasicAuthFactory([]);
-        $basicAuth = $factory->makeAuth();
+        $basicAuth = $factory->make();
     }
 
     public function testMakeAuthWithArrayBackendConfig()
@@ -35,7 +35,7 @@ class FactoryTest extends TestCase
         $config = $this->config;
         $config['auth']['backend'] = 'array';
         $factory = new BasicAuthFactory($config);
-        $basicAuth = $factory->makeAuth();
+        $basicAuth = $factory->make();
         $this->assertInstanceOf(BasicAuth::class, $basicAuth);
     }
 
@@ -45,7 +45,7 @@ class FactoryTest extends TestCase
         // test with mysql backend
         $config = $this->config;
         $factory = new BasicAuthFactory($config);
-        $basicAuth = $factory->makeAuth();
+        $basicAuth = $factory->make();
         $this->assertInstanceOf(BasicAuth::class, $basicAuth);
 
         // test with missing db config
@@ -53,7 +53,7 @@ class FactoryTest extends TestCase
         unset($config['db']);
         $factory = new BasicAuthFactory($config);
         $this->expectException(BasicAuthException::class);
-        $factory->makeAuth();
+        $factory->make();
     }
 
     public function testMakeAuthWithInvalidBackendConfig()
@@ -63,6 +63,6 @@ class FactoryTest extends TestCase
         $config['auth']['backend'] = 'foo';
         $factory = new BasicAuthFactory($config);
         $this->expectException(BasicAuthException::class);
-        $basicAuth = $factory->makeAuth();
+        $basicAuth = $factory->make();
     }
 }

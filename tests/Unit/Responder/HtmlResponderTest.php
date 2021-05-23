@@ -3,7 +3,7 @@
 namespace Bloatless\Endocore\Tests\Unit\Responder;
 
 use Bloatless\Endocore\Components\Templating\PhtmlRenderer;
-use Bloatless\Endocore\Components\Core\Http\Response;
+use Bloatless\Endocore\Core\Http\Response;
 use Bloatless\Endocore\Responder\HtmlResponder;
 use PHPUnit\Framework\TestCase;
 
