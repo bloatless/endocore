@@ -31,6 +31,7 @@ class ErrorHandler implements ErrorHandlerContract
     public function __construct(LoggerContract $logger)
     {
         $this->logger = $logger;
+        $this->request = new Request();
     }
 
     /**

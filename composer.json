@@ -15,7 +15,7 @@
             "email": "foo@bloatless.org"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "repositories": [{
         "type": "path",
         "url": "../endocore*",
@@ -33,6 +33,6 @@
         "nikic/fast-route": "^1.3"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8.3"
+        "phpunit/phpunit": "^9.5.4"
     }
 }
