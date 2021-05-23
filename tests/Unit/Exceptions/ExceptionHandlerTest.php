@@ -7,7 +7,7 @@ use Bloatless\Endocore\Components\ErrorHandler\ErrorHandlerContract;
 use Bloatless\Endocore\Exception\Http\BadRequestException;
 use Bloatless\Endocore\Exception\Http\MethodNotAllowedException;
 use Bloatless\Endocore\Exception\Http\NotFoundException;
-use Bloatless\Endocore\Components\Core\Logger\NullLogger;
+use Bloatless\Endocore\Core\Logger\NullLogger;
 use Bloatless\Endocore\Core\Http\Request;
 use PHPUnit\Framework\TestCase;
 

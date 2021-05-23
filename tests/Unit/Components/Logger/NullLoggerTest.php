@@ -2,8 +2,8 @@
 
 namespace Bloatless\Endocore\Tests\Unit\Logger;
 
-use Bloatless\Endocore\Components\Core\Logger\LogLevel;
-use Bloatless\Endocore\Components\Core\Logger\NullLogger;
+use Bloatless\Endocore\Core\Logger\LogLevel;
+use Bloatless\Endocore\Core\Logger\NullLogger;
 use PHPUnit\Framework\TestCase;
 
 class NullLoggerTest extends TestCase

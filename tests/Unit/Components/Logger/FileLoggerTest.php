@@ -2,10 +2,10 @@
 
 namespace Bloatless\Endocore\Tests\Unit\Logger;
 
-use Bloatless\Endocore\Components\Core\Logger\LoggerFactory;
-use Bloatless\Endocore\Components\Core\Logger\LoggerException;
-use Bloatless\Endocore\Components\Core\Logger\FileLogger;
-use Bloatless\Endocore\Components\Core\Logger\LogLevel;
+use Bloatless\Endocore\Core\Logger\LoggerFactory;
+use Bloatless\Endocore\Core\Logger\LoggerException;
+use Bloatless\Endocore\Core\Logger\FileLogger;
+use Bloatless\Endocore\Core\Logger\LogLevel;
 use PHPUnit\Framework\TestCase;
 
 class FileLoggerTest extends TestCase
@@ -18,7 +18,7 @@ class FileLoggerTest extends TestCase
     public function setUp(): void
     {
         $this->config = include TESTS_ROOT . '/Fixtures/config.php';
-        $this->factory = new LoggerFactory($this->config['logger']);
+        $this->factory = new LoggerFactory($this->config);
     }
 
     public function testInitWithValidLogPath()
