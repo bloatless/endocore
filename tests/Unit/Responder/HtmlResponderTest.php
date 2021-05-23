@@ -3,7 +3,9 @@
 namespace Bloatless\Endocore\Tests\Unit\Responder;
 
 use Bloatless\Endocore\Components\Templating\PhtmlRenderer;
+use Bloatless\Endocore\Core\Http\Request;
 use Bloatless\Endocore\Core\Http\Response;
+use Bloatless\Endocore\Domain\Payload;
 use Bloatless\Endocore\Responder\HtmlResponder;
 use PHPUnit\Framework\TestCase;
 
@@ -20,46 +22,37 @@ class HtmlResponderTest extends TestCase
 
     public function testGetSetResponder()
     {
-        $responder = new HtmlResponder($this->config);
+        $responder = new HtmlResponder();
         $responder->setResponse(new Response);
         $this->assertInstanceOf(Response::class, $responder->getResponse());
     }
 
-    public function testFound()
+    public function testInvoke()
     {
-        $responder = new HtmlResponder($this->config);
-        $response = $responder->found([
-            'body' => 'bar',
-        ]);
-        $this->assertEquals('bar', $response->getBody());
-    }
+        $responder = new HtmlResponder();
+        $request = new Request();
+        $payload = new Payload(Payload::STATUS_OK, []);
+        $response = $responder->__invoke($request, $payload);
+        $this->assertInstanceOf(Response::class, $response);
 
-    public function testBadRequest()
-    {
-        $responder = new HtmlResponder($this->config);
-        $response = $responder->badRequest();
-        $this->assertEquals(400, $response->getStatus());
-    }
-
-    public function testNotFound()
-    {
-        $responder = new HtmlResponder($this->config);
-        $response = $responder->notFound();
-        $this->assertEquals(404, $response->getStatus());
-    }
-
-    public function testMethodNotAllowed()
-    {
-        $responder = new HtmlResponder($this->config);
-        $response = $responder->methodNotAllowed();
-        $this->assertEquals(405, $response->getStatus());
+        $payload = new Payload(Payload::STATUS_ERROR, []);
+        $response = $responder->__invoke($request, $payload);
+        $this->assertInstanceOf(Response::class, $response);
     }
 
     public function testError()
     {
-        $responder = new HtmlResponder($this->config);
-        $response = $responder->error(['foo' => 'testing error']);
-        $this->assertEquals(500, $response->getStatus());
-        $this->assertStringContainsString('testing error', $response->getBody());
+        $responder = new HtmlResponder();
+        $payload = new Payload(Payload::STATUS_ERROR, []);
+        $response = $responder->error($payload);
+        $this->assertStringContainsString('Error', $response->getBody());
+    }
+
+    public function testProvideResponse()
+    {
+        $responder = new HtmlResponder();
+        $payload = new Payload(Payload::STATUS_OK, []);
+        $response = $responder->provideResponse($payload);
+        $this->assertStringContainsString('title', $response->getBody());
     }
 }

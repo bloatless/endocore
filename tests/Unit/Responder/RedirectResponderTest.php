@@ -5,10 +5,10 @@ namespace Bloatless\Endocore\Tests\Unit\Responder;
 use Bloatless\Endocore\Core\Http\Request;
 use Bloatless\Endocore\Core\Http\Response;
 use Bloatless\Endocore\Domain\Payload;
-use Bloatless\Endocore\Responder\JsonResponder;
+use Bloatless\Endocore\Responder\RedirectResponder;
 use PHPUnit\Framework\TestCase;
 
-class JsonResponderTest extends TestCase
+class RedirectResponderTest extends TestCase
 {
     public $config;
 
@@ -19,17 +19,17 @@ class JsonResponderTest extends TestCase
 
     public function testGetSetResponder()
     {
-        $responder = new JsonResponder();
+        $responder = new RedirectResponder();
         $responder->setResponse(new Response());
         $this->assertInstanceOf(Response::class, $responder->getResponse());
     }
 
     public function testInvoke()
     {
-        $responder = new JsonResponder();
+        $responder = new RedirectResponder();
         $request = new Request();
-        $payload = new Payload(Payload::STATUS_OK, ['foo' => 'bar']);
+        $payload = new Payload(Payload::STATUS_OK, ['location' => 'http://example.com']);
         $response = $responder->__invoke($request, $payload);
-        $this->assertStringContainsString('"foo":"bar"', $response->getBody());
+        $this->assertArrayHasKey('Location', $response->getHeaders());
     }
 }
