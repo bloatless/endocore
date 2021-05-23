@@ -4,7 +4,7 @@ return [
     'home' => [
         'method' => 'GET',
         'pattern' => '/',
-        'handler' => 'Bloatless\Endocore\Tests\Fixtures\HelloWorldHtmlAction',
+        'handler' => 'Bloatless\Endocore\Tests\Fixtures\Action\HelloWorldAction',
     ],
 
     'invalid_action' => [

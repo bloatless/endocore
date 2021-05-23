@@ -3,48 +3,32 @@
 namespace Bloatless\Endocore\Tests\Integration;
 
 use Bloatless\Endocore\Application;
-use Bloatless\Endocore\Core\Logger\LoggerFactory as LoggerFactory;
-use Bloatless\Endocore\Components\ErrorHandler\ErrorHandlerContract;
+use Bloatless\Endocore\Contracts\ErrorHandler\ErrorHandlerContract;
+use Bloatless\Endocore\Contracts\Router\RouterContract;
+use Bloatless\Endocore\Core\Http\Exception\MethodNotAllowedException;
+use Bloatless\Endocore\Core\Http\Exception\NotFoundException;
 use Bloatless\Endocore\Core\Http\Request;
-use Bloatless\Endocore\Components\Router\Router;
+use Bloatless\Endocore\Exception\Application\EndocoreException;
+use League\Container\Container;
 use PHPUnit\Framework\TestCase;
 
 class ApplicationTest extends TestCase
 {
     public $config;
 
-    public $routes;
-
-    public $logger;
-
-    public $exceptionHandler;
-
     public function setUp(): void
     {
-        $this->config = include TESTS_ROOT . '/Fixtures/config.php';
-        $this->routes = include TESTS_ROOT . '/Fixtures/routes.php';
-        $loggerFactory = new LoggerFactory($this->config);
-        $this->logger = $loggerFactory->makeNullLogger();
-        $request = new Request;
-        $this->exceptionHandler = new ErrorHandlerContract($this->config, $this->logger, $request);
+        $this->config = include TESTS_ROOT . '/Fixtures/config/config.php';
     }
 
     public function testApplicationCanBeInitiated()
     {
-        $request = new Request;
-        $router = new Router($this->routes);
-        $app = new Application(
-            $this->config,
-            $request,
-            $router,
-            $this->logger,
-            $this->exceptionHandler
-        );
+
+        $app = new Application(TESTS_ROOT . '/Fixtures/');
         $this->assertInstanceOf('Bloatless\Endocore\Application', $app);
-        $this->assertInstanceOf('Bloatless\Endocore\Core\Http\Request', $app->request);
-        $this->assertInstanceOf('Bloatless\Endocore\Components\Router\Router', $app->router);
-        $this->assertInstanceOf('Bloatless\Endocore\Core\Logger\LoggerInterface', $app->logger);
-        $this->assertInstanceOf('Bloatless\Endocore\Components\ErrorHandler\ErrorHandlerContract', $app->exceptionHandler);
+        $this->assertInstanceOf(RouterContract::class, $app->router);
+        $this->assertInstanceOf(ErrorHandlerContract::class, $app->errorHandler);
+        $this->assertInstanceOf(Container::class, $app->container);
     }
 
     /**
@@ -57,10 +41,10 @@ class ApplicationTest extends TestCase
            'REQUEST_METHOD' => 'GET',
            'REQUEST_URI' => '/'
         ]);
-        $router = new Router($this->routes);
-        $app = new Application($this->config, $request, $router, $this->logger, $this->exceptionHandler);
+
+        $app = new Application(TESTS_ROOT . '/Fixtures/');
         $this->expectOutputString('Hello World!');
-        $response = $app->run();
+        $response = $app->handle($request);
         $this->assertEquals('Hello World!', $response->getBody());
     }
 
@@ -74,11 +58,9 @@ class ApplicationTest extends TestCase
             'REQUEST_METHOD' => 'GET',
             'REQUEST_URI' => '/qwertz'
         ]);
-        $router = new Router($this->routes);
-        $app = new Application($this->config, $request, $router, $this->logger, $this->exceptionHandler);
-        $this->expectOutputRegex('/not found/i');
-        $response = $app->run();
-        $this->assertEquals(404, $response->getStatus());
+        $app = new Application(TESTS_ROOT . '/Fixtures/');
+        $this->expectException(NotFoundException::class);
+        $response = $app->handle($request);
     }
 
     /**
@@ -91,11 +73,9 @@ class ApplicationTest extends TestCase
             'REQUEST_METHOD' => 'POST',
             'REQUEST_URI' => '/'
         ]);
-        $router = new Router($this->routes);
-        $app = new Application($this->config, $request, $router, $this->logger, $this->exceptionHandler);
-        $this->expectOutputRegex('/method not allowed/i');
-        $response = $app->run();
-        $this->assertEquals(405, $response->getStatus());
+        $app = new Application(TESTS_ROOT . '/Fixtures/');
+        $this->expectException(MethodNotAllowedException::class);
+        $response = $app->handle($request);
     }
 
     /**
@@ -108,10 +88,8 @@ class ApplicationTest extends TestCase
             'REQUEST_METHOD' => 'GET',
             'REQUEST_URI' => '/invalid-action'
         ]);
-        $router = new Router($this->routes);
-        $app = new Application($this->config, $request, $router, $this->logger, $this->exceptionHandler);
-        $this->expectOutputRegex('/Action class not found/i');
-        $response = $app->run();
-        $this->assertEquals(500, $response->getStatus());
+        $app = new Application(TESTS_ROOT . '/Fixtures/');
+        $this->expectException(EndocoreException::class);
+        $response = $app->handle($request);
     }
 }

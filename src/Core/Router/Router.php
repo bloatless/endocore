@@ -51,6 +51,10 @@ class Router implements RouterContract
     {
         $urlPath = rawurldecode(parse_url($uri, PHP_URL_PATH));
         $routeInfo = $this->routeDispatcher->dispatch($httpMethod, $urlPath);
+        if ($routeInfo[0] === FastRoute\Dispatcher::METHOD_NOT_ALLOWED) {
+            return new Route($routeInfo[0], '', []);
+        }
+
         return new Route(
             $routeInfo[0],
             $routeInfo[1] ?? '',

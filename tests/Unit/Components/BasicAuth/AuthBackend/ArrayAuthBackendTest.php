@@ -17,7 +17,7 @@ class ArrayAuthBackendTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->config = include TESTS_ROOT . '/Fixtures/config.php';
+        $this->config = include TESTS_ROOT . '/Fixtures/config/config.php';
         $this->users = $this->config['auth']['backends']['array']['users'];
     }
 

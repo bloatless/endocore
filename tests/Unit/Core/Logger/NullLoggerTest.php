@@ -1,6 +1,6 @@
 <?php
 
-namespace Bloatless\Endocore\Tests\Unit\Logger;
+namespace Bloatless\Endocore\Tests\Unit\Core\Logger;
 
 use Bloatless\Endocore\Core\Logger\LogLevel;
 use Bloatless\Endocore\Core\Logger\NullLogger;

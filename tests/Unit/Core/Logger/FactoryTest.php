@@ -1,6 +1,6 @@
 <?php
 
-namespace Bloatless\Endocore\Tests\Unit\Logger;
+namespace Bloatless\Endocore\Tests\Unit\Core\Logger;
 
 use Bloatless\Endocore\Core\Logger\LoggerFactory;
 use Bloatless\Endocore\Core\Logger\FileLogger;
@@ -15,7 +15,7 @@ class FactoryTest extends TestCase
 
     public function setUp(): void
     {
-        $this->config = include TESTS_ROOT . '/Fixtures/config.php';
+        $this->config = include TESTS_ROOT . '/Fixtures/config/config.php';
     }
 
     public function testGetFileLogger()

@@ -16,7 +16,7 @@ class BasicAuthTest extends DatabaseTest
     public function setUp(): void
     {
         parent::setUp();
-        $this->config = include TESTS_ROOT . '/Fixtures/config.php';
+        $this->config = include TESTS_ROOT . '/Fixtures/config/config.php';
         $this->arrayBackend = new ArrayAuthBackend($this->config['auth']['backends']['array']['users']);
     }
 

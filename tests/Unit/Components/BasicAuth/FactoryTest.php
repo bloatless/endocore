@@ -17,7 +17,7 @@ class FactoryTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->config = include TESTS_ROOT . '/Fixtures/config.php';
+        $this->config = include TESTS_ROOT . '/Fixtures/config/config.php';
     }
 
     public function testMakeAuthWithMissingConfig()

@@ -58,7 +58,7 @@ class DatabaseTest extends AbstractDatabaseTest
         unset($db, $connection);
 
         // invalid driver:
-        $configData = include TESTS_ROOT . '/Fixtures/config.php';
+        $configData = include TESTS_ROOT . '/Fixtures/config/config.php';
         $configData['db']['connections']['db1']['driver'] = 'foo';
         $db = new Database($configData['db']['connections'], 'db1');
         $this->expectException(DatabaseException::class);
@@ -75,7 +75,7 @@ class DatabaseTest extends AbstractDatabaseTest
 
     public function testAddGetConnection()
     {
-        $config = include TESTS_ROOT . '/Fixtures/config.php';
+        $config = include TESTS_ROOT . '/Fixtures/config/config.php';
 
         $db = $this->provideDatabase();
         $this->assertFalse($db->hasConnection('db1'));
@@ -92,7 +92,7 @@ class DatabaseTest extends AbstractDatabaseTest
 
     private function provideDatabase()
     {
-        $config = include TESTS_ROOT . '/Fixtures/config.php';
+        $config = include TESTS_ROOT . '/Fixtures/config/config.php';
         $db = new Database($config['db']['connections'], 'db1');
 
         return $db;

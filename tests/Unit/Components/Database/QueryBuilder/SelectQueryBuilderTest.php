@@ -15,7 +15,7 @@ class SelectQueryBuilderTest extends AbstractDatabaseTest
     public function setUp(): void
     {
         parent::setUp();
-        $config = include TESTS_ROOT . '/Fixtures/config.php';
+        $config = include TESTS_ROOT . '/Fixtures/config/config.php';
         $factory = new DatabaseFactory($config);
         $this->db = $factory->make();
     }

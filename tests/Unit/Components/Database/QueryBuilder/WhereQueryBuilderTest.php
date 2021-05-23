@@ -14,7 +14,7 @@ class WhereQueryBuilderTest extends AbstractDatabaseTest
     public function setUp(): void
     {
         parent::setUp();
-        $configData = include TESTS_ROOT . '/Fixtures/config.php';
+        $configData = include TESTS_ROOT . '/Fixtures/config/config.php';
         $config = $configData['db'];
         $defaultConnection = $config['default_connection'];
         $this->defaultCredentials = $config['connections'][$defaultConnection];

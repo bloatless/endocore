@@ -2,13 +2,14 @@
 
 return [
     'logger' => [
-        'path_logs' => __DIR__ . '/logs',
+        'type' => 'null',
+        'path_logs' => TESTS_ROOT . '/Fixtures/logs',
         'min_level' => 'debug',
     ],
 
     'renderer' => [
-        'path_views' => __DIR__ . '/resources/views',
-        'compile_path' => __DIR__ . '/cache/compile',
+        'path_views' => TESTS_ROOT . '/Fixtures/resources/views',
+        'compile_path' => TESTS_ROOT . '/Fixtures/cache/compile',
         'view_components' => [],
     ],
 

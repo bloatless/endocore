@@ -11,7 +11,7 @@ class DatabaseFactoryTest extends AbstractDatabaseTest
 
     public function testMake()
     {
-        $config = include TESTS_ROOT . '/Fixtures/config.php';
+        $config = include TESTS_ROOT . '/Fixtures/config/config.php';
         $factory = new DatabaseFactory($config);
         $db = $factory->make();
         $this->assertInstanceOf(Database::class, $db);
@@ -19,7 +19,7 @@ class DatabaseFactoryTest extends AbstractDatabaseTest
 
     public function testInitWithoutConnections()
     {
-        $config = include TESTS_ROOT . '/Fixtures/config.php';
+        $config = include TESTS_ROOT . '/Fixtures/config/config.php';
         unset($config['db']);
         $factory = new DatabaseFactory($config);
         $this->expectException(DatabaseException::class);

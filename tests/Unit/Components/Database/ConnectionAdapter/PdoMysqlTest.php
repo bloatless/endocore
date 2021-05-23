@@ -14,7 +14,7 @@ class PdoMysqlTest extends TestCase
 
     public function setUp(): void
     {
-        $configData = include TESTS_ROOT . '/Fixtures/config.php';
+        $configData = include TESTS_ROOT . '/Fixtures/config/config.php';
         $this->config = $configData['db'];
         $defaultConnection = $this->config['default_connection'];
         $this->defaultCredentials = $this->config['connections'][$defaultConnection];

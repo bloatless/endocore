@@ -19,7 +19,7 @@ class QueryBuilderTest extends AbstractDatabaseTest
     public function setUp(): void
     {
         parent::setUp();
-        $config = include TESTS_ROOT . '/Fixtures/config.php';
+        $config = include TESTS_ROOT . '/Fixtures/config/config.php';
         $defaultConnectionName = $config['db']['default_connection'];
         $this->connection = (new PdoMysql)->connect($config['db']['connections'][$defaultConnectionName]);
     }

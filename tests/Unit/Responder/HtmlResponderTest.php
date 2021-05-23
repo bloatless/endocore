@@ -15,7 +15,7 @@ class HtmlResponderTest extends TestCase
 
     public function setUp(): void
     {
-        $this->config = include TESTS_ROOT . '/Fixtures/config.php';
+        $this->config = include TESTS_ROOT . '/Fixtures/config/config.php';
     }
 
     public function testGetSetResponder()
