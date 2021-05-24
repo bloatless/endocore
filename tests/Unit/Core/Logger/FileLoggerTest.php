@@ -131,7 +131,7 @@ class FileLoggerTest extends TestCase
         $logger = $this->factory->makeFileLogger();
         $logger->setMinLevel(LogLevel::WARNING);
         $logger->debug('foobar');
-        $this->assertFileNotExists($pathToLogfile);
+        $this->assertFileDoesNotExist($pathToLogfile);
         $logger->emergency('barfoo');
         $this->assertFileExists($pathToLogfile);
         unlink($pathToLogfile);
