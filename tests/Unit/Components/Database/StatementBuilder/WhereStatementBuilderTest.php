@@ -104,4 +104,32 @@ class WhereStatementBuilderTest extends TestCase
         ]]);
         $this->assertEquals(' WHERE `id` IS NOT NULL'.PHP_EOL, $builder->getStatement());
     }
+
+    public function testAddWhereRaw()
+    {
+        $builder = new WhereStatementBuilderMock;
+        $builder->addWhere([[
+            'key' => 'id = 1',
+            'value' => [],
+            'operator' => '',
+            'concatenator' => 'AND',
+            'raw' => true
+        ]]);
+        $this->assertEquals(' WHERE id = 1' . PHP_EOL, $builder->getStatement());
+    }
+
+    public function testAddWhereRawWithBinding()
+    {
+        $builder = new WhereStatementBuilderMock;
+        $builder->addWhere([[
+            'key' => 'id = :id',
+            'value' => [
+                'id' => 123
+            ],
+            'operator' => '',
+            'concatenator' => 'AND',
+            'raw' => true
+        ]]);
+        $this->assertEquals(' WHERE id = :id' . PHP_EOL, $builder->getStatement());
+    }
 }

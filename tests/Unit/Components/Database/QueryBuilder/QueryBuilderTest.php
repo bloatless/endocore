@@ -9,7 +9,8 @@ use Bloatless\Endocore\Tests\Fixtures\Components\Database\QueryBuilderMock;
 use Bloatless\Endocore\Tests\Fixtures\Components\Database\StatementBuilderMock;
 use Bloatless\Endocore\Tests\Unit\Components\Database\AbstractDatabaseTest;
 
-class QueryBuilderTest extends AbstractDatabaseTest
+class
+QueryBuilderTest extends AbstractDatabaseTest
 {
     /**
      * @var \PDO $connection

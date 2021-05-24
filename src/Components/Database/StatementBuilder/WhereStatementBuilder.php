@@ -21,6 +21,9 @@ abstract class WhereStatementBuilder extends StatementBuilder
         $firstClause = true;
         $this->statement .= ' WHERE ';
         foreach ($where as $clause) {
+            if (!isset($clause['raw'])) {
+                $clause['raw'] = false;
+            }
             if ($firstClause === false) {
                 $this->statement .= ' ' . $clause['concatenator'] . ' ';
             }
@@ -41,7 +44,7 @@ abstract class WhereStatementBuilder extends StatementBuilder
                     $this->addWhereNull($clause['key'], true);
                     break;
                 default:
-                    $this->addSimpleWhere($clause['key'], $clause['operator'], $clause['value']);
+                    $this->addSimpleWhere($clause['key'], $clause['operator'], $clause['value'], $clause['raw']);
                     break;
             }
 
@@ -57,11 +60,21 @@ abstract class WhereStatementBuilder extends StatementBuilder
      * @param mixed $value
      * @return void
      */
-    protected function addSimpleWhere(string $key, string $operator, $value): void
+    protected function addSimpleWhere(string $key, string $operator, $value, bool $raw = false): void
     {
-        $placeholder = $this->addBindingValue($key, $value);
-        $key = $this->quoteName($key);
-        $this->statement .= sprintf('%s %s %s', $key, $operator, $placeholder);
+        if ($raw === true) {
+            if (is_array($value) && !empty($value)) {
+                foreach ($value as $bindingKey => $bindingValue) {
+                    $this->addBindingValue($bindingKey, $bindingValue);
+                }
+            }
+            $this->statement .= $key;
+        } else {
+            $placeholder = $this->addBindingValue($key, $value);
+            $key = $this->quoteName($key);
+            $this->statement .= sprintf('%s %s %s', $key, $operator, $placeholder);
+        }
+
         $this->statement .= PHP_EOL;
     }
 

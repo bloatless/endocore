@@ -37,7 +37,9 @@ class WhereQueryBuilderTest extends AbstractDatabaseTest
             ->whereNull('firstname')
             ->whereNotNull('lastname')
             ->orWhereNull('lastname')
-            ->orWhereNotNull('firstname');
+            ->orWhereNotNull('firstname')
+            ->whereRaw('customer_id = 1')
+            ->orWhereRaw('customer_id = 2');
         $this->assertInstanceOf(WhereQueryBuilderMock::class, $builder);
     }
 }
