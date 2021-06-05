@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Bloatless\Endocore\Components\PhtmlRenderer;
 
+use Bloatless\Endocore\Components\PhtmlRenderer\PreCompiler\CustomTagPreCompiler;
 use Bloatless\Endocore\Components\PhtmlRenderer\PreCompiler\SubviewPreCompiler;
 use Bloatless\Endocore\Components\PhtmlRenderer\PreCompiler\LayoutPreCompiler;
 use Bloatless\Endocore\Components\PhtmlRenderer\PreCompiler\MustachePreCompiler;
 use Bloatless\Endocore\Components\PhtmlRenderer\PreCompiler\ViewComponentPreCompiler;
+use Bloatless\Endocore\Components\PhtmlRenderer\Renderer\CustomTagRenderer;
 use Bloatless\Endocore\Components\PhtmlRenderer\Renderer\SubviewRenderer;
 use Bloatless\Endocore\Components\PhtmlRenderer\Renderer\ViewComponentRenderer;
 use Bloatless\Endocore\Contracts\Components\FactoryContract;
@@ -44,8 +46,10 @@ class PhtmlRendererFactory implements FactoryContract
         $viewRenderer = new ViewRenderer();
         $subviewRenderer = new SubviewRenderer($this);
         $viewComponentRenderer = new ViewComponentRenderer($this, $viewComponents);
+        $customTagRenderer = new CustomTagRenderer();
         $viewRenderer->addRenderer('subview', $subviewRenderer);
         $viewRenderer->addRenderer('viewComponent', $viewComponentRenderer);
+        $viewRenderer->addRenderer('customTags', $customTagRenderer);
 
         // prepare pre-compiler
         $layoutPreCompiler = new LayoutPreCompiler();
@@ -53,6 +57,7 @@ class PhtmlRendererFactory implements FactoryContract
         $mustachePreCompiler = new MustachePreCompiler();
         $subviewPreCompiler = new SubviewPreCompiler();
         $viewComponentPreCompiler = new ViewComponentPreCompiler();
+        $customTagPreCompiler = new CustomTagPreCompiler();
 
         $renderer = new PhtmlRenderer($viewRenderer);
         $renderer->setViewPath($pathViews);
@@ -61,6 +66,7 @@ class PhtmlRendererFactory implements FactoryContract
         $renderer->addPreCompiler($subviewPreCompiler);
         $renderer->addPreCompiler($mustachePreCompiler);
         $renderer->addPreCompiler($viewComponentPreCompiler);
+        $renderer->addPreCompiler($customTagPreCompiler);
 
         return $renderer;
     }
