@@ -29,7 +29,7 @@ class CustomTagPreCompiler implements PreCompilerInterface
      */
     private function extractJs(string $content): string
     {
-        $pattern = '/<script type="extract-js">(?<js>.*)<\/script>/Us';
+        $pattern = '/<script data-ecc="extract-js">(?<js>.*)<\/script>/Us';
         $matchCount = preg_match_all($pattern, $content, $matches, PREG_SET_ORDER);
         if ($matchCount === 0) {
             return $content;
