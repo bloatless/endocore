@@ -8,7 +8,12 @@ use Bloatless\Endocore\Components\PhtmlRenderer\TemplatingException;
 
 class CustomTagRenderer implements RendererInterface
 {
-    private array $jsStack = [];
+    private JsStack $jsStack;
+
+    public function __construct()
+    {
+        $this->jsStack = JsStack::getInstance();
+    }
 
     /**
      * Handles renderer calls injected by CustomTagPreCompiler.
@@ -42,8 +47,7 @@ class CustomTagRenderer implements RendererInterface
      */
     private function addToJsStack(string $jsCode): void
     {
-        $jsCodeHash = md5($jsCode);
-        $this->jsStack[$jsCodeHash] = base64_decode($jsCode);
+        $this->jsStack->add(base64_decode($jsCode));
     }
 
     /**
@@ -53,7 +57,7 @@ class CustomTagRenderer implements RendererInterface
      */
     private function echoJsStack(): string
     {
-        $jsCode = implode("\r\n ", $this->jsStack);
+        $jsCode = implode("\r\n ", $this->jsStack->all());
 
         return '<script>' . $jsCode . '</script>';
     }

@@ -55,7 +55,7 @@ class ViewComponentPreCompiler implements PreCompilerInterface
             $data = $this->getDataAttributes($match['attributes']);
             $componentHash = $this->getComponentHash($componentName, 0, $tagCounts[$componentName]);
             $uniqueTag = sprintf(
-                '<?php $this->call(\'viewComponent\', [\'hash\' => \'%s\', \'type\' => \'%s\', \'action\' => \'start\', \'attributes\' => \'%s\'], \'data\' => %s]); ?>',
+                '<?php $this->call(\'viewComponent\', [\'hash\' => \'%s\', \'type\' => \'%s\', \'action\' => \'start\', \'attributes\' => \'%s\', \'data\' => %s]); ?>',
                 $componentHash,
                 $componentName,
                 $attributes,
