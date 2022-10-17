@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Bloatless\Endocore\Components\Database;
 
 use Bloatless\Endocore\Components\Database\ConnectionAdapter\PdoMysql;
+use Bloatless\Endocore\Components\Database\ConnectionAdapter\PdoSqlite;
 use Bloatless\Endocore\Components\Database\Exception\DatabaseException;
 use Bloatless\Endocore\Components\Database\QueryBuilder\DeleteQueryBuilder;
 use Bloatless\Endocore\Components\Database\QueryBuilder\InsertQueryBuilder;
@@ -132,13 +133,11 @@ class Database
 
         $dbConfig = $this->credentials[$connectionName];
 
-        switch ($dbConfig['driver']) {
-            case 'mysql':
-                $adapter = new PdoMysql;
-                break;
-            default:
-                throw new DatabaseException('Unsupported database driver. Check config.');
-        }
+        $adapter = match ($dbConfig['driver']) {
+            'mysql' => new PdoMysql(),
+            'sqlite' => new PdoSqlite(),
+            default => throw new DatabaseException('Unsupported database driver. Check config.'),
+        };
 
         $connection = $adapter->connect($dbConfig);
         $this->addConnection($connectionName, $connection);
